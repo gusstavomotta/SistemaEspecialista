@@ -120,4 +120,6 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+LOGIN_URL = '/login/'  # Define para onde os usuários não autenticados serão redirecionados
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

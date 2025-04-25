@@ -27,7 +27,6 @@ class Aluno(models.Model):
     treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
 
 class EscalaPoms(models.Model):
-    
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='escalas')
     data = models.DateField()
     
