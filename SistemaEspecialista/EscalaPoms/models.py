@@ -16,6 +16,8 @@ class Treinador(models.Model):
     num_telefone = models.CharField(null=True, blank=True, help_text="Número de telefone")
     
 class Aluno(models.Model):
+    treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
+
     cpf = models.CharField(
         max_length=11,
         primary_key=True,
@@ -27,9 +29,6 @@ class Aluno(models.Model):
     senha = models.CharField(max_length=128)
     genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Feminino')])
     num_telefone = models.CharField(null=True, blank=True, help_text="Número de telefone")
-
-    
-    treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
 
 class EscalaPoms(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='escalas')

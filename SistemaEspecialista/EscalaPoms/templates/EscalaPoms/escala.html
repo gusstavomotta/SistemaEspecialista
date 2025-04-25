@@ -1,10 +1,433 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Escala</title>
+  <link rel="stylesheet" href="{% static 'css/escala.css' %}">
+  <title>Cadastro da Escala POMS Reduzida</title>
 </head>
 <body>
-  <h1>Você está na tela de Escala</h1>
+  <h1>Cadastro da Escala POMS Reduzida</h1>
+  <form method="post" action="{% url 'escala' %}">
+    {%csrf_token%}
+    <fieldset>
+      <legend>Tensão</legend>
+      
+      <div class="item">
+        <p>1. Sinto-me tenso(a)</p>
+        <label><input type="radio" name="tensao_1" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_1" value="1"> 1</label>
+        <label><input type="radio" name="tensao_1" value="2"> 2</label>
+        <label><input type="radio" name="tensao_1" value="3"> 3</label>
+        <label><input type="radio" name="tensao_1" value="4"> 4</label>
+      </div>
+      
+      <div class="item">
+        <p>2. Sinto-me inquieto(a)</p>
+        <label><input type="radio" name="tensao_2" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_2" value="1"> 1</label>
+        <label><input type="radio" name="tensao_2" value="2"> 2</label>
+        <label><input type="radio" name="tensao_2" value="3"> 3</label>
+        <label><input type="radio" name="tensao_2" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>3. Sinto que estou Nervoso</p>
+        <label><input type="radio" name="tensao_3" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_3" value="1"> 1</label>
+        <label><input type="radio" name="tensao_3" value="2"> 2</label>
+        <label><input type="radio" name="tensao_3" value="3"> 3</label>
+        <label><input type="radio" name="tensao_3" value="4"> 4</label>
+      </div>
+
+      <div class="item">
+        <p>4. Sinto que estou Ansioso</p>
+        <label><input type="radio" name="tensao_4" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_4" value="1"> 1</label>
+        <label><input type="radio" name="tensao_4" value="2"> 2</label>
+        <label><input type="radio" name="tensao_4" value="3"> 3</label>
+        <label><input type="radio" name="tensao_4" value="4"> 4</label>
+      </div>
+      
+      <div class="item">
+        <p>5. Sinto que estou tranquilo</p>
+        <label><input type="radio" name="tensao_5" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_5" value="1"> 1</label>
+        <label><input type="radio" name="tensao_5" value="2"> 2</label>
+        <label><input type="radio" name="tensao_5" value="3"> 3</label>
+        <label><input type="radio" name="tensao_5" value="4"> 4</label>
+      </div>
+      <div class="item">
+        <p>6. Sinto que estou Impaciente</p>
+        <label><input type="radio" name="tensao_6" value="0" required> 0</label>
+        <label><input type="radio" name="tensao_6" value="1"> 1</label>
+        <label><input type="radio" name="tensao_6" value="2"> 2</label>
+        <label><input type="radio" name="tensao_6" value="3"> 3</label>
+        <label><input type="radio" name="tensao_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Depressão</legend>
+      
+      <div class="item">
+        <p>7. Sinto-me Triste</p>
+        <label><input type="radio" name="depressao_1" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_1" value="1"> 1</label>
+        <label><input type="radio" name="depressao_1" value="2"> 2</label>
+        <label><input type="radio" name="depressao_1" value="3"> 3</label>
+        <label><input type="radio" name="depressao_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>8. Sinto-me Só</p>
+        <label><input type="radio" name="depressao_2" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_2" value="1"> 1</label>
+        <label><input type="radio" name="depressao_2" value="2"> 2</label>
+        <label><input type="radio" name="depressao_2" value="3"> 3</label>
+        <label><input type="radio" name="depressao_2" value="4"> 4</label>
+      </div>
+
+      <div class="item">
+        <p>9. Sinto-me Deprimido</p>
+        <label><input type="radio" name="depressao_3" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_3" value="1"> 1</label>
+        <label><input type="radio" name="depressao_3" value="2"> 2</label>
+        <label><input type="radio" name="depressao_3" value="3"> 3</label>
+        <label><input type="radio" name="depressao_3" value="4"> 4</label>
+      </div>
+      <div class="item">
+        <p>10. Sinto-me Desanimado</p>
+        <label><input type="radio" name="depressao_4" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_4" value="1"> 1</label>
+        <label><input type="radio" name="depressao_4" value="2"> 2</label>
+        <label><input type="radio" name="depressao_4" value="3"> 3</label>
+        <label><input type="radio" name="depressao_4" value="4"> 4</label>
+      </div>
+      <div class="item">
+        <p>11. Sinto-me Infeliz</p>
+        <label><input type="radio" name="depressao_5" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_5" value="1"> 1</label>
+        <label><input type="radio" name="depressao_5" value="2"> 2</label>
+        <label><input type="radio" name="depressao_5" value="3"> 3</label>
+        <label><input type="radio" name="depressao_5" value="4"> 4</label>
+      </div>
+      <div class="item">
+        <p>12. Sinto-me Desencorajado</p>
+        <label><input type="radio" name="depressao_6" value="0" required> 0</label>
+        <label><input type="radio" name="depressao_6" value="1"> 1</label>
+        <label><input type="radio" name="depressao_6" value="2"> 2</label>
+        <label><input type="radio" name="depressao_6" value="3"> 3</label>
+        <label><input type="radio" name="depressao_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Hostilidade</legend>
+    
+      <div class="item">
+        <p>13. Sinto-me Irritado</p>
+        <label><input type="radio" name="hostilidade_1" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_1" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_1" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_1" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>14. Sinto-me Mal humorado</p>
+        <label><input type="radio" name="hostilidade_2" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_2" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_2" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_2" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_2" value="4"> 4</label>
+      </div>
+      <div class="item">
+        <p>15. Sinto-me Aborrecido</p>
+        <label><input type="radio" name="hostilidade_3" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_3" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_3" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_3" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_3" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>16. Sinto-me Furioso</p>
+        <label><input type="radio" name="hostilidade_4" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_4" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_4" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_4" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_4" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>17. Sinto-me com Mau Feitio</p>
+        <label><input type="radio" name="hostilidade_5" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_5" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_5" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_5" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_5" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>18. Sinto-me Enervado</p>
+        <label><input type="radio" name="hostilidade_6" value="0" required> 0</label>
+        <label><input type="radio" name="hostilidade_6" value="1"> 1</label>
+        <label><input type="radio" name="hostilidade_6" value="2"> 2</label>
+        <label><input type="radio" name="hostilidade_6" value="3"> 3</label>
+        <label><input type="radio" name="hostilidade_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Fadiga</legend>
+    
+      <div class="item">
+        <p>19. Sinto-me Esgotado</p>
+        <label><input type="radio" name="fadiga_1" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_1" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_1" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_1" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>20. Sinto-me Mal Fatigado</p>
+        <label><input type="radio" name="fadiga_2" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_2" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_2" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_2" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_2" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>21. Sinto-me Exausto</p>
+        <label><input type="radio" name="fadiga_3" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_3" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_3" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_3" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_3" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>22. Sinto-me sem Energia</p>
+        <label><input type="radio" name="fadiga_4" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_4" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_4" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_4" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_4" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>23. Sinto-me Estourado</p>
+        <label><input type="radio" name="fadiga_5" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_5" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_5" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_5" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_5" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>24. Sinto-me Cansado</p>
+        <label><input type="radio" name="fadiga_6" value="0" required> 0</label>
+        <label><input type="radio" name="fadiga_6" value="1"> 1</label>
+        <label><input type="radio" name="fadiga_6" value="2"> 2</label>
+        <label><input type="radio" name="fadiga_6" value="3"> 3</label>
+        <label><input type="radio" name="fadiga_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Confusão</legend>
+    
+      <div class="item">
+        <p>25. Sinto-me Confuso</p>
+        <label><input type="radio" name="confusao_1" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_1" value="1"> 1</label>
+        <label><input type="radio" name="confusao_1" value="2"> 2</label>
+        <label><input type="radio" name="confusao_1" value="3"> 3</label>
+        <label><input type="radio" name="confusao_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>26. Sinto-me Embaralhado</p>
+        <label><input type="radio" name="confusao_2" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_2" value="1"> 1</label>
+        <label><input type="radio" name="confusao_2" value="2"> 2</label>
+        <label><input type="radio" name="confusao_2" value="3"> 3</label>
+        <label><input type="radio" name="confusao_2" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>27. Sinto-me Desnorteado</p>
+        <label><input type="radio" name="confusao_3" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_3" value="1"> 1</label>
+        <label><input type="radio" name="confusao_3" value="2"> 2</label>
+        <label><input type="radio" name="confusao_3" value="3"> 3</label>
+        <label><input type="radio" name="confusao_3" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>28. Sinto-me Eficaz</p>
+        <label><input type="radio" name="confusao_4" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_4" value="1"> 1</label>
+        <label><input type="radio" name="confusao_4" value="2"> 2</label>
+        <label><input type="radio" name="confusao_4" value="3"> 3</label>
+        <label><input type="radio" name="confusao_4" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>29. Sinto-me Competente</p>
+        <label><input type="radio" name="confusao_5" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_5" value="1"> 1</label>
+        <label><input type="radio" name="confusao_5" value="2"> 2</label>
+        <label><input type="radio" name="confusao_5" value="3"> 3</label>
+        <label><input type="radio" name="confusao_5" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>30. Sinto-me Inseguro</p>
+        <label><input type="radio" name="confusao_6" value="0" required> 0</label>
+        <label><input type="radio" name="confusao_6" value="1"> 1</label>
+        <label><input type="radio" name="confusao_6" value="2"> 2</label>
+        <label><input type="radio" name="confusao_6" value="3"> 3</label>
+        <label><input type="radio" name="confusao_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Vigor</legend>
+    
+      <div class="item">
+        <p>31. Sinto-me Animado</p>
+        <label><input type="radio" name="vigor_1" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_1" value="1"> 1</label>
+        <label><input type="radio" name="vigor_1" value="2"> 2</label>
+        <label><input type="radio" name="vigor_1" value="3"> 3</label>
+        <label><input type="radio" name="vigor_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>32. Sinto-me Ativo</p>
+        <label><input type="radio" name="vigor_2" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_2" value="1"> 1</label>
+        <label><input type="radio" name="vigor_2" value="2"> 2</label>
+        <label><input type="radio" name="vigor_2" value="3"> 3</label>
+        <label><input type="radio" name="vigor_2" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>33. Sinto-me Enérgico</p>
+        <label><input type="radio" name="vigor_3" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_3" value="1"> 1</label>
+        <label><input type="radio" name="vigor_3" value="2"> 2</label>
+        <label><input type="radio" name="vigor_3" value="3"> 3</label>
+        <label><input type="radio" name="vigor_3" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>34. Sinto-me Cheio de Vida</p>
+        <label><input type="radio" name="vigor_4" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_4" value="1"> 1</label>
+        <label><input type="radio" name="vigor_4" value="2"> 2</label>
+        <label><input type="radio" name="vigor_4" value="3"> 3</label>
+        <label><input type="radio" name="vigor_4" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>35. Sinto-me Cheio de Boa Disposição</p>
+        <label><input type="radio" name="vigor_5" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_5" value="1"> 1</label>
+        <label><input type="radio" name="vigor_5" value="2"> 2</label>
+        <label><input type="radio" name="vigor_5" value="3"> 3</label>
+        <label><input type="radio" name="vigor_5" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>36. Sinto-me Alegre</p>
+        <label><input type="radio" name="vigor_6" value="0" required> 0</label>
+        <label><input type="radio" name="vigor_6" value="1"> 1</label>
+        <label><input type="radio" name="vigor_6" value="2"> 2</label>
+        <label><input type="radio" name="vigor_6" value="3"> 3</label>
+        <label><input type="radio" name="vigor_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Desajuste ao treino</legend>
+    
+      <div class="item">
+        <p>37. Sinto-me Imprestável</p>
+        <label><input type="radio" name="desajuste_1" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_1" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_1" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_1" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_1" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>38. Sinto-me Sem valor</p>
+        <label><input type="radio" name="desajuste_2" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_2" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_2" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_2" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_2" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>39. Sinto-me Miserável</p>
+        <label><input type="radio" name="desajuste_3" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_3" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_3" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_3" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_3" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>40. Sinto-me Inútil</p>
+        <label><input type="radio" name="desajuste_4" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_4" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_4" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_4" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_4" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>41. Sinto-me Culpado</p>
+        <label><input type="radio" name="desajuste_5" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_5" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_5" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_5" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_5" value="4"> 4</label>
+      </div>
+    
+      <div class="item">
+        <p>42. Sinto-me Apático</p>
+        <label><input type="radio" name="desajuste_6" value="0" required> 0</label>
+        <label><input type="radio" name="desajuste_6" value="1"> 1</label>
+        <label><input type="radio" name="desajuste_6" value="2"> 2</label>
+        <label><input type="radio" name="desajuste_6" value="3"> 3</label>
+        <label><input type="radio" name="desajuste_6" value="4"> 4</label>
+      </div>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Dados Adicionais - Opcional</legend>
+      <div class="adicional">
+        <label for="sono">Horas de Sono:</label>
+        <input type="number" id="sono" name="sono" min="0" placeholder="Ex: 8 horas">
+      </div>
+      <div class="adicional">
+        <label for="volume_treino">Volume de Treino:</label>
+        <input type="number" id="volume_treino" name="volume_treino" min="0" placeholder="Ex: 50" >
+      </div>
+      <div class="adicional">
+        <label for="freq_cardiaca_media">Frequência Cardíaca Média (BPM):</label>
+        <input type="number" id="freq_cardiaca_media" name="freq_cardiaca_media" min="0" placeholder="Ex: 80 BPM">
+      </div>
+    </fieldset>
+    <button type="submit">Enviar Respostas</button>
+  </form>
 </body>
 </html>
