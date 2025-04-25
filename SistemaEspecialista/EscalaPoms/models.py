@@ -12,7 +12,8 @@ class Treinador(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=128)
-
+    genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Feminino')])
+    
 class Aluno(models.Model):
     cpf = models.CharField(
         max_length=11,
@@ -23,6 +24,7 @@ class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=128)
+    genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Feminino')])
     
     treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
 

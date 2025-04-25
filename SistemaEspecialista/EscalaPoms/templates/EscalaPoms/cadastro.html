@@ -1,10 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro</title>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
 </head>
 <body>
-  <h1>Você está na tela de Cadastro</h1>
+    <h1>Cadastro de Usuário</h1>
+    
+    {% if messages %}
+      {% for message in messages %}
+         <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Cadastrar</button>
+    </form>
+    
+    <script>
+        // Exemplo básico para esconder o campo de treinador se o tipo escolhido for "treinador"
+        const tipoUsuario = document.getElementById("id_tipo_usuario");
+        const treinadorField = document.getElementById("id_treinador").parentNode;
+        
+        function toggleTreinadorField() {
+            if(tipoUsuario.value === "aluno"){
+                treinadorField.style.display = "block";
+            } else {
+                treinadorField.style.display = "none";
+            }
+        }
+        
+        // Executa ao carregar e sempre que o valor mudar
+        toggleTreinadorField();
+        tipoUsuario.addEventListener("change", toggleTreinadorField);
+    </script>
 </body>
 </html>

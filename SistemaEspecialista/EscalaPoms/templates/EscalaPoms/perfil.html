@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Perfil</title>
+    <meta charset="UTF-8">
+    <title>Perfil do Usuário</title>
 </head>
 <body>
-  <h1>Você está na tela de Perfil</h1>
+    <h1>Perfil do Usuário</h1>
+    
+    <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+    <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    
+    <!-- 
+        Se o usuário for um Aluno, ele terá um treinador associado.
+         É possível exibir essa informação condicionalmente.
+    -->
+    {% if usuario.treinador %}
+        <p><strong>Treinador:</strong> {{ usuario.treinador.nome }}</p>
+    {% endif %}
+    
+    <!-- Você pode adicionar mais informações ou links para editar o perfil -->
 </body>
 </html>
