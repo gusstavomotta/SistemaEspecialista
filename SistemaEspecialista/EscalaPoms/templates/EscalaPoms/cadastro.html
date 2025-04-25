@@ -1,40 +1,93 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de usuário</title>
+  <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
 </head>
 <body>
-    <h1>Cadastro de Usuário</h1>
-    
-    {% if messages %}
-      {% for message in messages %}
-         <p>{{ message }}</p>
-      {% endfor %}
-    {% endif %}
-    
-    <form method="post">
+  <div class="container">
+    <div class="title">Cadastro</div>
+    <div class="content">
+      {% if messages %}
+        <ul class="messages">
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <form method="post" action="{% url 'cadastro' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Cadastrar</button>
-    </form>
-    
-    <script>
-        // Exemplo básico para esconder o campo de treinador se o tipo escolhido for "treinador"
-        const tipoUsuario = document.getElementById("id_tipo_usuario");
-        const treinadorField = document.getElementById("id_treinador").parentNode;
-        
-        function toggleTreinadorField() {
-            if(tipoUsuario.value === "aluno"){
-                treinadorField.style.display = "block";
-            } else {
-                treinadorField.style.display = "none";
-            }
-        }
-        
-        // Executa ao carregar e sempre que o valor mudar
-        toggleTreinadorField();
-        tipoUsuario.addEventListener("change", toggleTreinadorField);
-    </script>
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">Nome completo</span>
+            {{ form.nome }}
+            {{ form.nome.errors }}
+          </div>
+          <div class="input-box">
+            <span class="details">CPF</span>
+            {{ form.cpf }}
+            {{ form.cpf.errors }}
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            {{ form.email }}
+            {{ form.email.errors }}
+          </div>
+          <div class="input-box">
+            <span class="details">Número de telefone</span>
+            {{ form.num_telefone }}
+            {{ form.num_telefone.errors }}
+          </div>
+          <div class="input-box">
+            <span class="details">Senha</span>
+            {{ form.senha }}
+            {{ form.senha.errors }}
+          </div>
+        </div>
+        <div class="gender-details">
+          <span class="gender-title">Gênero</span>
+          <div class="category">
+            {{ form.genero }}
+            {{ form.genero.errors }}
+          </div>
+        </div>
+        <div class="usertype-details">
+          <span class="usertype-title">Função</span>
+          <div class="category">
+            {{ form.tipo_usuario }}
+            {{ form.tipo_usuario.errors }}
+          </div>
+        </div>
+        <div class="input-box" id="treinador-field">
+          <span class="details">CPF do treinador</span>
+          {{ form.treinador }}
+          {{ form.treinador.errors }}
+        </div>
+        <div class="button">
+          <input type="submit" value="Cadastrar">
+        </div>
+        <div class="login-link">
+          <p>Já possui uma conta? <a href="{% url 'login' %}">Faça login</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    const tipoUsuario = document.getElementById("id_tipo_usuario");
+    const treinadorField = document.getElementById("treinador-field");
+    function toggleTreinadorField() {
+      if (tipoUsuario.value === "aluno") {
+        treinadorField.style.display = "block";
+      } else {
+        treinadorField.style.display = "none";
+      }
+    }
+    toggleTreinadorField();
+    tipoUsuario.addEventListener("change", toggleTreinadorField);
+  </script>
 </body>
 </html>
