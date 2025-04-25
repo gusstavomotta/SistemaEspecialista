@@ -22,7 +22,8 @@ class CadastroForm(forms.Form):
     senha = forms.CharField(widget=forms.PasswordInput)
     tipo_usuario = forms.ChoiceField(choices=TIPO_CHOICES, label="Tipo de usuário")
     genero = forms.ChoiceField(choices=TIPO_GENEROS, label="Gênero", required=False, initial='masculino', help_text="Selecione o gênero")
-    
+    num_telefone = forms.CharField(max_length=100)
+
     # Campo extra para quando o usuário for aluno
     treinador = forms.CharField(
         max_length=11,
@@ -53,13 +54,17 @@ class CadastroForm(forms.Form):
         email = self.cleaned_data['email']
         senha = make_password(self.cleaned_data['senha'])
         tipo = self.cleaned_data['tipo_usuario']
+        genero = self.cleaned_data['genero']
+        num_telefone = self.cleaned_data.get('num_telefone')
 
         if tipo == 'treinador':
             usuario = Treinador.objects.create(
                 cpf=cpf,
                 nome=nome,
                 email=email,
-                senha=senha
+                senha=senha,
+                genero=genero,
+                num_telefone=num_telefone
             )
         else:
             t_cpf = self.cleaned_data['treinador']
@@ -73,6 +78,8 @@ class CadastroForm(forms.Form):
                 nome=nome,
                 email=email,
                 senha=senha,
-                treinador=treinador_obj
+                treinador=treinador_obj,
+                genero=genero,
+                num_telefone=num_telefone
             )
         return usuario

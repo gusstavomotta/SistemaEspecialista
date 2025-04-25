@@ -13,6 +13,7 @@ class Treinador(models.Model):
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=128)
     genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Feminino')])
+    num_telefone = models.CharField(null=True, blank=True, help_text="Número de telefone")
     
 class Aluno(models.Model):
     cpf = models.CharField(
@@ -25,6 +26,8 @@ class Aluno(models.Model):
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=128)
     genero = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Feminino')])
+    num_telefone = models.CharField(null=True, blank=True, help_text="Número de telefone")
+
     
     treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
 
