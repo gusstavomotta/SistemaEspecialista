@@ -8,6 +8,11 @@ class CadastroForm(forms.Form):
         ('aluno', 'Aluno'),
     )
     
+    TIPO_GENEROS =  (
+            ('masculino', 'Masculino'),
+            ('feminino', 'Feminino'),
+    )
+    
     cpf = forms.CharField(
         max_length=11,
         help_text="Digite somente os números do CPF"
@@ -16,6 +21,7 @@ class CadastroForm(forms.Form):
     email = forms.EmailField()
     senha = forms.CharField(widget=forms.PasswordInput)
     tipo_usuario = forms.ChoiceField(choices=TIPO_CHOICES, label="Tipo de usuário")
+    genero = forms.ChoiceField(choices=TIPO_GENEROS, label="Gênero", required=False, initial='masculino', help_text="Selecione o gênero")
     
     # Campo extra para quando o usuário for aluno
     treinador = forms.CharField(

@@ -1,7 +1,10 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
     <title>Login</title>
 </head>
 <body>
@@ -32,6 +35,10 @@
 
             <button type="submit">Entrar</button>
         </form>
+
+        <div class="signup-link">
+            <p>Não tem uma conta? <a href="{% url 'cadastro' %}">Cadastre-se</a></p>
+        </div>
     </div>
 </body>
 </html>
