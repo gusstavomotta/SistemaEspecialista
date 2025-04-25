@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -6,5 +8,8 @@
 </head>
 <body>
   <h1>Você está na tela do Dashboard</h1>
+  <a href="{% url 'perfil' %}" class="btn-back">Perfil</a>
+  <a href="{% url 'escala' %}" class="btn-back">Escala</a>
+  <a href="{% url 'relatorio' %}" class="btn-back">Relatório</a>
 </body>
 </html>
