@@ -48,25 +48,41 @@
             {{ form.senha.errors }}
           </div>
         </div>
+
         <div class="gender-details">
           <span class="gender-title">Gênero</span>
+          <input type="radio" name="genero" id="dot-1" value="masculino" {% if form.genero.value == "masculino" %}checked{% endif %}>
+          <input type="radio" name="genero" id="dot-2" value="feminino" {% if form.genero.value == "feminino" %}checked{% endif %}>
           <div class="category">
-            {{ form.genero }}
-            {{ form.genero.errors }}
+            <label for="dot-1"><span class="dot one"></span><span class="gender">Masculino</span></label>
+            <label for="dot-2"><span class="dot two"></span><span class="gender">Feminino</span></label>
           </div>
+          {{ form.genero.errors }}
         </div>
+
         <div class="usertype-details">
           <span class="usertype-title">Função</span>
+          <input type="radio" name="tipo_usuario" id="dot-3" value="aluno" {% if form.tipo_usuario.value == "aluno" %}checked{% endif %}>
+          <input type="radio" name="tipo_usuario" id="dot-4" value="treinador" {% if form.tipo_usuario.value == "treinador" %}checked{% endif %}>
           <div class="category">
-            {{ form.tipo_usuario }}
-            {{ form.tipo_usuario.errors }}
+            <label for="dot-3">
+              <span class="dot three"></span>
+              <span class="gender">Aluno</span>
+            </label>
+            <label for="dot-4">
+              <span class="dot four"></span>
+              <span class="gender">Treinador</span>
+            </label>
           </div>
+          {{ form.tipo_usuario.errors }}
         </div>
+
         <div class="input-box" id="treinador-field">
           <span class="details">CPF do treinador</span>
           {{ form.treinador }}
           {{ form.treinador.errors }}
         </div>
+
         <div class="button">
           <input type="submit" value="Cadastrar">
         </div>
@@ -77,17 +93,20 @@
     </div>
   </div>
   <script>
-    const tipoUsuario = document.getElementById("id_tipo_usuario");
+    const radios = document.querySelectorAll('input[name="tipo_usuario"]');
     const treinadorField = document.getElementById("treinador-field");
+  
     function toggleTreinadorField() {
-      if (tipoUsuario.value === "aluno") {
+      const selecionado = document.querySelector('input[name="tipo_usuario"]:checked');
+      if (selecionado && selecionado.value === "aluno") {
         treinadorField.style.display = "block";
       } else {
         treinadorField.style.display = "none";
       }
     }
+
     toggleTreinadorField();
-    tipoUsuario.addEventListener("change", toggleTreinadorField);
+    radios.forEach(radio => radio.addEventListener("change", toggleTreinadorField));
   </script>
 </body>
 </html>
