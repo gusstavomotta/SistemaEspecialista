@@ -1,16 +1,12 @@
-from django.contrib.auth.hashers import check_password
+import datetime
+from .backends import *
+from .models import *
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CadastroForm
-from .models import *
-import datetime
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout as auth_logout
-from .decorators import treinador_required, aluno_required
-#Todas as funções verificam se o método é post get
-#Caso for post realiza o processamento adequado
-#Caso for get renderiza a página correspondente
 
 def login_view(request):
     if request.method == 'POST':
@@ -58,7 +54,7 @@ def perfil(request):
 @login_required
 def escala(request):
     if request.method == 'POST':
-        cpf = request.session.get('cpf_usuario')
+        cpf = request.user.username
         try:
             aluno = Aluno.objects.get(cpf=cpf)
         except Aluno.DoesNotExist:
@@ -113,6 +109,12 @@ def escala(request):
         
     return render(request, 'EscalaPoms/escala.html')
 
+@login_required
+@treinador_required
+def meus_alunos(request):
+    return render (request, 'EscalaPoms/meus_alunos.html')
+    
+    return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos})
 @login_required
 def dashboard(request):
     #aqui serão feitos os cálculos para gerar os gráficos e as informações que serão mostradas no dashboard

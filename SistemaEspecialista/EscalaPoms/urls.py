@@ -10,4 +10,6 @@ urlpatterns = [
     path('escala/', escala, name='escala'),
     path('perfil/', perfil, name='perfil'),
     path('relatorio/', relatorio, name='relatorio'),
+    path('meus_alunos/', meus_alunos, name='meus_alunos'),
+
 ]
