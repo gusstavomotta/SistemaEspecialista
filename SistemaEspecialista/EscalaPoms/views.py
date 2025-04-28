@@ -4,41 +4,30 @@ from django.contrib import messages
 from .forms import CadastroForm
 from .models import *
 import datetime
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as auth_logout
 
 #Todas as funções verificam se o método é post get
 #Caso for post realiza o processamento adequado
 #Caso for get renderiza a página correspondente
 
-def login(request):
-    
+def login_view(request):
     if request.method == 'POST':
         cpf = request.POST.get('cpf')
         senha = request.POST.get('senha')
-        
-        try:
-            usuario = Treinador.objects.get(cpf=cpf)
-            tipo_usuario = 'treinador'
-        
-        except Treinador.DoesNotExist:
-            try:
-                usuario = Aluno.objects.get(cpf=cpf)
-                tipo_usuario = 'aluno'
-                
-            except Aluno.DoesNotExist:
-                messages.error(request, "Usuário não encontrado.")
-                return render(request, 'EscalaPoms/login.html')
-        
-        if not check_password(senha, usuario.senha):
-            messages.error(request, "Senha incorreta.")
-            return render(request, 'EscalaPoms/login.html')
-        
-        request.session['cpf_usuario'] = usuario.cpf
-        request.session['tipo_usuario'] = tipo_usuario
-        
-        messages.success(request, "Login efetuado com sucesso!")
-        return redirect('dashboard')
+        user = authenticate(request, username=cpf, password=senha)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login efetuado com sucesso!")
+            return redirect('dashboard')
+        else:
+            messages.error(request, "CPF ou senha incorretos.")
+    return render(request, 'EscalaPoms/login.html')
 
-    return render(request,'EscalaPoms/login.html')
+def logout_view(request):
+    auth_logout(request)
+    return redirect('login')
 
 def cadastro(request):
     if request.method == 'POST':
@@ -57,24 +46,16 @@ def cadastro(request):
 
     return render(request, 'EscalaPoms/cadastro.html', {'form': form})
 
-
+@login_required
 def perfil(request):
-    
-    cpf = request.session.get('cpf_usuario')
-    tipo_usuario = request.session.get('tipo_usuario')
-    
-    if tipo_usuario == 'treinador':
-        usuario = Treinador.objects.get(cpf=cpf)
-    
-    elif tipo_usuario == 'aluno':
-        usuario = Aluno.objects.get(cpf=cpf)
-    
-    dados_usuario = {
-        'usuario': usuario,
-    }
-    return render(request, 'EscalaPoms/perfil.html', dados_usuario)
+    cpf = request.user.username
+    try:
+        perfil = Treinador.objects.get(cpf=cpf)
+    except Treinador.DoesNotExist:
+        perfil = Aluno.objects.get(cpf=cpf)
+    return render(request, 'EscalaPoms/perfil.html', {'usuario': perfil})
 
-
+@login_required
 def escala(request):
     if request.method == 'POST':
         cpf = request.session.get('cpf_usuario')
@@ -132,10 +113,12 @@ def escala(request):
         
     return render(request, 'EscalaPoms/escala.html')
 
+@login_required
 def dashboard(request):
     #aqui serão feitos os cálculos para gerar os gráficos e as informações que serão mostradas no dashboard
     return render(request, 'EscalaPoms/dashboard.html')
 
+@login_required
 def relatorio(request):
     #aqui será feito o processamento para gerar os relatórios, somas e gráficos
     return render(request, 'EscalaPoms/relatorio.html')
