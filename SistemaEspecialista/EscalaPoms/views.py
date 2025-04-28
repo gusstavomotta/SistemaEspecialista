@@ -7,7 +7,7 @@ import datetime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
-
+from .decorators import treinador_required, aluno_required
 #Todas as funções verificam se o método é post get
 #Caso for post realiza o processamento adequado
 #Caso for get renderiza a página correspondente
