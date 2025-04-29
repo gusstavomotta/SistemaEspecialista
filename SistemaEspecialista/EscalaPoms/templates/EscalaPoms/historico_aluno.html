@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Histórico do Aluno</title>
+</head>
+<body>
+  <h1>Histórico de Escalas de {{ aluno.nome }}</h1>
+  <p><strong>Email:</strong> {{ aluno.email }}</p>
+  <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+
+  <h2>Escalas Registradas</h2>
+  <ul>
+    {% for escala in escalas %}
+      <li>
+        <strong>Data:</strong> {{ escala.data }} <br>
+        <strong>Soma Tensão:</strong> {{ escala.somaTensao }} <br>
+        <strong>Soma Depressão:</strong> {{ escala.somaDepressao }} <br>
+        <strong>Soma Hostilidade:</strong> {{ escala.somaHostilidade }} <br>
+        <strong>Soma Fadiga:</strong> {{ escala.somaFadiga }} <br>
+        <strong>Soma Confusão:</strong> {{ escala.somaConfusao }} <br>
+        <strong>Soma Vigor:</strong> {{ escala.somaVigor }} <br>
+        <strong>Soma Desajuste:</strong> {{ escala.somaDesajuste }} <br>
+        <strong>PTH:</strong> {{ escala.pth }} <br>
+        <strong>Sono:</strong> {{ escala.sono }} <br>
+        <strong>Volume de Treino:</strong> {{ escala.volume_treino }} <br>
+        <strong>Frequência Cardíaca Média:</strong> {{ escala.freq_cardiaca_media }} <br>
+        <br>
+      </li>
+    {% empty %}
+      <li>Nenhuma escala registrada para este aluno.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'meus_alunos' %}" class="btn-back">Voltar para Meus Alunos</a>
+</body>
+</html>

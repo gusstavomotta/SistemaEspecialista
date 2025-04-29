@@ -41,7 +41,7 @@ class EscalaPoms(models.Model):
     somaConfusao = models.IntegerField()
     somaVigor = models.IntegerField()
     somaDesajuste = models.IntegerField()
-    somaTotal = models.IntegerField()
+    pth = models.IntegerField()
     
     sono = models.IntegerField(null=True, blank=True, help_text="Horas de sono")
     volume_treino = models.IntegerField(null=True, blank=True, help_text="Volume de treino (ex: carga, repetições ou outro critério)")

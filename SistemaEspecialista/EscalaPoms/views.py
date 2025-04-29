@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CadastroForm
+from django.shortcuts import reverse
 
 def login_view(request):
     if request.method == 'POST':
@@ -16,14 +17,18 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Login efetuado com sucesso!")
-            return redirect('dashboard')
+
+            # Verifica se o usuário é um treinador ou aluno baseado nos modelos do banco de dados
+            if Treinador.objects.filter(cpf=user.username).exists():
+                return redirect('home_treinador')
+            elif Aluno.objects.filter(cpf=user.username).exists():
+                return redirect('home_aluno')
+            else:
+                messages.error(request, "Usuário não possui uma função atribuída.")
+                return redirect('login')
         else:
             messages.error(request, "CPF ou senha incorretos.")
     return render(request, 'EscalaPoms/login.html')
-
-def logout_view(request):
-    auth_logout(request)
-    return redirect('login')
 
 def cadastro(request):
     if request.method == 'POST':
@@ -42,14 +47,21 @@ def cadastro(request):
 
     return render(request, 'EscalaPoms/cadastro.html', {'form': form})
 
+@aluno_required
 @login_required
-def perfil(request):
-    cpf = request.user.username
-    try:
-        perfil = Treinador.objects.get(cpf=cpf)
-    except Treinador.DoesNotExist:
-        perfil = Aluno.objects.get(cpf=cpf)
-    return render(request, 'EscalaPoms/perfil.html', {'usuario': perfil})
+def home_aluno(request):
+    
+    return render(request, 'EscalaPoms/home_aluno.html')
+
+@treinador_required
+@login_required
+def home_treinador(request):
+    
+    return render(request, 'EscalaPoms/home_treinador.html')
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('login')
 
 @login_required
 def escala(request):
@@ -69,7 +81,7 @@ def escala(request):
             somaConfusao = sum([int(request.POST.get(f'confusao_{i}')) for i in range(1, 6)])
             somaVigor = sum([int(request.POST.get(f'vigor_{i}')) for i in range(1, 7)])
             somaDesajuste = sum([int(request.POST.get(f'desajuste_{i}')) for i in range(1, 6)])
-            somaTotal = somaTensao + somaDepressao + somaHostilidade + somaFadiga + somaConfusao + somaVigor + somaDesajuste
+            pth = ((somaTensao + somaDepressao + somaHostilidade + somaFadiga + somaConfusao) - somaVigor )+ 100
             
             sono = request.POST.get('sono')
             volume_treino = request.POST.get('volume_treino')
@@ -91,7 +103,7 @@ def escala(request):
                     somaConfusao=somaConfusao,
                     somaVigor=somaVigor,
                     somaDesajuste=somaDesajuste,
-                    somaTotal=somaTotal,
+                    pth=pth,
                     sono=sono,
                     volume_treino=volume_treino,
                     freq_cardiaca_media=freq_cardiaca_media
@@ -109,18 +121,51 @@ def escala(request):
         
     return render(request, 'EscalaPoms/escala.html')
 
+
 @login_required
 @treinador_required
 def meus_alunos(request):
-    return render (request, 'EscalaPoms/meus_alunos.html')
-    
+    cpf = request.user.username
+    try:
+        treinador = Treinador.objects.get(cpf=cpf)
+    except Treinador.DoesNotExist:
+        messages.error(request, "Treinador não encontrado.")
+        return redirect('login')
+    alunos = Aluno.objects.filter(treinador=treinador)  
     return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos})
+
+
 @login_required
-def dashboard(request):
-    #aqui serão feitos os cálculos para gerar os gráficos e as informações que serão mostradas no dashboard
-    return render(request, 'EscalaPoms/dashboard.html')
+@treinador_required
+def historico_aluno(request, aluno_cpf):
+    try:
+        aluno = Aluno.objects.get(cpf=aluno_cpf)
+        
+        if aluno.treinador.cpf != request.user.username:
+            messages.error(request, "Você não tem permissão para acessar as escalas deste aluno.")
+            return redirect('meus_alunos')
+        
+        escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('-data')
+        return render(request, 'EscalaPoms/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
+    except Aluno.DoesNotExist:
+        messages.error(request, "Aluno não encontrado.")
+        return redirect('meus_alunos')
+
+@login_required
+def perfil(request):
+    cpf = request.user.username
+    try:
+        perfil = Treinador.objects.get(cpf=cpf)
+        dashboard_url = reverse('home_treinador')
+    except Treinador.DoesNotExist:
+        perfil = Aluno.objects.get(cpf=cpf)
+        dashboard_url = reverse('home_aluno')
+    return render(request, 'EscalaPoms/perfil.html', {'usuario': perfil, 'dashboard_url': dashboard_url})
+
 
 @login_required
 def relatorio(request):
-    #aqui será feito o processamento para gerar os relatórios, somas e gráficos
     return render(request, 'EscalaPoms/relatorio.html')
+
+def esqueceu_senha(request):
+    return render(request, 'EscalaPoms/esqueceu_senha.html')

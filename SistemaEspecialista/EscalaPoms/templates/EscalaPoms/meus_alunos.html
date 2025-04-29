@@ -1,17 +1,30 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>TELA MEU ALUNOS</title>
+  <title>TELA MEUS ALUNOS</title>
 </head>
 <body>
-  <h1>Você está na tela do Meus alunos</h1>
-  <a href="{% url 'perfil' %}" class="btn-back">Perfil</a>
-  <a href="{% url 'escala' %}" class="btn-back">Escala</a>
-  <a href="{% url 'relatorio' %}" class="btn-back">Relatório</a>
-  <a href="{% url 'logout' %}" class="btn-back">Logout</a>
+  <h1>Você está na tela do Meus Alunos</h1>
 
+  <h2>Alunos</h2>
+  <ul>
+    {% for aluno in alunos %}
+      <li>
+        <strong>Nome:</strong> {{ aluno.nome }} - <strong>Email:</strong> {{ aluno.email }} <br>
+        <a href="{% url 'historico_aluno' aluno.cpf %}">Ver Histórico</a>
+      </li>
+    {% empty %}
+      <li>Nenhum aluno encontrado.</li>
+    {% endfor %}
+  </ul>
+
+  <div>
+    <a href="{% url 'perfil' %}" class="btn-back">Perfil</a>
+    <a href="{% url 'escala' %}" class="btn-back">Escala</a>
+    <a href="{% url 'relatorio' %}" class="btn-back">Relatório</a>
+    <a href="{% url 'logout' %}" class="btn-back">Logout</a>
+  </div>
 </body>
 </html>
