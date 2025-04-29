@@ -5,108 +5,225 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cadastro de usuário</title>
-  <link rel="stylesheet" href="{% static 'css/colors.css' %}">
-  <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <!-- Seu CSS customizado -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
-  <div class="container">
-    <div class="title">Cadastro</div>
-    <div class="content">
-      {% if messages %}
-        <ul class="messages">
-          {% for msg in messages %}
-            <li>{{ msg }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-      <form method="post" action="{% url 'cadastro' %}">
-        {% csrf_token %}
-        <div class="user-details">
-          <div class="input-box">
-            <span class="details">Nome completo</span>
-            {{ form.nome }}
-            {{ form.nome.errors }}
-          </div>
-          <div class="input-box">
-            <span class="details">CPF</span>
-            {{ form.cpf }}
-            {{ form.cpf.errors }}
-          </div>
-          <div class="input-box">
-            <span class="details">Email</span>
-            {{ form.email }}
-            {{ form.email.errors }}
-          </div>
-          <div class="input-box">
-            <span class="details">Número de telefone</span>
-            {{ form.num_telefone }}
-            {{ form.num_telefone.errors }}
-          </div>
-          <div class="input-box">
-            <span class="details">Senha</span>
-            {{ form.senha }}
-            {{ form.senha.errors }}
-          </div>
-        </div>
 
-        <div class="gender-details">
-          <span class="gender-title">Gênero</span>
-          <input type="radio" name="genero" id="dot-1" value="masculino" {% if form.genero.value == "masculino" %}checked{% endif %}>
-          <input type="radio" name="genero" id="dot-2" value="feminino" {% if form.genero.value == "feminino" %}checked{% endif %}>
-          <div class="category">
-            <label for="dot-1"><span class="dot one"></span><span class="gender">Masculino</span></label>
-            <label for="dot-2"><span class="dot two"></span><span class="gender">Feminino</span></label>
+  <section class="gradient-form d-flex align-items-center min-vh-100">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-xl-10">
+          <div class="card border-0 shadow-lg rounded-4 h-100">
+            <div class="row g-0 h-100">
+
+              <!-- Coluna do formulário -->
+              <div class="col-lg-6 d-flex align-items-center">
+                <div class="card-body p-md-5 mx-md-4 d-flex flex-column justify-content-center">
+
+                  <div class="text-center mb-4">
+                    <h2 class="fw-bold display-6">Cadastro</h2>
+                  </div>
+
+                  <form method="post" action="{% url 'cadastro' %}">
+                    {% csrf_token %}
+
+                    {% if messages %}
+                      <div class="alert alert-warning rounded-3">
+                        {% for message in messages %}
+                          <div>{{ message }}</div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                      <div class="col-12">
+                        <input
+                          type="text"
+                          name="nome"
+                          value="{{ form.nome.value|default_if_none:'' }}"
+                          class="form-control form-control-lg {% if form.nome.errors %}is-invalid{% endif %}"
+                          placeholder="Nome completo"
+                          required
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.nome.errors|first }}
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <input
+                          type="text"
+                          name="cpf"
+                          value="{{ form.cpf.value|default_if_none:'' }}"
+                          class="form-control form-control-lg {% if form.cpf.errors %}is-invalid{% endif %}"
+                          placeholder="CPF"
+                          required
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.cpf.errors|first }}
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <input
+                          type="email"
+                          name="email"
+                          value="{{ form.email.value|default_if_none:'' }}"
+                          class="form-control form-control-lg {% if form.email.errors %}is-invalid{% endif %}"
+                          placeholder="E-mail"
+                          required
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.email.errors|first }}
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <input
+                          type="tel"
+                          name="num_telefone"
+                          value="{{ form.num_telefone.value|default_if_none:'' }}"
+                          class="form-control form-control-lg {% if form.num_telefone.errors %}is-invalid{% endif %}"
+                          placeholder="Telefone (opcional)"
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.num_telefone.errors|first }}
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <input
+                          type="password"
+                          name="senha"
+                          class="form-control form-control-lg {% if form.senha.errors %}is-invalid{% endif %}"
+                          placeholder="Senha"
+                          required
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.senha.errors|first }}
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Gênero -->
+                    <div class="mt-4">
+                      <label class="form-label me-3">Gênero:</label>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="genero"
+                          id="genero-m"
+                          value="masculino"
+                          {% if form.genero.value == "masculino" %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="genero-m">Masculino</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="genero"
+                          id="genero-f"
+                          value="feminino"
+                          {% if form.genero.value == "feminino" %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="genero-f">Feminino</label>
+                      </div>
+                      <div class="text-danger small">{{ form.genero.errors|first }}</div>
+                    </div>
+
+                    <!-- Função -->
+                    <div class="mt-3">
+                      <label class="form-label me-3">Função:</label>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="tipo_usuario"
+                          id="tipo-aluno"
+                          value="aluno"
+                          {% if form.tipo_usuario.value == "aluno" %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="tipo-aluno">Aluno</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="tipo_usuario"
+                          id="tipo-treinador"
+                          value="treinador"
+                          {% if form.tipo_usuario.value == "treinador" %}checked{% endif %}
+                        >
+                        <label class="form-check-label" for="tipo-treinador">Treinador</label>
+                      </div>
+                      <div class="text-danger small">{{ form.tipo_usuario.errors|first }}</div>
+                    </div>
+
+                    <!-- CPF do treinador (toggle) -->
+                    <div class="mt-3" id="treinador-field">
+                      <input
+                        type="text"
+                        name="treinador"
+                        value="{{ form.treinador.value|default_if_none:'' }}"
+                        class="form-control form-control-lg {% if form.treinador.errors %}is-invalid{% endif %}"
+                        placeholder="CPF do treinador"
+                      >
+                      <div class="invalid-feedback">
+                        {{ form.treinador.errors|first }}
+                      </div>
+                    </div>
+
+                    <!-- Botão de cadastro -->
+                    <div class="text-center mt-4">
+                      <button type="submit" class="btn btn-lg gradient-custom-2 w-100">
+                        Cadastrar
+                      </button>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3">
+                      <p class="mb-0 me-2">Já possui conta?</p>
+                      <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm">
+                        Login
+                      </a>
+                    </div>
+
+                  </form>
+
+                </div>
+              </div>
+
+              <!-- Coluna lateral -->
+              <div class="col-lg-6 lateral-column position-relative d-flex align-items-center rounded-end-4">
+                <div class="overlay"></div>
+                <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center position-relative">
+                  <h4 class="fw-bold text-nowrap">Transforme emoções em movimento</h4>
+                </div>
+              </div>
+
+            </div>
           </div>
-          {{ form.genero.errors }}
         </div>
-
-        <div class="usertype-details">
-          <span class="usertype-title">Função</span>
-          <input type="radio" name="tipo_usuario" id="dot-3" value="aluno" {% if form.tipo_usuario.value == "aluno" %}checked{% endif %}>
-          <input type="radio" name="tipo_usuario" id="dot-4" value="treinador" {% if form.tipo_usuario.value == "treinador" %}checked{% endif %}>
-          <div class="category">
-            <label for="dot-3">
-              <span class="dot three"></span>
-              <span class="gender">Aluno</span>
-            </label>
-            <label for="dot-4">
-              <span class="dot four"></span>
-              <span class="gender">Treinador</span>
-            </label>
-          </div>
-          {{ form.tipo_usuario.errors }}
-        </div>
-
-        <div class="input-box" id="treinador-field">
-          <span class="details">CPF do treinador</span>
-          {{ form.treinador }}
-          {{ form.treinador.errors }}
-        </div>
-
-        <div class="button">
-          <input type="submit" value="Cadastrar">
-        </div>
-        <div class="login-link">
-          <p>Já possui uma conta? <a href="{% url 'login' %}">Faça login</a></p>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </section>
+
   <script>
     const radios = document.querySelectorAll('input[name="tipo_usuario"]');
     const treinadorField = document.getElementById("treinador-field");
-  
+
     function toggleTreinadorField() {
-      const selecionado = document.querySelector('input[name="tipo_usuario"]:checked');
-      if (selecionado && selecionado.value === "aluno") {
-        treinadorField.style.display = "block";
-      } else {
-        treinadorField.style.display = "none";
-      }
+      const sel = document.querySelector('input[name="tipo_usuario"]:checked');
+      treinadorField.style.display = (sel && sel.value === "aluno") ? 'block' : 'none';
     }
 
-    toggleTreinadorField();
     radios.forEach(radio => radio.addEventListener("change", toggleTreinadorField));
+    toggleTreinadorField();
   </script>
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

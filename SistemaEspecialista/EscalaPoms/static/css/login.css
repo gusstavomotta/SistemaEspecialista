@@ -1,120 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+/* static/css/login.css */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
+/* Reset de fonte e corpo */
 body {
-  min-height: 100vh;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: #f8f9fa;
 }
 
-.login-container {
-  background-color: #fff;
-  max-width: 400px;
-  width: 100%;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+/* Fundo claro da seção */
+.gradient-form {
+  background-color: #dcf1e1;
 }
 
-.login-container h1 {
-  font-size: 26px;
-  text-align: center;
-  margin-bottom: 25px;
+/* Botão com cor sólida esportiva e efeito hover */
+.gradient-custom-2 {
+  background-color: #57cc99;
+  color: #fff;
+  border: none;
+  border-radius: .75rem;
+  transition: transform .2s, filter .2s;
+}
+.gradient-custom-2:hover,
+.gradient-custom-2:focus {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+/* Card mais suave */
+.card {
+  border-radius: 1rem;
+}
+.shadow-lg {
+  box-shadow: 0 1rem 2rem rgba(0,0,0,0.15) !important;
+}
+
+/* Inputs arredondados */
+.form-control-lg {
+  border-radius: .5rem;
+  padding: 1rem;
+}
+
+/* Lateral com imagem de fundo */
+.lateral-column {
+  background-image: url('../images/teste.jpg');
+  background-size: cover;
+  background-position: center;
   position: relative;
+  overflow: hidden;
 }
 
-.login-container h1::after {
+/* Overlay semitransparente para realçar texto */
+.lateral-column .overlay {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: -10px;
-  transform: translateX(-50%);
-  height: 3px;
-  width: 40px;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.form-group {
-  margin-bottom: 20px;
+/* Garante altura total */
+.row.g-0.h-100 {
+  height: 100%;
 }
 
-.form-group label {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  height: 45px;
-  padding: 10px 15px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-bottom: 2px solid #ccc;
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-  border-color: #9b59b6;
-  outline: none;
-}
-
-button[type="submit"] {
-  width: 100%;
-  height: 45px;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: 500;
-  color: #fff;
-  cursor: pointer;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-  transition: background 0.3s ease;
-}
-
-button[type="submit"]:hover {
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
-}
-
-.messages {
-  background-color: #fdecea;
-  color: #e74c3c;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.signup-link {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 14px;
-}
-
-.signup-link a {
-  color: #9b59b6;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.signup-link a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 400px) {
-  .login-container {
-    padding: 20px;
+/* Responsividade: força altura total em telas médias para cima */
+/* força altura total em md+ */
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+  .row.g-0.h-100 {
+    height: 100%;
   }
 }
