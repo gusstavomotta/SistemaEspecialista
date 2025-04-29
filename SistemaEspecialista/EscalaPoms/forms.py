@@ -24,7 +24,6 @@ class CadastroForm(forms.Form):
     genero = forms.ChoiceField(choices=TIPO_GENEROS, label="Gênero", required=False, initial='masculino', help_text="Selecione o gênero")
     num_telefone = forms.CharField(max_length=100)
 
-    # Campo extra para quando o usuário for aluno
     treinador = forms.CharField(
         max_length=11,
         required=False,
@@ -37,18 +36,13 @@ class CadastroForm(forms.Form):
         tipo = cleaned_data.get('tipo_usuario')
         treinador_cpf = cleaned_data.get('treinador')
         
-        # Se o tipo for aluno, é obrigatório informar o CPF do treinador.
         if tipo == 'aluno' and not treinador_cpf:
             raise forms.ValidationError("Para cadastro de aluno, informe o CPF do treinador.")
         
         return cleaned_data
 
     def save(self):
-        """
-        Salva o registro dependendo do tipo de usuário selecionado.
-        Para o treinador, cria a instância da model Treinador.
-        Para o aluno, busca o treinador informado e cria a instância da model Aluno.
-        """
+
         cpf = self.cleaned_data['cpf']
         nome = self.cleaned_data['nome']
         email = self.cleaned_data['email']
@@ -68,7 +62,6 @@ class CadastroForm(forms.Form):
             )
         else:
             t_cpf = self.cleaned_data['treinador']
-            # Procura o treinador informado
             try:
                 treinador_obj = Treinador.objects.get(cpf=t_cpf)
             except Treinador.DoesNotExist:

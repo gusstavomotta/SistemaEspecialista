@@ -6,18 +6,14 @@ from .models import Treinador, Aluno
 class CPFBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         cpf = username
-        # tenta Treinador
         try:
             usuario = Treinador.objects.get(cpf=cpf)
         except Treinador.DoesNotExist:
-            # tenta Aluno
             try:
                 usuario = Aluno.objects.get(cpf=cpf)
             except Aluno.DoesNotExist:
                 return None
-        # verifica hash
         if check_password(password, usuario.senha):
-            # mapeia para um User do Django (ou cria um “virtual”)
             user, created = User.objects.get_or_create(username=cpf)
             return user
         return None
@@ -37,7 +33,7 @@ def treinador_required(view_func):
         if Treinador.objects.filter(cpf=cpf).exists():
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('dashboard')  # Ou outra página de erro
+            return redirect('dashboard')  
     return _wrapped_view
 
 def aluno_required(view_func):
@@ -46,5 +42,5 @@ def aluno_required(view_func):
         if Aluno.objects.filter(cpf=cpf).exists():
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('dashboard')  # Ou outra página de erro
+            return redirect('dashboard') 
     return _wrapped_view

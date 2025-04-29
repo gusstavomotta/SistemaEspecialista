@@ -18,7 +18,6 @@ def login_view(request):
             login(request, user)
             messages.success(request, "Login efetuado com sucesso!")
 
-            # Verifica se o usuário é um treinador ou aluno baseado nos modelos do banco de dados
             if Treinador.objects.filter(cpf=user.username).exists():
                 return redirect('home_treinador')
             elif Aluno.objects.filter(cpf=user.username).exists():
@@ -74,20 +73,19 @@ def escala(request):
             return redirect('login')
         
         try:
-            somaTensao = sum([int(request.POST.get(f'tensao_{i}')) for i in range(1, 6)])
-            somaDepressao = sum([int(request.POST.get(f'depressao_{i}')) for i in range(1, 6)])
-            somaHostilidade = sum([int(request.POST.get(f'hostilidade_{i}')) for i in range(1, 6)])
-            somaFadiga = sum([int(request.POST.get(f'fadiga_{i}')) for i in range(1, 6)])
-            somaConfusao = sum([int(request.POST.get(f'confusao_{i}')) for i in range(1, 6)])
+            somaTensao = sum([int(request.POST.get(f'tensao_{i}')) for i in range(1, 7)])
+            somaDepressao = sum([int(request.POST.get(f'depressao_{i}')) for i in range(1, 7)])
+            somaHostilidade = sum([int(request.POST.get(f'hostilidade_{i}')) for i in range(1, 7)])
+            somaFadiga = sum([int(request.POST.get(f'fadiga_{i}')) for i in range(1, 7)])
+            somaConfusao = sum([int(request.POST.get(f'confusao_{i}')) for i in range(1, 7)])
             somaVigor = sum([int(request.POST.get(f'vigor_{i}')) for i in range(1, 7)])
-            somaDesajuste = sum([int(request.POST.get(f'desajuste_{i}')) for i in range(1, 6)])
+            somaDesajuste = sum([int(request.POST.get(f'desajuste_{i}')) for i in range(1, 7)])
             pth = ((somaTensao + somaDepressao + somaHostilidade + somaFadiga + somaConfusao) - somaVigor )+ 100
             
             sono = request.POST.get('sono')
             volume_treino = request.POST.get('volume_treino')
             freq_cardiaca_media = request.POST.get('freq_cardiaca_media')
             
-            # Converte os campos opcionais para inteiro, se possível; caso contrário, tómalos como None.
             sono = int(sono) if sono and sono.isdigit() else None
             volume_treino = int(volume_treino) if volume_treino and volume_treino.isdigit() else None
             freq_cardiaca_media = int(freq_cardiaca_media) if freq_cardiaca_media and freq_cardiaca_media.isdigit() else None
@@ -109,7 +107,7 @@ def escala(request):
                     freq_cardiaca_media=freq_cardiaca_media
                 )
                 messages.success(request, "Dados salvos com sucesso!")
-                return redirect('dashboard')
+                return redirect('perfil')
             
             except Exception as e:
                 messages.error(request, f"Erro ao salvar os dados: {e}")

@@ -137,5 +137,4 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 LOGIN_URL = 'login'             # nome da url de login
-LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'

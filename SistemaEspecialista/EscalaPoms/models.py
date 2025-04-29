@@ -1,7 +1,5 @@
 from django.db import models
 
-#Aqui criamos as classes que são as tabelas do banco também
-#Cada atributo é uma coluna
 class Treinador(models.Model):
     cpf = models.CharField(
         max_length=11,
