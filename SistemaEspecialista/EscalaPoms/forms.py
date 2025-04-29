@@ -2,6 +2,8 @@ from django.contrib.auth.hashers import make_password
 from django import forms
 from .models import Treinador, Aluno
 from .utils import validar_cpf, validar_numero_telefone
+from django.core.exceptions import ValidationError
+
 
 class CadastroForm(forms.Form):
     """
@@ -28,7 +30,10 @@ class CadastroForm(forms.Form):
     )
     nome = forms.CharField(max_length=100)
     email = forms.EmailField()
-    senha = forms.CharField(widget=forms.PasswordInput)
+    
+    senha = forms.CharField(widget=forms.PasswordInput,label="Senha")
+    senha2 = forms.CharField(widget=forms.PasswordInput,label="Confirmar Senha")
+    
     tipo_usuario = forms.ChoiceField(choices=TIPO_CHOICES, label="Tipo de usuário")
     genero = forms.ChoiceField(
         choices=TIPO_GENEROS,
@@ -56,6 +61,12 @@ class CadastroForm(forms.Form):
         treinador associado.
         """
         cleaned_data = super().clean()
+        senha = cleaned_data.get('senha')
+        senha2 = cleaned_data.get('senha2')
+        
+        if senha and senha2 and senha != senha2:
+            raise ValidationError({'senha2': 'As senhas não coincidem.'})
+
         tipo = cleaned_data.get('tipo_usuario')
         treinador_cpf = cleaned_data.get('treinador')
         

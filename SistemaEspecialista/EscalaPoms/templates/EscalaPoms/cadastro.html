@@ -87,7 +87,8 @@
                           name="num_telefone"
                           value="{{ form.num_telefone.value|default_if_none:'' }}"
                           class="form-control form-control-lg {% if form.num_telefone.errors %}is-invalid{% endif %}"
-                          placeholder="Telefone (opcional)"
+                          placeholder="Telefone"
+                          required
                         >
                         <div class="invalid-feedback">
                           {{ form.num_telefone.errors|first }}
@@ -106,8 +107,20 @@
                           {{ form.senha.errors|first }}
                         </div>
                       </div>
-                    </div>
 
+                      <div class="col-12">
+                        <input
+                          type="password"
+                          name="senha2"
+                          class="form-control form-control-lg {% if form.senha2.errors %}is-invalid{% endif %}"
+                          placeholder="Confirmar senha"
+                          required
+                        >
+                        <div class="invalid-feedback">
+                          {{ form.senha2.errors|first }}
+                        </div>
+                    </div>
+                    </div>
                     <!-- Gênero -->
                     <div class="mt-4">
                       <label class="form-label me-3">Gênero:</label>
