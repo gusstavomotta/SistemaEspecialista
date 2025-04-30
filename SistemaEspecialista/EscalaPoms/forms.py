@@ -58,7 +58,7 @@ class CadastroForm(forms.Form):
         if senha and senha2 and senha != senha2:
             self.add_error('senha2', 'As senhas não coincidem.')
         if cleaned.get('tipo_usuario') == 'aluno' and not cleaned.get('treinador'):
-            self.add_error('treinador', 'Para cadastro de aluno, informe o CPF do treinador.')
+            self.add_error('treinador', 'Para se cadastrar, selecione um treinador.')
         return cleaned
     
     def clean_cpf(self):

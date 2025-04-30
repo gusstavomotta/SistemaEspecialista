@@ -5,50 +5,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meu Perfil</title>
-  <!-- Cores globais -->
   <link rel="stylesheet" href="{% static 'css/colors.css' %}">
-  <!-- Estilos da página de perfil -->
   <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <header class="header">
     <h1>Meu Perfil</h1>
-    <a href="{{ url_dashboard }}" class="btn-back">← Voltar para a home</a>  </header>
+    <a href="{{ url_dashboard }}" class="btn-back">← Voltar para a home</a>
+  </header>
 
-  <main class="profile-container">
-    <div class="profile-card">
-      <div class="profile-field">
-        <span class="label">CPF:</span>
-        <span class="value">{{ usuario.cpf }}</span>
+  {% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="alert {{ message.tags }}">
+        {{ message }}
       </div>
-      <div class="profile-field">
-        <span class="label">Nome:</span>
-        <span class="value">{{ usuario.nome }}</span>
-      </div>
-      <div class="profile-field">
-        <span class="label">Email:</span>
-        <span class="value">{{ usuario.email }}</span>
-      </div>
-      <div class="profile-field">
-        <span class="label">Gênero:</span>
-        <span class="value">{{ usuario.genero }}</span>
-      </div>
-      <div class="profile-field">
-        <span class="label">Telefone:</span>
-        <span class="value">{{ usuario.num_telefone }}</span>
-      </div>
-      
-      {% if usuario.treinador %}
-      <div class="profile-field">
-        <span class="label">Treinador:</span>
-        <span class="value">{{ usuario.treinador.nome }}</span>
-      </div>
-      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
 
-      <div class="profile-actions">
-        <a href="/perfil/editar/" class="btn">Editar Perfil</a>
+  <form method="POST">
+    {% csrf_token %}
+    <main class="profile-container">
+      <div class="profile-card">
+        <div class="profile-field">
+          <span class="label">CPF:</span>
+          <span class="value">{{ usuario.cpf }}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="label">Nome:</span>
+          <span class="value">{{ usuario.nome }}</span>
+        </div>
+
+        <div class="profile-field">
+          <span class="label">Email:</span>
+          <input type="email" name="email" value="{{ usuario.email }}" required>
+        </div>
+
+        <div class="profile-field">
+          <span class="label">Telefone:</span>
+          <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
+        </div>
+
+        <div class="profile-field">
+          <span class="label">Gênero:</span>
+          <span class="value">{{ usuario.genero }}</span>
+        </div>
+
+        {% if usuario.treinador %}
+        <div class="profile-field">
+          <span class="label">Treinador:</span>
+          <span class="value">{{ usuario.treinador.nome }}</span>
+        </div>
+        {% endif %}
+
+        <div class="profile-actions">
+          <button type="submit" class="btn">Salvar</button>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </form>
 </body>
 </html>

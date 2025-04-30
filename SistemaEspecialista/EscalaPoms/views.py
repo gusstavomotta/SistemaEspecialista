@@ -4,11 +4,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as deslogar, authenticate, login
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
+from .utils import validar_numero_telefone
 
 from .forms import CadastroForm
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
 from .utils import obter_url_dashboard, obter_usuario_por_cpf, processar_dados_escala
+from .utils import validar_cpf
+from django.contrib.auth.hashers import make_password
+
 
 
 def login_view(request):
@@ -33,7 +37,14 @@ def cadastro(request):
         form = CadastroForm(request.POST)
         if form.is_valid():
             try:
-                form.save()
+                usuario = form.save()
+                treinador_cpf = request.POST.get('treinador')
+
+                if treinador_cpf:
+                    treinador = Treinador.objects.get(cpf=treinador_cpf)
+                    usuario.treinador = treinador
+                    usuario.save()
+
                 messages.success(request, "Cadastro realizado com sucesso!")
                 return redirect('login')
             except Exception as erro:
@@ -42,8 +53,39 @@ def cadastro(request):
             messages.error(request, "Verifique os erros abaixo.")
     else:
         form = CadastroForm()
-    return render(request, 'EscalaPoms/cadastro.html', {'form': form})
+    
+    treinadores = Treinador.objects.all().values('cpf', 'nome')  # Obtendo ID e nome dos treinadores
+    return render(request, 'EscalaPoms/cadastro.html', {'form': form, 'treinadores': treinadores})
 
+def redefinir_senha(request):
+    if request.method == 'POST':
+        cpf = request.POST.get('cpf')
+        nova_senha = request.POST.get('nova_senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
+
+        if not validar_cpf(cpf):
+            messages.error(request, 'CPF inválido.')
+            return redirect('redefinir_senha')
+
+        if nova_senha != confirmar_senha:
+            messages.error(request, 'As senhas não coincidem.')
+            return redirect('redefinir_senha')
+
+        try:
+            usuario = Treinador.objects.get(cpf=cpf)
+        except Treinador.DoesNotExist:
+            try:
+                usuario = Aluno.objects.get(cpf=cpf)
+            except Aluno.DoesNotExist:
+                messages.error(request, 'CPF não encontrado.')
+                return redirect('redefinir_senha')
+
+        usuario.senha = make_password(nova_senha)
+        usuario.save()
+        messages.success(request, 'Senha redefinida com sucesso.')
+        return redirect('login')
+    
+    return render(request, 'EscalaPoms/redefinir_senha.html')
 
 @login_required
 @aluno_required
@@ -92,22 +134,38 @@ def historico_aluno(request, aluno_cpf):
 def perfil(request):
     cpf = request.user.username
     usuario = obter_usuario_por_cpf(cpf)
-    if isinstance(usuario, Treinador):
-        url_dashboard = reverse('home_treinador')
-    else:
-        url_dashboard = reverse('home_aluno')
-    return render(request, 'EscalaPoms/perfil.html', {'usuario': usuario,'url_dashboard': url_dashboard})
 
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        telefone = request.POST.get('telefone')
 
-def logout_view(request):
-    deslogar(request)
-    return redirect('login')
+        # valida telefone
+        if not validar_numero_telefone(telefone):
+            messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
+            return redirect('perfil')
+    
+        # salva alterações
+        usuario.email = email
+        usuario.num_telefone = telefone
+        usuario.save()
+        messages.success(request, 'Perfil atualizado com sucesso.')
 
+        # redireciona para o dashboard correto
+        nome_kg = obter_url_dashboard(cpf)  # "home_treinador" ou "home_aluno"
+        return redirect(reverse(nome_kg))
+
+    # GET: apenas exibe
+    nome_kg = obter_url_dashboard(cpf)
+    url_dashboard = reverse(nome_kg) if nome_kg else '/'
+    return render(request, 'EscalaPoms/perfil.html', {
+        'usuario': usuario,
+        'url_dashboard': url_dashboard
+    })
 
 @login_required
 def relatorio(request):
     return render(request, 'EscalaPoms/relatorio.html')
 
-
-def esqueceu_senha(request):
-    return render(request, 'EscalaPoms/esqueceu_senha.html')
+def logout_view(request):
+    deslogar(request)
+    return redirect('login')

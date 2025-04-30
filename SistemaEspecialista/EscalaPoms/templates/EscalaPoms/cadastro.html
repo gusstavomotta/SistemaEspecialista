@@ -177,19 +177,20 @@
                       <div class="text-danger small">{{ form.tipo_usuario.errors|first }}</div>
                     </div>
 
-                    <!-- CPF do treinador (toggle) -->
-                    <div class="mt-3" id="treinador-field">
-                      <input
-                        type="text"
-                        name="treinador"
-                        value="{{ form.treinador.value|default_if_none:'' }}"
-                        class="form-control form-control-lg {% if form.treinador.errors %}is-invalid{% endif %}"
-                        placeholder="CPF do treinador"
-                      >
-                      <div class="invalid-feedback">
-                        {{ form.treinador.errors|first }}
-                      </div>
+                   <!-- CPF do treinador (Dropdown com nome) -->
+                   <div class="mt-3" id="treinador-field">
+                    <select name="treinador" class="form-control form-control-lg {% if form.treinador.errors %}is-invalid{% endif %}">
+                      <option value="" disabled selected>Selecione o treinador</option>
+                      {% for treinador in treinadores %}
+                        <option value="{{ treinador.cpf }}" {% if form.treinador.value == treinador.cpf %}selected{% endif %}>
+                          {{ treinador.nome }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                    <div class="invalid-feedback">
+                      {{ form.treinador.errors|first }}
                     </div>
+                  </div>
 
                     <!-- Botão de cadastro -->
                     <div class="text-center mt-4">

@@ -12,6 +12,6 @@ urlpatterns = [
     path('relatorio/', relatorio, name='relatorio'),
     path('meus_alunos/', meus_alunos, name='meus_alunos'),
     path('historico_aluno/<str:aluno_cpf>/', historico_aluno, name='historico_aluno'),
-    path('esqueceu_senha/', esqueceu_senha, name='esqueceu_senha'),
+    path('redefinir_senha/', redefinir_senha, name='redefinir_senha'),
 
 ]
