@@ -3,7 +3,7 @@ from django import forms
 from .models import Treinador, Aluno
 from .utils import validar_cpf, validar_numero_telefone
 from django.core.exceptions import ValidationError
-
+import re
 
 class CadastroForm(forms.Form):
     """
@@ -53,52 +53,25 @@ class CadastroForm(forms.Form):
     )
 
     def clean(self):
-        """
-        Validação geral do formulário.
-
-        Aqui, é verificado se o campo 'treinador' foi informado quando o tipo
-        de usuário é 'aluno'. Essa validação garante que alunos possuam um 
-        treinador associado.
-        """
-        cleaned_data = super().clean()
-        senha = cleaned_data.get('senha')
-        senha2 = cleaned_data.get('senha2')
-        
+        cleaned = super().clean()
+        senha, senha2 = cleaned.get('senha'), cleaned.get('senha2')
         if senha and senha2 and senha != senha2:
-            raise ValidationError({'senha2': 'As senhas não coincidem.'})
-
-        tipo = cleaned_data.get('tipo_usuario')
-        treinador_cpf = cleaned_data.get('treinador')
-        
-        if tipo == 'aluno' and not treinador_cpf:
-            raise forms.ValidationError("Para cadastro de aluno, informe o CPF do treinador.")
-        
-        return cleaned_data
+            self.add_error('senha2', 'As senhas não coincidem.')
+        if cleaned.get('tipo_usuario') == 'aluno' and not cleaned.get('treinador'):
+            self.add_error('treinador', 'Para cadastro de aluno, informe o CPF do treinador.')
+        return cleaned
     
     def clean_cpf(self):
-        """
-        Validação específica para o campo CPF.
-
-        Utiliza a função auxiliar validar_cpf, que remove os caracteres não numéricos,
-        verifica se possui 11 dígitos, checa se não é uma sequência repetida e valida os dígitos
-        verificadores do CPF.
-        """
-        cpf = self.cleaned_data['cpf']
+        cpf = re.sub(r'\D', '', self.cleaned_data['cpf'])
         if not validar_cpf(cpf):
             raise forms.ValidationError("CPF inválido.")
         return cpf
-
+    
     def clean_num_telefone(self):
-        """
-        Validação específica para o campo número de telefone.
-
-        Utiliza a função auxiliar validar_numero_telefone para remover caracteres não numéricos
-        e garantir que o telefone possua 10 ou 11 dígitos de acordo com o padrão brasileiro.
-        """
-        num_telefone = self.cleaned_data['num_telefone']
-        if not validar_numero_telefone(num_telefone):
-            raise forms.ValidationError("Número de telefone inválido.")
-        return num_telefone
+        tel = re.sub(r'\D', '', self.cleaned_data['num_telefone'])
+        if not validar_numero_telefone(tel):
+            raise forms.ValidationError("Telefone inválido.")
+        return tel
     
     def save(self):
         """

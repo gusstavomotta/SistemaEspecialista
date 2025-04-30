@@ -68,8 +68,7 @@ def escala(request):
             return redirect('perfil')
         except ValueError as ev:
             messages.error(request, str(ev))
-        except Exception:
-            messages.error(request, "Erro inesperado ao salvar os dados.")
+
     return render(request, 'EscalaPoms/escala.html')
 
 
@@ -92,17 +91,12 @@ def historico_aluno(request, aluno_cpf):
 @login_required
 def perfil(request):
     cpf = request.user.username
-    try:
-        usuario = obter_usuario_por_cpf(cpf)
-    except (Treinador.DoesNotExist, Aluno.DoesNotExist):
-        messages.error(request, "Usuário não encontrado.")
-        return redirect('login')
-
+    usuario = obter_usuario_por_cpf(cpf)
     if isinstance(usuario, Treinador):
         url_dashboard = reverse('home_treinador')
     else:
         url_dashboard = reverse('home_aluno')
-    return render(request, 'EscalaPoms/perfil.html', {'usuario': usuario, 'url_dashboard': url_dashboard})
+    return render(request, 'EscalaPoms/perfil.html', {'usuario': usuario,'url_dashboard': url_dashboard})
 
 
 def logout_view(request):
