@@ -74,7 +74,7 @@ class CadastroForm(forms.Form):
             raise forms.ValidationError("Para cadastro de aluno, informe o CPF do treinador.")
         
         return cleaned_data
-
+    
     def clean_cpf(self):
         """
         Validação específica para o campo CPF.

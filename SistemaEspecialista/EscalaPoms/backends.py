@@ -61,7 +61,7 @@ def treinador_required(view_func):
         if Treinador.objects.filter(cpf=cpf).exists():
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('dashboard')
+            return redirect('home_aluno')
     return _wrapped_view
 
 def aluno_required(view_func):
@@ -78,5 +78,5 @@ def aluno_required(view_func):
         if Aluno.objects.filter(cpf=cpf).exists():
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('dashboard')
+            return redirect('home_treinador')
     return _wrapped_view
