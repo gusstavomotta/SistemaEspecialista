@@ -1,28 +1,48 @@
 /* escala.css */
 
-/* Estilo do container do form */
-form {
-  max-width: 800px;
-  margin: 0 auto 100px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Card para cada domínio */
+fieldset {
+  margin-bottom: 1.5rem;
+  border: none;
+  padding: 0;
+}
+fieldset > legend {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #333;
 }
 
-/* Botão de enviar */
+/* Card-base */
+fieldset.card {
+  border: 1px solid #dee2e6;
+  border-radius: .375rem;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+fieldset.card .card-body {
+  padding: 1rem 1.25rem;
+}
+
+/* Itens inline usando form-check */
+.item {
+  margin-bottom: 1rem;
+}
+.item p {
+  margin-bottom: .5rem;
+  font-weight: 500;
+}
+.item .form-check {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+/* Botão principal */
 button[type="submit"] {
   display: block;
   width: 50%;
-  margin: 20px auto 0;
-  padding: 10px;
-  background-color: #4285f4;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-}
-button[type="submit"]:hover {
-  background-color: #357ae8;
+  margin: 2rem auto 0;
+  padding: .75rem 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 500;
 }

@@ -8,19 +8,38 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Cadastro da Escala POMS Reduzida</h1>
+  <h1 class="text-center mb-4">Cadastro da Escala POMS Reduzida</h1>
   <form method="post" action="{% url 'home_aluno' %}">
     {% csrf_token %}
-    <fieldset>
+    
+    <fieldset class="mb-4">
       <legend>Tensão</legend>
-      
-      <div class="item">
+    
+      <!-- Pergunta 1 -->
+      <div class="mb-3">
         <p>1. Sinto-me tenso(a)</p>
-        <label><input type="radio" name="tensao_1" value="0" required> 0</label>
-        <label><input type="radio" name="tensao_1" value="1"> 1</label>
-        <label><input type="radio" name="tensao_1" value="2"> 2</label>
-        <label><input type="radio" name="tensao_1" value="3"> 3</label>
-        <label><input type="radio" name="tensao_1" value="4"> 4</label>
+        <div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_0" value="0" required>
+            <label class="form-check-label" for="tensao_1_0">0</label>
+          </div>
+          <div class="form-check form-check-inline"> 
+            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_1" value="1">
+            <label class="form-check-label" for="tensao_1_1">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_2" value="2">
+            <label class="form-check-label" for="tensao_1_2">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_3" value="3">
+            <label class="form-check-label" for="tensao_1_3">3</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_4" value="4">
+            <label class="form-check-label" for="tensao_1_4">4</label>
+          </div>
+        </div>
       </div>
       
       <div class="item">
@@ -412,23 +431,47 @@
       </div>
     </fieldset>
 
-      <fieldset>
-        <legend>Dados Adicionais - Opcional</legend>
-        <div class="adicional">
-          <label for="sono">Horas de Sono:</label>
-          <input type="number" id="sono" name="sono" min="0" placeholder="Ex: 8 horas">
+    <fieldset class="mb-4">
+      <legend class="h5">Dados Adicionais – Opcional</legend>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label for="sono" class="form-label">Horas de Sono</label>
+          <input
+            type="number"
+            class="form-control"
+            id="sono"
+            name="sono"
+            min="0"
+            placeholder="Ex: 8 horas"
+          >
         </div>
-        <div class="adicional">
-          <label for="volume_treino">Volume de Treino:</label>
-          <input type="number" id="volume_treino" name="volume_treino" min="0" placeholder="Ex: 50">
+        <div class="col-md-4">
+          <label for="volume_treino" class="form-label">Volume de Treino</label>
+          <input
+            type="number"
+            class="form-control"
+            id="volume_treino"
+            name="volume_treino"
+            min="0"
+            placeholder="Ex: 50"
+          >
         </div>
-        <div class="adicional">
-          <label for="freq_cardiaca_media">Frequência Cardíaca Média (BPM):</label>
-          <input type="number" id="freq_cardiaca_media" name="freq_cardiaca_media" min="0" placeholder="Ex: 80 BPM">
+        <div class="col-md-4">
+          <label for="freq_cardiaca_media" class="form-label">Frequência Cardíaca Média (BPM)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="freq_cardiaca_media"
+            name="freq_cardiaca_media"
+            min="0"
+            placeholder="Ex: 80 BPM"
+          >
         </div>
-      </fieldset>
-
-      <button type="submit">Enviar Respostas</button>
+      </div>
+    </fieldset>
+    
+    <button type="submit">Enviar Respostas</button>
+    
     </form>
   </div>
 {% endblock %}

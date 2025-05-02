@@ -1,37 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <title>Histórico do Aluno</title>
-</head>
-<body>
-  <h1>Histórico de Escalas de {{ aluno.nome }}</h1>
-  <p><strong>Email:</strong> {{ aluno.email }}</p>
-  <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+{% extends 'EscalaPoms/base.html' %}
+{% load static %}
 
-  <h2>Escalas Registradas</h2>
-  <ul>
+{% block title %}Histórico de {{ aluno.nome }}{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Histórico de Escalas de {{ aluno.nome }}</h1>
+
+  <div class="mb-3">
+    <p><strong>Email:</strong> {{ aluno.email }}</p>
+    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+  </div>
+
+  <h2 class="h4 mb-3">Escalas Registradas</h2>
+  <ul class="list-group mb-4">
     {% for escala in escalas %}
-      <li>
-        <strong>Data:</strong> {{ escala.data }} <br>
-        <strong>Soma Tensão:</strong> {{ escala.somaTensao }} <br>
-        <strong>Soma Depressão:</strong> {{ escala.somaDepressao }} <br>
-        <strong>Soma Hostilidade:</strong> {{ escala.somaHostilidade }} <br>
-        <strong>Soma Fadiga:</strong> {{ escala.somaFadiga }} <br>
-        <strong>Soma Confusão:</strong> {{ escala.somaConfusao }} <br>
-        <strong>Soma Vigor:</strong> {{ escala.somaVigor }} <br>
-        <strong>Soma Desajuste:</strong> {{ escala.somaDesajuste }} <br>
-        <strong>PTH:</strong> {{ escala.pth }} <br>
-        <strong>Sono:</strong> {{ escala.sono }} <br>
-        <strong>Volume de Treino:</strong> {{ escala.volume_treino }} <br>
-        <strong>Frequência Cardíaca Média:</strong> {{ escala.freq_cardiaca_media }} <br>
-        <br>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-3"><strong>Data:</strong><br>{{ escala.data }}</div>
+          <div class="col-md-3"><strong>PTH:</strong><br>{{ escala.pth }}</div>
+          <div class="col-md-3"><strong>Sono:</strong><br>{{ escala.sono|default:"–" }}</div>
+          <div class="col-md-3"><strong>Freq. Cardíaca:</strong><br>{{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3"><strong>Σ Tensão:</strong><br>{{ escala.somaTensao }}</div>
+          <div class="col-md-3"><strong>Σ Depressão:</strong><br>{{ escala.somaDepressao }}</div>
+          <div class="col-md-3"><strong>Σ Hostilidade:</strong><br>{{ escala.somaHostilidade }}</div>
+          <div class="col-md-3"><strong>Σ Fadiga:</strong><br>{{ escala.somaFadiga }}</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3"><strong>Σ Confusão:</strong><br>{{ escala.somaConfusao }}</div>
+          <div class="col-md-3"><strong>Σ Vigor:</strong><br>{{ escala.somaVigor }}</div>
+          <div class="col-md-3"><strong>Σ Desajuste:</strong><br>{{ escala.somaDesajuste }}</div>
+          <div class="col-md-3"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
+        </div>
       </li>
     {% empty %}
-      <li>Nenhuma escala registrada para este aluno.</li>
+      <li class="list-group-item">Nenhuma escala registrada para este aluno.</li>
     {% endfor %}
   </ul>
 
-  <a href="{% url 'meus_alunos' %}" class="btn-back">Voltar para Meus Alunos</a>
-</body>
-</html>
+  <a href="{% url 'meus_alunos' %}" class="btn btn-secondary">
+    ← Voltar para Meus Alunos
+  </a>
+{% endblock %}
