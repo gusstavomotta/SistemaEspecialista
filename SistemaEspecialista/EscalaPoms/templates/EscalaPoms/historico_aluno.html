@@ -33,7 +33,9 @@
           <div class="col-md-3"><strong>Σ Desajuste:</strong><br>{{ escala.somaDesajuste }}</div>
           <div class="col-md-3"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
         </div>
+        
       </li>
+      <br>
     {% empty %}
       <li class="list-group-item">Nenhuma escala registrada para este aluno.</li>
     {% endfor %}

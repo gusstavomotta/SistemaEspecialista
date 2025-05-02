@@ -51,16 +51,6 @@ def processar_dados_escala(request):
         'freq_cardiaca_media': freq_cardiaca_media,
     }
 
-def obter_url_dashboard(cpf):
-    """
-    Retorna a URL do dashboard de acordo com o tipo de usuário (Treinador ou Aluno).
-    """
-    if Treinador.objects.filter(cpf=cpf).exists():
-        return 'home_treinador'
-    if Aluno.objects.filter(cpf=cpf).exists():
-        return 'home_aluno'
-    return None
-
 def obter_usuario_por_cpf(cpf):
     """
     Retorna o usuário correspondente ao CPF, buscando primeiramente entre Treinadores e,

@@ -9,10 +9,9 @@ from .utils import validar_numero_telefone
 from .forms import CadastroForm
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
-from .utils import obter_url_dashboard, obter_usuario_por_cpf, processar_dados_escala
+from .utils import obter_usuario_por_cpf, processar_dados_escala
 from .utils import validar_cpf
 from django.contrib.auth.hashers import make_password
-
 
 
 def login_view(request):
@@ -23,11 +22,7 @@ def login_view(request):
         if usuario:
             login(request, usuario)
             messages.success(request, "Login efetuado com sucesso!")
-            url_dashboard = obter_url_dashboard(usuario.username)
-            if url_dashboard:
-                return redirect(url_dashboard)
-            messages.error(request, "Usuário não possui uma função atribuída.")
-            return redirect('login')
+            return redirect('home')
         messages.error(request, "CPF ou senha incorretos.")
     return render(request, 'EscalaPoms/login.html')
 
@@ -88,15 +83,17 @@ def redefinir_senha(request):
     return render(request, 'EscalaPoms/redefinir_senha.html')
 
 @login_required
-@aluno_required
-def home_aluno(request):
-    return render(request, 'EscalaPoms/home_aluno.html')
+def home(request):
+    cpf = request.user.username 
+    usuario = obter_usuario_por_cpf(cpf)  
 
+    if isinstance(usuario, Treinador):
+        tipo = 'Treinador'
+    elif isinstance(usuario, Aluno):
+        tipo = 'Aluno'
 
-@login_required
-@treinador_required
-def home_treinador(request):
-    return render(request, 'EscalaPoms/home_treinador.html')
+    context = {'nome': usuario.nome, 'tipo': tipo}
+    return render(request, 'EscalaPoms/home.html', context)
 
 @login_required
 @aluno_required
@@ -139,27 +136,24 @@ def perfil(request):
         email = request.POST.get('email')
         telefone = request.POST.get('telefone')
 
-        # valida telefone
+        # Valida o telefone
         if not validar_numero_telefone(telefone):
             messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
             return redirect('perfil')
     
-        # salva alterações
+        # Salva as alterações
         usuario.email = email
         usuario.num_telefone = telefone
         usuario.save()
         messages.success(request, 'Perfil atualizado com sucesso.')
 
-        # redireciona para o dashboard correto
-        nome_kg = obter_url_dashboard(cpf)  # "home_treinador" ou "home_aluno"
-        return redirect(reverse(nome_kg))
+        # Redireciona para a home unificada
+        return redirect('home')
 
-    # GET: apenas exibe
-    nome_kg = obter_url_dashboard(cpf)
-    url_dashboard = reverse(nome_kg) if nome_kg else '/'
+    # GET: Apenas exibe a página
     return render(request, 'EscalaPoms/perfil.html', {
         'usuario': usuario,
-        'url_dashboard': url_dashboard
+        'url_dashboard': reverse('home')
     })
 
 @login_required
