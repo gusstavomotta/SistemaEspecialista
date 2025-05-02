@@ -6,10 +6,7 @@ def converter_para_inteiro(valor):
     return int(valor) if valor and valor.isdigit() else None
 
 def somar_campos_post(request, prefixo, quantidade=6):
-    """
-    Soma os valores dos campos enviados via POST com o prefixo especificado.
-    Exemplo: Para o prefixo 'tensao', soma os campos tensao_1 até tensao_6.
-    """
+
     total = 0
     for i in range(1, quantidade + 1):
         valor_campo = request.POST.get(f'{prefixo}_{i}')
@@ -19,9 +16,7 @@ def somar_campos_post(request, prefixo, quantidade=6):
     return total
 
 def processar_dados_escala(request):
-    """
-    Processa e retorna os dados da escala em forma de dicionário para salvamento.
-    """
+
     soma_tensao = somar_campos_post(request, 'tensao')
     soma_depressao = somar_campos_post(request, 'depressao')
     soma_hostilidade = somar_campos_post(request, 'hostilidade')
@@ -33,40 +28,29 @@ def processar_dados_escala(request):
     pth = ((soma_tensao + soma_depressao + soma_hostilidade +
            soma_fadiga + soma_confusao) - soma_vigor) + 100
 
-    sono = converter_para_inteiro(request.POST.get('sono'))
-    volume_treino = converter_para_inteiro(request.POST.get('volume_treino'))
-    freq_cardiaca_media = converter_para_inteiro(request.POST.get('freq_cardiaca_media'))
-
     return {
-        'somaTensao': soma_tensao,
-        'somaDepressao': soma_depressao,
-        'somaHostilidade': soma_hostilidade,
-        'somaFadiga': soma_fadiga,
-        'somaConfusao': soma_confusao,
-        'somaVigor': soma_vigor,
-        'somaDesajuste': soma_desajuste,
+        'soma_tensao': soma_tensao,
+        'soma_depressao': soma_depressao,
+        'soma_hostilidade': soma_hostilidade,
+        'soma_fadiga': soma_fadiga,
+        'soma_confusao': soma_confusao,
+        'soma_vigor': soma_vigor,
+        'soma_desajuste': soma_desajuste,
         'pth': pth,
-        'sono': sono,
-        'volume_treino': volume_treino,
-        'freq_cardiaca_media': freq_cardiaca_media,
+        'sono': converter_para_inteiro(request.POST.get('sono')),
+        'volume_treino': converter_para_inteiro(request.POST.get('volume_treino')),
+        'freq_cardiaca_media': converter_para_inteiro(request.POST.get('freq_cardiaca_media')),
     }
 
 def obter_usuario_por_cpf(cpf):
-    """
-    Retorna o usuário correspondente ao CPF, buscando primeiramente entre Treinadores e,
-    se não encontrado, entre Alunos.
-    """
+
     try:
         return Treinador.objects.get(cpf=cpf)
     except Treinador.DoesNotExist:
         return Aluno.objects.get(cpf=cpf)
 
 def validar_cpf(cpf: str) -> bool:
-    """
-    Valida um CPF brasileiro.
-    Remove caracteres não numéricos, verifica se o CPF tem 11 dígitos,
-    se não é uma sequência repetida e se os dígitos verificadores estão corretos.
-    """
+
     cpf = ''.join(filter(str.isdigit, cpf))
     if len(cpf) != 11:
         return False
@@ -82,9 +66,9 @@ def validar_cpf(cpf: str) -> bool:
     return cpf[-2:] == f'{digito1}{digito2}'
 
 def validar_numero_telefone(telefone: str) -> bool:
-    """
-    Valida o número de telefone.
-    Remove tudo que não seja dígito e verifica se o número possui 10 ou 11 dígitos.
-    """
+
     telefone = re.sub(r'\D', '', telefone)
     return len(telefone) in (10, 11)
+
+def normalizar_cpf(texto: str) -> str:
+    return re.sub(r'\D', '', texto or '')

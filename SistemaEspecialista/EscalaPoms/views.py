@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from .utils import validar_numero_telefone
 
-from .forms import CadastroForm
+from .forms import *
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
 from .utils import obter_usuario_por_cpf, processar_dados_escala
@@ -29,28 +29,27 @@ def login_view(request):
 
 def cadastro(request):
     if request.method == 'POST':
-        form = CadastroForm(request.POST)
+        tipo = request.POST.get('tipo_usuario')
+        # escolhe o form certo
+        if tipo == 'treinador':
+            form = TreinadorForm(request.POST)
+        else:
+            form = AlunoForm(request.POST)
+
         if form.is_valid():
-            try:
-                usuario = form.save()
-                treinador_cpf = request.POST.get('treinador')
-
-                if treinador_cpf:
-                    treinador = Treinador.objects.get(cpf=treinador_cpf)
-                    usuario.treinador = treinador
-                    usuario.save()
-
-                messages.success(request, "Cadastro realizado com sucesso!")
-                return redirect('login')
-            except Exception as erro:
-                form.add_error(None, f"Ocorreu um erro ao salvar o cadastro: {erro}")
+            form.save()
+            messages.success(request, "Cadastro realizado com sucesso!")
+            return redirect('login')
         else:
             messages.error(request, "Verifique os erros abaixo.")
     else:
-        form = CadastroForm()
-    
-    treinadores = Treinador.objects.all().values('cpf', 'nome')  # Obtendo ID e nome dos treinadores
-    return render(request, 'EscalaPoms/cadastro.html', {'form': form, 'treinadores': treinadores})
+        form = TreinadorForm()
+
+    treinadores = Treinador.objects.all().values('cpf', 'nome')
+    return render(request, 'EscalaPoms/cadastro.html', {
+        'form': form,
+        'treinadores': treinadores
+    })
 
 def redefinir_senha(request):
     if request.method == 'POST':
@@ -114,7 +113,7 @@ def escala(request):
 @login_required
 @treinador_required
 def meus_alunos(request):
-    treinador = get_object_or_404(Treinador, cpf=request.user.username)
+    treinador = Treinador.objects.get(cpf=request.user.username)
     alunos = Aluno.objects.filter(treinador=treinador)
     return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos})
 
@@ -136,21 +135,20 @@ def perfil(request):
         email = request.POST.get('email')
         telefone = request.POST.get('telefone')
 
-        # Valida o telefone
         if not validar_numero_telefone(telefone):
             messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
-            return redirect('perfil')
+            return render(request, 'EscalaPoms/perfil.html', {
+                'usuario': usuario,
+                'url_dashboard': reverse('home')
+            })
     
-        # Salva as alterações
         usuario.email = email
         usuario.num_telefone = telefone
         usuario.save()
         messages.success(request, 'Perfil atualizado com sucesso.')
 
-        # Redireciona para a home unificada
         return redirect('home')
 
-    # GET: Apenas exibe a página
     return render(request, 'EscalaPoms/perfil.html', {
         'usuario': usuario,
         'url_dashboard': reverse('home')
