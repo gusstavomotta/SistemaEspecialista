@@ -22,7 +22,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
   
-    /* reset básico e fonte */
+    /* Reset básico e fonte */
     html, body {
       height: 100%;
       margin: 0;
@@ -35,7 +35,7 @@
     a { text-decoration: none; }
   
     #sidebar.collapsed + .main {
-    left: 0;
+      left: 0;
     }
     
     /* === SIDEBAR FIXA === */
@@ -160,7 +160,7 @@
     }
   </style>
   
-  <!-- ponto para CSS extra de cada página -->
+  <!-- Ponto para CSS extra de cada página -->
   {% block extra_css %}{% endblock %}
 
 </head>
@@ -197,6 +197,7 @@
           </ul>
         </li>
 
+        <!-- Menu Aluno -->
         <li class="sidebar-item">
           <a
             href="#alunoMenu"
@@ -218,16 +219,21 @@
           </ul>
         </li>
 
+        <!-- Menu Perfil -->
         <li class="sidebar-item">
           <a href="{% url 'perfil' %}" class="sidebar-link">
             <i class="lni lni-user"></i>
             <span>Perfil</span>
           </a>
         </li>
-
       </ul>
 
+      <!-- Rodapé com botões adicionais -->
       <div class="sidebar-footer">
+        <a href="{% url 'sobre' %}" class="sidebar-link">
+          <i class="lni lni-info"></i>
+          <span>Sobre</span>
+        </a>
         <a href="{% url 'logout' %}" class="sidebar-link">
           <i class="lni lni-exit"></i>
           <span>Logout</span>

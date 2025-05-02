@@ -154,6 +154,7 @@ def perfil(request):
     })
 
 @login_required
+@aluno_required
 def minhas_escalas(request):
 
     aluno = get_object_or_404(
@@ -178,3 +179,5 @@ def logout_view(request):
     return redirect('login')
 
 
+def sobre(request):
+    return render(request, 'EscalaPoms/sobre.html')
