@@ -82,24 +82,3 @@ def classificar_niveis_emocoes(caminho_arquivo_regras: str,
                 break
 
     return niveis_resultantes
-
-
-# Exemplo de utilização
-if __name__ == '__main__':
-    # Definir caminho para o arquivo de regras POMS
-    arquivo_regras_poms = 'regras.txt'
-
-    # Dicionário com as somas de cada domínio emocional
-    somas_por_dominio = {
-        'soma_tensao': 22.0,
-        'soma_depressao': 23.0,
-        'soma_hostilidade': 18.0,
-        'soma_fadiga': 22.0,
-        'soma_confusao': 17.0,
-        'soma_vigor': 22.0,
-        'soma_desajuste': 24.0
-    }
-
-    niveis_emocionais = classificar_niveis_emocoes(arquivo_regras_poms, somas_por_dominio)
-    for nivel, rotulo in niveis_emocionais.items():
-        print(f"{nivel}: {rotulo}")

@@ -1,18 +1,32 @@
 import datetime
+import os
+from django.conf        import settings
 
+# Autenticação e controle de usuários
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as deslogar, authenticate, login
-from django.shortcuts import render, redirect, reverse, get_object_or_404
-from django.contrib import messages
-from .utils import validar_numero_telefone
-
-from .forms import *
-from .models import Treinador, Aluno, EscalaPoms
-from .backends import aluno_required, treinador_required
-from .utils import obter_usuario_por_cpf, processar_dados_escala
-from .utils import validar_cpf
 from django.contrib.auth.hashers import make_password
 
+# Manipulação de requisições e respostas
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib import messages
+
+# Imports de formulários, modelos e backends
+from .forms import *
+from .models import Treinador, Aluno, EscalaPoms, ClassificacaoRecomendacao
+from .backends import aluno_required, treinador_required
+from .maquina_inferencia import (
+    carregar_regras_poms,
+    classificar_niveis_emocoes
+)
+
+# Utilitários do projeto
+from .utils import (
+    validar_numero_telefone,
+    obter_usuario_por_cpf,
+    processar_dados_escala,
+    validar_cpf
+)
 
 def login_view(request):
     if request.method == 'POST':
@@ -25,7 +39,6 @@ def login_view(request):
             return redirect('home')
         messages.error(request, "CPF ou senha incorretos.")
     return render(request, 'EscalaPoms/login.html')
-
 
 def cadastro(request):
     if request.method == 'POST':
@@ -97,33 +110,71 @@ def home(request):
 @aluno_required
 def escala(request):
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
+
     if request.method == 'POST':
         try:
+            # 1) Processa os dados brutos e soma os domínios
             dados = processar_dados_escala(request)
-            EscalaPoms.objects.create(aluno=aluno, data=datetime.date.today(), **dados)
-            messages.success(request, "Dados salvos com sucesso!")
+
+            # 2) Cria a EscalaPoms
+            escala = EscalaPoms.objects.create(
+                aluno=aluno,
+                data=datetime.date.today(),
+                **dados
+            )
+
+            # 3) Monta o dicionário de somas para a inferência
+            somas = {
+                'soma_tensao':      escala.soma_tensao,
+                'soma_depressao':   escala.soma_depressao,
+                'soma_hostilidade': escala.soma_hostilidade,
+                'soma_fadiga':      escala.soma_fadiga,
+                'soma_confusao':    escala.soma_confusao,
+                'soma_vigor':       escala.soma_vigor,
+                'soma_desajuste':   escala.soma_desajuste,
+            }
+
+            # 4) Define o caminho do arquivo de regras POMS
+            caminho_regras = os.path.join(settings.BASE_DIR, 'EscalaPoms', 'regras.txt')
+
+            # 5) Chama a máquina de inferência para obter os níveis
+            niveis = classificar_niveis_emocoes(caminho_regras, somas)
+
+            # 6) Cria o registro de classificação/recomendação
+            ClassificacaoRecomendacao.objects.create(
+                escala=escala,
+                nivel_tensao      = niveis.get('nivel_tensao'),
+                nivel_depressao   = niveis.get('nivel_depressao'),
+                nivel_hostilidade = niveis.get('nivel_hostilidade'),
+                nivel_fadiga      = niveis.get('nivel_fadiga'),
+                nivel_confusao    = niveis.get('nivel_confusao'),
+                nivel_vigor       = niveis.get('nivel_vigor'),
+                nivel_desajuste   = niveis.get('nivel_desajuste'),
+                # Se quiser, gere aqui um texto de recomendação:
+                # recomendacao=gerar_recomendacao(niveis)
+            )
+
+            messages.success(request, "Dados salvos e classificados com sucesso!")
             return redirect('perfil')
+
         except ValueError as ev:
             messages.error(request, str(ev))
 
     return render(request, 'EscalaPoms/escala.html')
 
-
 @login_required
 @treinador_required
 def meus_alunos(request):
     treinador = Treinador.objects.get(cpf=request.user.username)
-    alunos = Aluno.objects.filter(treinador=treinador)
+    alunos = Aluno.objects.filter(treinador=treinador).order_by('nome')
     return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos})
-
 
 @login_required
 @treinador_required
 def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
-    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('-data')
+    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data')
     return render(request, 'EscalaPoms/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
-
 
 @login_required
 def perfil(request):
@@ -165,12 +216,15 @@ def minhas_escalas(request):
     escalas_do_aluno = (
         EscalaPoms.objects
         .filter(aluno=aluno)
-        .order_by('-data')
+        .order_by('data')
+        .select_related('classificacao')    # aqui!
+
     )
 
     return render(request, 'EscalaPoms/minhas_escalas.html', {
         'aluno': aluno,
         'escalas': escalas_do_aluno,
+        
     })
 
 @login_required

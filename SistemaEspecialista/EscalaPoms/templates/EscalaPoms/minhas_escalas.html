@@ -4,7 +4,7 @@
 {% block title %}Minhas Escalas{% endblock %}
 
 {% block content %}
-  <h1 class="mb-4">Minhas escalas</h1>
+  <h1 class="mb-4">Minhas Escalas</h1>
 
   <div class="mb-3">
     <p><strong>Nome:</strong> {{ aluno.nome }}</p>
@@ -52,42 +52,54 @@
             {{ escala.soma_desajuste }}
           </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-3">
-            <strong>Nível Tensão:</strong><br>
-            {{ escala.nivel_tensao }}
+
+        {% if escala.classificacao %}
+          <div class="row mt-4">
+            <div class="col-12"><strong>Níveis Emocionais:</strong></div>
           </div>
-          <div class="col-md-3">
-            <strong>Nível Depressão:</strong><br>
-            {{ escala.nivel_depressao }}
+          <div class="row">
+            <div class="col-md-3">
+              <strong>Tensão:</strong><br>
+              {{ escala.classificacao.nivel_tensao }}
+            </div>
+            <div class="col-md-3">
+              <strong>Depressão:</strong><br>
+              {{ escala.classificacao.nivel_depressao }}
+            </div>
+            <div class="col-md-3">
+              <strong>Hostilidade:</strong><br>
+              {{ escala.classificacao.nivel_hostilidade }}
+            </div>
+            <div class="col-md-3">
+              <strong>Fadiga:</strong><br>
+              {{ escala.classificacao.nivel_fadiga }}
+            </div>
           </div>
-          <div class="col-md-3">
-            <strong>Nível Hostilidade:</strong><br>
-            {{ escala.nivel_hostilidade }}
+          <div class="row mt-2">
+            <div class="col-md-3">
+              <strong>Confusão:</strong><br>
+              {{ escala.classificacao.nivel_confusao }}
+            </div>
+            <div class="col-md-3">
+              <strong>Vigor:</strong><br>
+              {{ escala.classificacao.nivel_vigor }}
+            </div>
+            <div class="col-md-3">
+              <strong>Desajuste:</strong><br>
+              {{ escala.classificacao.nivel_desajuste }}
+            </div>
+            <div class="col-md-3">
+              <strong>Volume Treino:</strong><br>
+              {{ escala.volume_treino|default:"–" }}
+            </div>
           </div>
-          <div class="col-md-3">
-            <strong>Nível Fadiga:</strong><br>
-            {{ escala.nivel_fadiga }}
+        {% else %}
+          <div class="row mt-4">
+            <div class="col-12 text-warning">
+              Classificação ainda não disponível.
+            </div>
           </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-3">
-            <strong>Nível Confusão:</strong><br>
-            {{ escala.nivel_confusao }}
-          </div>
-          <div class="col-md-3">
-            <strong>Nível Vigor:</strong><br>
-            {{ escala.nivel_vigor }}
-          </div>
-          <div class="col-md-3">
-            <strong>Nível Desajuste:</strong><br>
-            {{ escala.nivel_desajuste }}
-          </div>
-          <div class="col-md-3">
-            <strong>Volume Treino:</strong><br>
-            {{ escala.volume_treino|default:"–" }}
-          </div>
-        </div>
+        {% endif %}
       </li>
       <br>
     {% empty %}

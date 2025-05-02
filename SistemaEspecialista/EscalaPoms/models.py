@@ -55,3 +55,26 @@ class EscalaPoms(models.Model):
     def __str__(self):
         # Retorna uma string que relaciona o aluno e a data da escala, facilitando a identificação do registro.
         return f"Escala de {self.aluno.nome} em {self.data}"
+
+class ClassificacaoRecomendacao(models.Model):
+    escala = models.OneToOneField(
+        'EscalaPoms',
+        on_delete=models.CASCADE,
+        related_name='classificacao'
+    )
+
+    nivel_tensao      = models.CharField(max_length=20)
+    nivel_depressao   = models.CharField(max_length=20)
+    nivel_hostilidade = models.CharField(max_length=20)
+    nivel_fadiga      = models.CharField(max_length=20)
+    nivel_confusao    = models.CharField(max_length=20)
+    nivel_vigor       = models.CharField(max_length=20)
+    nivel_desajuste   = models.CharField(max_length=20)
+
+    # Campo opcional para recomendação textual baseada nos níveis
+    recomendacao = models.TextField(blank=True, null=True)
+
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Classificação para {self.escala.aluno.nome} em {self.escala.data}"
