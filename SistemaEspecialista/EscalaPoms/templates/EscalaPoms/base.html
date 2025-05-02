@@ -34,6 +34,10 @@
     li { list-style: none; }
     a { text-decoration: none; }
   
+    #sidebar.collapsed + .main {
+    left: 0;
+    }
+    
     /* === SIDEBAR FIXA === */
     #sidebar {
       position: fixed;
@@ -117,6 +121,7 @@
       left: 264px; right: 0;
       overflow-y: auto;
       background-color: #f9f9f9;
+      transition: left 0.35s ease-in-out;
     }
   
     /* Navbar fica fixa no topo do conteúdo */
@@ -155,7 +160,6 @@
     }
   </style>
   
-
   <!-- ponto para CSS extra de cada página -->
   {% block extra_css %}{% endblock %}
 
@@ -165,7 +169,7 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar-toggle">
       <div class="sidebar-logo">
-        <a href="{% url 'home_treinador' %}">Sistema Especialista</a>
+        <a href="#">Sistema Especialista</a>
       </div>
 
       <ul class="sidebar-nav">
