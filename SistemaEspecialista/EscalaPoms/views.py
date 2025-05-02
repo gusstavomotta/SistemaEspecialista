@@ -30,7 +30,6 @@ def login_view(request):
 def cadastro(request):
     if request.method == 'POST':
         tipo = request.POST.get('tipo_usuario')
-        # escolhe o form certo
         if tipo == 'treinador':
             form = TreinadorForm(request.POST)
         else:
@@ -155,9 +154,25 @@ def perfil(request):
     })
 
 @login_required
-def relatorio(request):
-    return render(request, 'EscalaPoms/relatorio.html')
+def minhas_escalas(request):
 
+    aluno = get_object_or_404(
+        Aluno,
+        cpf=request.user.username
+    )
+
+    escalas_do_aluno = (
+        EscalaPoms.objects
+        .filter(aluno=aluno)
+        .order_by('-data')
+    )
+
+    return render(request, 'EscalaPoms/minhas_escalas.html', {
+        'aluno': aluno,
+        'escalas': escalas_do_aluno,
+    })
+
+@login_required
 def logout_view(request):
     deslogar(request)
     return redirect('login')

@@ -1,0 +1,197 @@
+# Variáveis de saída
+VARIAVEL: nivel_tensao
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_depressao
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_hostilidade
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_fadiga
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_confusao
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_vigor
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+VARIAVEL: nivel_desajuste
+  TIPO: simbolica
+  VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
+
+# Variáveis de entrada (soma de cada domínio emocional)
+VARIAVEL: soma_tensao
+  TIPO: numerica
+
+VARIAVEL: soma_depressao
+  TIPO: numerica
+
+VARIAVEL: soma_hostilidade
+  TIPO: numerica
+
+VARIAVEL: soma_fadiga
+  TIPO: numerica
+
+VARIAVEL: soma_confusao
+  TIPO: numerica
+
+VARIAVEL: soma_vigor
+  TIPO: numerica
+
+VARIAVEL: soma_desajuste
+  TIPO: numerica
+
+# Regras para TENSÃO
+REGRA: tensao_baixa
+SE soma_tensao <= 5
+ENTAO nivel_tensao = Baixo
+
+REGRA: tensao_medio_baixa
+SE soma_tensao > 5 E soma_tensao <= 10
+ENTAO nivel_tensao = Medio_Baixo
+
+REGRA: tensao_media
+SE soma_tensao > 10 E soma_tensao <= 15
+ENTAO nivel_tensao = Medio
+
+REGRA: tensao_medio_alta
+SE soma_tensao > 15 E soma_tensao <= 20
+ENTAO nivel_tensao = Medio_Alto
+
+REGRA: tensao_alta
+SE soma_tensao > 20 E soma_tensao <= 25
+ENTAO nivel_tensao = Alto
+
+# Regras para DEPRESSÃO
+REGRA: depressao_baixa
+SE soma_depressao <= 5
+ENTAO nivel_depressao = Baixo
+
+REGRA: depressao_medio_baixa
+SE soma_depressao > 5 E soma_depressao <= 10
+ENTAO nivel_depressao = Medio_Baixo
+
+REGRA: depressao_media
+SE soma_depressao > 10 E soma_depressao <= 15
+ENTAO nivel_depressao = Medio
+
+REGRA: depressao_medio_alta
+SE soma_depressao > 15 E soma_depressao <= 20
+ENTAO nivel_depressao = Medio_Alto
+
+REGRA: depressao_alta
+SE soma_depressao > 20 E soma_depressao <= 25
+ENTAO nivel_depressao = Alto
+
+# Regras para HOSTILIDADE
+REGRA: hostilidade_baixa
+SE soma_hostilidade <= 5
+ENTAO nivel_hostilidade = Baixo
+
+REGRA: hostilidade_medio_baixa
+SE soma_hostilidade > 5 E soma_hostilidade <= 10
+ENTAO nivel_hostilidade = Medio_Baixo
+
+REGRA: hostilidade_media
+SE soma_hostilidade > 10 E soma_hostilidade <= 15
+ENTAO nivel_hostilidade = Medio
+
+REGRA: hostilidade_medio_alta
+SE soma_hostilidade > 15 E soma_hostilidade <= 20
+ENTAO nivel_hostilidade = Medio_Alto
+
+REGRA: hostilidade_alta
+SE soma_hostilidade > 20 E soma_hostilidade <= 25
+ENTAO nivel_hostilidade = Alto
+
+# Regras para FADIGA
+REGRA: fadiga_baixa
+SE soma_fadiga <= 5
+ENTAO nivel_fadiga = Baixo
+
+REGRA: fadiga_medio_baixa
+SE soma_fadiga > 5 E soma_fadiga <= 10
+ENTAO nivel_fadiga = Medio_Baixo
+
+REGRA: fadiga_media
+SE soma_fadiga > 10 E soma_fadiga <= 15
+ENTAO nivel_fadiga = Medio
+
+REGRA: fadiga_medio_alta
+SE soma_fadiga > 15 E soma_fadiga <= 20
+ENTAO nivel_fadiga = Medio_Alto
+
+REGRA: fadiga_alta
+SE soma_fadiga > 20 E soma_fadiga <= 25
+ENTAO nivel_fadiga = Alto
+
+# Regras para CONFUSÃO
+REGRA: confusao_baixa
+SE soma_confusao <= 5
+ENTAO nivel_confusao = Baixo
+
+REGRA: confusao_medio_baixa
+SE soma_confusao > 5 E soma_confusao <= 10
+ENTAO nivel_confusao = Medio_Baixo
+
+REGRA: confusao_media
+SE soma_confusao > 10 E soma_confusao <= 15
+ENTAO nivel_confusao = Medio
+
+REGRA: confusao_medio_alta
+SE soma_confusao > 15 E soma_confusao <= 20
+ENTAO nivel_confusao = Medio_Alto
+
+REGRA: confusao_alta
+SE soma_confusao > 20 E soma_confusao <= 25
+ENTAO nivel_confusao = Alto
+
+# Regras para VIGOR
+REGRA: vigor_baixo
+SE soma_vigor <= 5
+ENTAO nivel_vigor = Baixo
+
+REGRA: vigor_medio_baixo
+SE soma_vigor > 5 E soma_vigor <= 10
+ENTAO nivel_vigor = Medio_Baixo
+
+REGRA: vigor_medio
+SE soma_vigor > 10 E soma_vigor <= 15
+ENTAO nivel_vigor = Medio
+
+REGRA: vigor_medio_alto
+SE soma_vigor > 15 E soma_vigor <= 20
+ENTAO nivel_vigor = Medio_Alto
+
+REGRA: vigor_alto
+SE soma_vigor > 20 E soma_vigor <= 25
+ENTAO nivel_vigor = Alto
+
+# Regras para DESAJUSTE AO TREINO
+REGRA: desajuste_baixo
+SE soma_desajuste <= 5
+ENTAO nivel_desajuste = Baixo
+
+REGRA: desajuste_medio_baixo
+SE soma_desajuste > 5 E soma_desajuste <= 10
+ENTAO nivel_desajuste = Medio_Baixo
+
+REGRA: desajuste_medio
+SE soma_desajuste > 10 E soma_desajuste <= 15
+ENTAO nivel_desajuste = Medio
+
+REGRA: desajuste_medio_alto
+SE soma_desajuste > 15 E soma_desajuste <= 20
+ENTAO nivel_desajuste = Medio_Alto
+
+REGRA: desajuste_alto
+SE soma_desajuste > 20 E soma_desajuste <= 25
+ENTAO nivel_desajuste = Alto

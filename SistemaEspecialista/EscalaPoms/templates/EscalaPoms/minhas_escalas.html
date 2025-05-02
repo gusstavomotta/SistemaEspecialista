@@ -1,0 +1,101 @@
+{% extends 'EscalaPoms/base.html' %}
+{% load static %}
+
+{% block title %}Minhas Escalas{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Minhas escalas</h1>
+
+  <div class="mb-3">
+    <p><strong>Nome:</strong> {{ aluno.nome }}</p>
+    <p><strong>Email:</strong> {{ aluno.email }}</p>
+    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+  </div>
+
+  <h2 class="h4 mb-3">Escalas Registradas</h2>
+  <ul class="list-group mb-4">
+    {% for escala in escalas %}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-3">
+            <strong>Data:</strong><br>
+            {{ escala.data|date:"d/m/Y" }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Tensão:</strong><br>
+            {{ escala.soma_tensao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Depressão:</strong><br>
+            {{ escala.soma_depressao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Hostilidade:</strong><br>
+            {{ escala.soma_hostilidade }}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">
+            <strong>Σ Fadiga:</strong><br>
+            {{ escala.soma_fadiga }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Confusão:</strong><br>
+            {{ escala.soma_confusao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Vigor:</strong><br>
+            {{ escala.soma_vigor }}
+          </div>
+          <div class="col-md-3">
+            <strong>Σ Desajuste:</strong><br>
+            {{ escala.soma_desajuste }}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">
+            <strong>Nível Tensão:</strong><br>
+            {{ escala.nivel_tensao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Nível Depressão:</strong><br>
+            {{ escala.nivel_depressao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Nível Hostilidade:</strong><br>
+            {{ escala.nivel_hostilidade }}
+          </div>
+          <div class="col-md-3">
+            <strong>Nível Fadiga:</strong><br>
+            {{ escala.nivel_fadiga }}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3">
+            <strong>Nível Confusão:</strong><br>
+            {{ escala.nivel_confusao }}
+          </div>
+          <div class="col-md-3">
+            <strong>Nível Vigor:</strong><br>
+            {{ escala.nivel_vigor }}
+          </div>
+          <div class="col-md-3">
+            <strong>Nível Desajuste:</strong><br>
+            {{ escala.nivel_desajuste }}
+          </div>
+          <div class="col-md-3">
+            <strong>Volume Treino:</strong><br>
+            {{ escala.volume_treino|default:"–" }}
+          </div>
+        </div>
+      </li>
+      <br>
+    {% empty %}
+      <li class="list-group-item">Nenhuma escala registrada para este aluno.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'home' %}" class="btn btn-secondary">
+    ← Voltar
+  </a>
+{% endblock %}
