@@ -3,12 +3,16 @@
 /* Reset de fonte e corpo */
 body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f8f9fa;
+  background-color: #dcf1e1;
 }
 
-/* Fundo claro da seção */
 .gradient-form {
   background-color: #dcf1e1;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;  /* impede a rolagem da página */
 }
 
 /* Botão com cor sólida esportiva e efeito hover */
@@ -29,6 +33,7 @@ body {
 .card {
   border-radius: 1rem;
 }
+
 .shadow-lg {
   box-shadow: 0 1rem 2rem rgba(0,0,0,0.15) !important;
 }
@@ -37,37 +42,4 @@ body {
 .form-control-lg {
   border-radius: .5rem;
   padding: 1rem;
-}
-
-/* Lateral com imagem de fundo */
-.lateral-column {
-  background-image: url('../images/teste.jpg');
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Overlay semitransparente para realçar texto */
-.lateral-column .overlay {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
-
-/* Garante altura total */
-.row.g-0.h-100 {
-  height: 100%;
-}
-
-/* Responsividade: força altura total em telas médias para cima */
-/* força altura total em md+ */
-@media (min-width: 768px) {
-  .gradient-form {
-    height: 100vh !important;
-  }
-  .row.g-0.h-100 {
-    height: 100%;
-  }
 }

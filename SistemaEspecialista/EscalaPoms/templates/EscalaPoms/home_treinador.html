@@ -1,17 +1,9 @@
+{% extends 'EscalaPoms/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <title>Home</title>
-</head>
-<body>
-  <h1>BEM VINDO TREINADOR: XXXXX</h1>
-  <a href="{% url 'perfil' %}" class="btn-back">Perfil</a>
-  <a href="{% url 'relatorio' %}" class="btn-back">Relatório</a>
-  <a href="{% url 'logout' %}" class="btn-back">Logout</a>
-  <a href="{% url 'meus_alunos' %}" class="btn-back">Meus alunos</a>
+{% block title %}Home{% endblock %}
 
-</body>
-</html>
+{% block content %}
+  <h1>BEM VINDO TREINADOR: {{ request.user.first_name }}</h1>
+  
+{% endblock %}

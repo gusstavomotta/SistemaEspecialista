@@ -2,28 +2,24 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
   <!-- Bootstrap CSS local -->
-  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
   <!-- Seu CSS customizado -->
-  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
 </head>
 <body>
-
-    <section class="gradient-form d-flex align-items-center min-vh-100">
-    <div class="container py-5 h-100">
+  <section class="gradient-form d-flex align-items-center min-vh-100">
+    <div class="container-sm py-5 h-100">
       <div class="row justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
-          <!-- Card com sombra e bordas arredondadas -->
+        <!-- Em telas pequenas ocupa 100%, em md 80%, em lg 60%, em xl 50% -->
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card border-0 shadow-lg rounded-4 h-100">
             <div class="row g-0 h-100">
-
-              <!-- Coluna do formulário -->
-              <div class="col-lg-6 d-flex align-items-center">
+              <div class="col-12">
                 <div class="card-body p-md-5 mx-md-4 d-flex flex-column justify-content-center">
-
                   <div class="text-center mb-4">
                     <h2 class="fw-bold display-6">Login</h2>
                   </div>
@@ -80,18 +76,8 @@
                       </a>
                     </div>
                   </form>
-
                 </div>
               </div>
-
-              <!-- Coluna do texto lateral com imagem de fundo -->
-              <div class="col-lg-6 lateral-column position-relative d-flex align-items-center rounded-end-4">
-                <div class="overlay"></div>
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4 text-center position-relative">
-                  <h4 class="fw-bold text-nowrap">Transforme emoções em movimento</h4>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>

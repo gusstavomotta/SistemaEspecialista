@@ -10,7 +10,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Body ocupa toda a altura e dispõem header + main em coluna */
+/* Corpo da página */
 body {
   min-height: 100vh;
   display: flex;
@@ -18,39 +18,21 @@ body {
   background: linear-gradient(135deg, var(--secondary-color), var(--highlight-color));
 }
 
-/* Header full-width, título à esquerda, botão à direita */
+/* Header full-width, título centralizado */
 .header {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 20px;
 }
-
-/* Título “Meu Perfil” */
 .header h1 {
   font-size: 24px;
   font-weight: 600;
   color: var(--tertiary-color);
 }
 
-/* Botão de voltar */
-.btn-back {
-  text-decoration: none;
-  color: var(--tertiary-color);
-  font-weight: 500;
-  font-size: 16px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.1);
-  transition: background 0.3s, color 0.3s;
-}
-.btn-back:hover {
-  background: rgba(0,0,0,0.2);
-  color: var(--highlight-color);
-}
-
-/* Main fica centralizado no espaço restante */
+/* Container principal do perfil */
 .profile-container {
   flex: 1;
   display: flex;
@@ -69,7 +51,7 @@ body {
   max-width: 700px;
 }
 
-/* Campos de dados */
+/* Campos de dados: label + valor/input */
 .profile-field {
   display: flex;
   margin-bottom: 15px;
@@ -84,7 +66,7 @@ body {
   color: #333;
 }
 
-/* Botão de ação dentro do card */
+/* Botão de salvar */
 .profile-actions {
   margin-top: 25px;
   text-align: center;
@@ -94,7 +76,6 @@ body {
   padding: 10px 25px;
   background: linear-gradient(135deg, var(--secondary-color), var(--highlight-color));
   color: var(--tertiary-color);
-  text-decoration: none;
   border: none;
   border-radius: 5px;
   font-size: 18px;

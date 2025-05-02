@@ -1,30 +1,22 @@
+{% extends 'EscalaPoms/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <title>TELA MEUS ALUNOS</title>
-</head>
-<body>
+
+{% block title %}Meus Alunos{% endblock %}
+
+{% block content %}
   <h1>Você está na tela do Meus Alunos</h1>
 
   <h2>Alunos</h2>
-  <ul>
+  <ul class="list-unstyled">
     {% for aluno in alunos %}
-      <li>
-        <strong>Nome:</strong> {{ aluno.nome }} - <strong>Email:</strong> {{ aluno.email }} <br>
-        <a href="{% url 'historico_aluno' aluno.cpf %}">Ver Histórico</a>
+      <li class="mb-3">
+        <strong>Nome:</strong> {{ aluno.nome }} – <strong>Email:</strong> {{ aluno.email }}<br>
+        <a href="{% url 'historico_aluno' aluno.cpf %}" class="btn btn-sm btn-outline-primary mt-1">
+          Ver Histórico
+        </a>
       </li>
     {% empty %}
       <li>Nenhum aluno encontrado.</li>
     {% endfor %}
   </ul>
-
-  <div>
-    <a href="{% url 'perfil' %}" class="btn-back">Perfil</a>
-    <a href="{% url 'escala' %}" class="btn-back">Escala</a>
-    <a href="{% url 'relatorio' %}" class="btn-back">Relatório</a>
-    <a href="{% url 'logout' %}" class="btn-back">Logout</a>
-  </div>
-</body>
-</html>
+{% endblock %}

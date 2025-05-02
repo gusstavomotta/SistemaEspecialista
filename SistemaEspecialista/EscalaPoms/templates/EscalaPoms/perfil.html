@@ -1,29 +1,26 @@
+{% extends 'EscalaPoms/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Perfil</title>
-  <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
+{% endblock %}
+
+{% block content %}
   <header class="header">
     <h1>Meu Perfil</h1>
-    <a href="{{ url_dashboard }}" class="btn-back">← Voltar para a home</a>
   </header>
 
   {% if messages %}
-  <div class="messages">
-    {% for message in messages %}
-      <div class="alert {{ message.tags }}">
-        {{ message }}
-      </div>
-    {% endfor %}
-  </div>
-{% endif %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   <form method="POST">
     {% csrf_token %}
@@ -55,10 +52,10 @@
         </div>
 
         {% if usuario.treinador %}
-        <div class="profile-field">
-          <span class="label">Treinador:</span>
-          <span class="value">{{ usuario.treinador.nome }}</span>
-        </div>
+          <div class="profile-field">
+            <span class="label">Treinador:</span>
+            <span class="value">{{ usuario.treinador.nome }}</span>
+          </div>
         {% endif %}
 
         <div class="profile-actions">
@@ -67,5 +64,4 @@
       </div>
     </main>
   </form>
-</body>
-</html>
+{% endblock %}
