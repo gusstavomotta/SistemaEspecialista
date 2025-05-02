@@ -2,35 +2,99 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <title>Esqueceu sua senha</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recuperar Senha</title>
+  <!-- Bootstrap CSS local -->
+  <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+  <!-- Seu CSS customizado -->
+  <link rel="stylesheet" href="{% static 'css/esqueceu_senha.css' %}" />
 </head>
 <body>
-  <h1>Recuperar Senha</h1>
+  <section class="gradient-form d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container py-5">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 mx-auto my-auto">
+          <div class="card border-0 shadow-lg rounded-4">
+            <div class="row g-0 h-100">
+              <div class="col-12">
+                <div class="card-body p-md-5 mx-md-4 d-flex flex-column justify-content-center">
+                  
+                  <div class="text-center mb-4">
+                    <h2 class="fw-bold display-6">Redefinir Senha</h2>
+                  </div>
 
-  {% if messages %}
-    <ul>
-      {% for message in messages %}
-        <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+                  <form method="post" action="">
+                    {% csrf_token %}
 
-  <form method="post">
-    {% csrf_token %}
-    <label for="cpf">CPF:</label>
-    <input type="text" name="cpf" id="cpf" maxlength="14" required><br><br>
+                    {% if messages %}
+                      <div class="alert alert-warning rounded-3">
+                        {% for message in messages %}
+                          <div>{{ message }}</div>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
 
-    <label for="nova_senha">Nova Senha:</label>
-    <input type="password" name="nova_senha" id="nova_senha" required><br><br>
+                    <div class="form-outline mb-4">
+                      <input
+                        type="text"
+                        id="cpf"
+                        name="cpf"
+                        class="form-control form-control-lg"
+                        placeholder="Digite seu CPF"
+                        maxlength="14"
+                        required
+                      />
+                    </div>
 
-    <label for="confirmar_senha">Confirmar Senha:</label>
-    <input type="password" name="confirmar_senha" id="confirmar_senha" required><br><br>
+                    <div class="form-outline mb-4">
+                      <input
+                        type="password"
+                        id="nova_senha"
+                        name="nova_senha"
+                        class="form-control form-control-lg"
+                        placeholder="Nova senha"
+                        required
+                      />
+                    </div>
 
-    <button type="submit">Atualizar Senha</button>
-  </form>
+                    <div class="form-outline mb-4">
+                      <input
+                        type="password"
+                        id="confirmar_senha"
+                        name="confirmar_senha"
+                        class="form-control form-control-lg"
+                        placeholder="Confirmar senha"
+                        required
+                      />
+                    </div>
 
-  <br>
-  <a href="{% url 'login' %}">Voltar ao login</a>
+                    <div class="text-center mb-5">
+                      <button
+                        type="submit"
+                        class="btn btn-lg gradient-custom-2 w-100 mb-3"
+                      >
+                        Atualizar Senha
+                      </button>
+                      <a
+                        href="{% url 'login' %}"
+                        class="text-muted small d-block"
+                      >
+                        Voltar ao login
+                      </a>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </section>
+
+  <!-- Bootstrap JS local (inclui Popper) -->
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
