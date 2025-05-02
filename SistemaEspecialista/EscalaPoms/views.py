@@ -173,7 +173,7 @@ def meus_alunos(request):
 @treinador_required
 def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
-    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data')
+    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('classificacao')
     return render(request, 'EscalaPoms/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
 
 @login_required

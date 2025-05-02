@@ -16,11 +16,12 @@
     {% for escala in escalas %}
       <li class="list-group-item">
         <div class="row">
-          <div class="col-md-3"><strong>Data:</strong><br>{{ escala.data }}</div>
+          <div class="col-md-3"><strong>Data:</strong><br>{{ escala.data|date:"d/m/Y" }}</div>
           <div class="col-md-3"><strong>PTH:</strong><br>{{ escala.pth }}</div>
           <div class="col-md-3"><strong>Sono:</strong><br>{{ escala.sono|default:"–" }}</div>
           <div class="col-md-3"><strong>Freq. Cardíaca:</strong><br>{{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
         </div>
+
         <div class="row mt-2">
           <div class="col-md-3"><strong>Σ Tensão:</strong><br>{{ escala.soma_tensao }}</div>
           <div class="col-md-3"><strong>Σ Depressão:</strong><br>{{ escala.soma_depressao }}</div>
@@ -33,7 +34,27 @@
           <div class="col-md-3"><strong>Σ Desajuste:</strong><br>{{ escala.soma_desajuste }}</div>
           <div class="col-md-3"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
         </div>
-        
+
+        {% if escala.classificacao %}
+        <div class="row mt-4">
+          <div class="col-12"><strong>Níveis Emocionais:</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-3"><strong>Tensão:</strong><br>{{ escala.classificacao.nivel_tensao }}</div>
+          <div class="col-md-3"><strong>Depressão:</strong><br>{{ escala.classificacao.nivel_depressao }}</div>
+          <div class="col-md-3"><strong>Hostilidade:</strong><br>{{ escala.classificacao.nivel_hostilidade }}</div>
+          <div class="col-md-3"><strong>Fadiga:</strong><br>{{ escala.classificacao.nivel_fadiga }}</div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-3"><strong>Confusão:</strong><br>{{ escala.classificacao.nivel_confusao }}</div>
+          <div class="col-md-3"><strong>Vigor:</strong><br>{{ escala.classificacao.nivel_vigor }}</div>
+          <div class="col-md-3"><strong>Desajuste:</strong><br>{{ escala.classificacao.nivel_desajuste }}</div>
+        </div>
+        {% else %}
+        <div class="row mt-3">
+          <div class="col-12 text-warning">Classificação emocional ainda não disponível.</div>
+        </div>
+        {% endif %}
       </li>
       <br>
     {% empty %}
