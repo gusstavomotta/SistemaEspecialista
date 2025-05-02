@@ -163,3 +163,5 @@ def relatorio(request):
 def logout_view(request):
     deslogar(request)
     return redirect('login')
+
+
