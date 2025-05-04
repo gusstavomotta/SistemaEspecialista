@@ -1128,6 +1128,7 @@
 
     <fieldset class="mb-4">
       <legend class="h5">Dados Adicionais – Opcional</legend>
+      
       <div class="row g-3">
         <div class="col-md-4">
           <label for="sono" class="form-label">Horas de Sono</label>
@@ -1140,6 +1141,7 @@
             placeholder="Ex: 8 horas"
           >
         </div>
+
         <div class="col-md-4">
           <label for="volume_treino" class="form-label">Volume de Treino</label>
           <input
@@ -1151,6 +1153,7 @@
             placeholder="Ex: 50"
           >
         </div>
+
         <div class="col-md-4">
           <label for="freq_cardiaca_media" class="form-label">Frequência Cardíaca Média (BPM)</label>
           <input
@@ -1161,6 +1164,17 @@
             min="0"
             placeholder="Ex: 80 BPM"
           >
+        </div>
+
+        <div class="mb-3">
+          <label for="observacoes" class="form-label">Informações Complementares</label>
+          <textarea
+            class="form-control"
+            id="observacoes"
+            name="observacoes"
+            rows="3"
+            placeholder="Ex: tomando remédio, cachorro morreu, etc."
+          ></textarea>
         </div>
       </div>
     </fieldset>

@@ -116,10 +116,13 @@ def escala(request):
             # 1) Processa os dados brutos e soma os domínios
             dados = processar_dados_escala(request)
 
+            observacoes = request.POST.get('observacoes', '').strip() or None
+
             # 2) Cria a EscalaPoms
             escala = EscalaPoms.objects.create(
                 aluno=aluno,
                 data=datetime.date.today(),
+                observacoes=observacoes,
                 **dados
             )
 
@@ -155,7 +158,7 @@ def escala(request):
             )
 
             messages.success(request, "Dados salvos e classificados com sucesso!")
-            return redirect('perfil')
+            return redirect('home')
 
         except ValueError as ev:
             messages.error(request, str(ev))

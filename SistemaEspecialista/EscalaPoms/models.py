@@ -51,6 +51,11 @@ class EscalaPoms(models.Model):
         blank=True,
         help_text="Frequência cardíaca média (BPM)"
     )
+    observacoes = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Informações complementares (ex: tomando remédio, acontecimentos da semana)"
+    )
 
     def __str__(self):
         # Retorna uma string que relaciona o aluno e a data da escala, facilitando a identificação do registro.
