@@ -10,12 +10,29 @@
 {% block content %}
   <section class="meus-alunos">
     <h1>Meus Alunos</h1>
+
+    <form method="get" class="mb-4">
+      <div class="input-group">
+        <input
+          type="text"
+          id="searchInput"
+          name="q"
+          class="form-control"
+          placeholder="Buscar aluno por nome..."
+          value="{{ q }}"
+        >
+        <button class="btn btn-outline-secondary" type="submit">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </form>
+
     <ul class="aluno-list">
       {% for aluno in alunos %}
         <li class="aluno-item">
           <div class="info">
             <span class="label">Nome:</span>
-            <span class="value">{{ aluno.nome }}</span>
+            <span class="value aluno-nome">{{ aluno.nome }}</span>
             <span class="label">Email:</span>
             <span class="value">{{ aluno.email }}</span>
           </div>
@@ -28,4 +45,16 @@
       {% endfor %}
     </ul>
   </section>
+  <script>
+    const input = document.getElementById('searchInput');
+    const items = document.querySelectorAll('.aluno-item');
+  
+    input.addEventListener('input', () => {
+      const filtro = input.value.trim().toLowerCase();
+      items.forEach(item => {
+        const nome = item.querySelector('.aluno-nome').textContent.toLowerCase();
+        item.style.display = nome.includes(filtro) ? '' : 'none';
+      });
+    });
+  </script>
 {% endblock %}

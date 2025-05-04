@@ -169,8 +169,16 @@ def escala(request):
 @treinador_required
 def meus_alunos(request):
     treinador = Treinador.objects.get(cpf=request.user.username)
-    alunos = Aluno.objects.filter(treinador=treinador).order_by('nome')
-    return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos})
+    # Captura termo de busca
+    q = request.GET.get('q', '').strip()
+
+    # Filtra alunos do treinador
+    alunos = Aluno.objects.filter(treinador=treinador)
+    if q:
+        alunos = alunos.filter(nome__icontains=q)
+    
+    alunos = alunos.order_by('nome')
+    return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos, 'q': q,})
 
 @login_required
 @treinador_required
