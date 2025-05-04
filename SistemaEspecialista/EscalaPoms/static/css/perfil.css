@@ -1,8 +1,9 @@
 /* perfil.css */
 
-/* Import Google Fonts - Poppins */
+/* Importa Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
+/* Reset e fonte */
 * {
   margin: 0;
   padding: 0;
@@ -10,92 +11,111 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Corpo da página */
+/* Body full height e coluna */
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, var(--secondary-color), var(--highlight-color));
 }
 
-/* Header full-width, título centralizado */
-.header {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+/* Wrapper geral do perfil */
+.perfil {
+  max-width: 800px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #333333;
 }
-.header h1 {
-  font-size: 24px;
+
+/* Header */
+.perfil .header {
+  margin-bottom: 1.5rem;
+}
+.perfil .header h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
   font-weight: 600;
-  color: var(--tertiary-color);
 }
 
-/* Container principal do perfil */
-.profile-container {
-  flex: 1;
+/* Pré-visualização da foto */
+.photo-field {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
+  margin-bottom: 1.5rem;
+}
+.photo-field .photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+  border: 2px solid #ccc;
 }
 
-/* Card de informações */
-.profile-card {
-  background-color: var(--tertiary-color);
-  padding: 35px 40px;
-  border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  width: 100%;
-  max-width: 700px;
-}
-
-/* Campos de dados: label + valor/input */
+/* Campos de perfil */
 .profile-field {
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 .profile-field .label {
   flex: 0 0 150px;
   font-weight: 500;
-  color: var(--highlight-color);
+  color: #555555;
 }
-.profile-field .value {
+.profile-field .value,
+.profile-field input {
   flex: 1;
-  color: #333;
+  color: #333333;
+  font-size: 1rem;
+}
+.profile-field input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
-/* Botão de salvar */
+/* Botão Salvar */
 .profile-actions {
-  margin-top: 25px;
+  margin-top: 2rem;
   text-align: center;
 }
 .profile-actions .btn {
-  display: inline-block;
   padding: 10px 25px;
-  background: linear-gradient(135deg, var(--secondary-color), var(--highlight-color));
-  color: var(--tertiary-color);
+  background: linear-gradient(135deg, #74C69D, #52B788);
+  color: #ffffff;
   border: none;
-  border-radius: 5px;
-  font-size: 18px;
+  border-radius: 0.25rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 .profile-actions .btn:hover {
-  background: linear-gradient(-135deg, var(--secondary-color), var(--highlight-color));
+  background: linear-gradient(-135deg, #74C69D, #52B788);
 }
 
 /* Responsividade */
-@media (max-width: 600px) {
-  .profile-card {
-    padding: 20px;
+@media (max-width: 576px) {
+  .perfil {
+    padding: 1.5rem 1rem;
+    margin: 1.5rem;
+  }
+  .perfil .header h1 {
+    font-size: 1.75rem;
+  }
+  .photo-field .photo-preview {
+    width: 100px;
+    height: 100px;
   }
   .profile-field {
     flex-direction: column;
   }
   .profile-field .label {
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
   }
 }

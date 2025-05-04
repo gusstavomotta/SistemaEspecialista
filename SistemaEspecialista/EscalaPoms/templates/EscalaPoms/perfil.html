@@ -1,67 +1,77 @@
+{# perfil.html #}
 {% extends 'EscalaPoms/base.html' %}
 {% load static %}
-
-{% block title %}Meu Perfil{% endblock %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
 {% endblock %}
 
+{% block title %}Meu Perfil{% endblock %}
+
 {% block content %}
-  <header class="header">
-    <h1>Meu Perfil</h1>
-  </header>
+  <section class="perfil">
+    <header class="header">
+      <h1>Meu Perfil</h1>
+    </header>
 
-  {% if messages %}
-    <div class="messages">
-      {% for message in messages %}
-        <div class="alert {{ message.tags }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
-  <form method="POST">
-    {% csrf_token %}
-    <main class="profile-container">
-      <div class="profile-card">
-        <div class="profile-field">
-          <span class="label">CPF:</span>
-          <span class="value">{{ usuario.cpf }}</span>
-        </div>
-
-        <div class="profile-field">
-          <span class="label">Nome:</span>
-          <span class="value">{{ usuario.nome }}</span>
-        </div>
-
-        <div class="profile-field">
-          <span class="label">Email:</span>
-          <input type="email" name="email" value="{{ usuario.email }}" required>
-        </div>
-
-        <div class="profile-field">
-          <span class="label">Telefone:</span>
-          <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
-        </div>
-
-        <div class="profile-field">
-          <span class="label">Gênero:</span>
-          <span class="value">{{ usuario.genero }}</span>
-        </div>
-
-        {% if usuario.treinador %}
-          <div class="profile-field">
-            <span class="label">Treinador:</span>
-            <span class="value">{{ usuario.treinador.nome }}</span>
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert {{ message.tags }}">
+            {{ message }}
           </div>
-        {% endif %}
-
-        <div class="profile-actions">
-          <button type="submit" class="btn">Salvar</button>
-        </div>
+        {% endfor %}
       </div>
-    </main>
-  </form>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Campo de foto com preview -->
+      <div class="photo-field">
+        {% if usuario.foto %}
+          <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
+        {% else %}
+          <div class="photo-preview"></div>
+        {% endif %}
+        <input type="file" name="foto" accept="image/*">
+      </div>
+
+      <div class="profile-field">
+        <span class="label">CPF:</span>
+        <span class="value">{{ usuario.cpf }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="label">Nome:</span>
+        <span class="value">{{ usuario.nome }}</span>
+      </div>
+
+      <div class="profile-field">
+        <span class="label">Email:</span>
+        <input type="email" name="email" value="{{ usuario.email }}" required>
+      </div>
+
+      <div class="profile-field">
+        <span class="label">Telefone:</span>
+        <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
+      </div>
+
+      <div class="profile-field">
+        <span class="label">Gênero:</span>
+        <span class="value">{{ usuario.genero }}</span>
+      </div>
+
+      {% if usuario.treinador %}
+        <div class="profile-field">
+          <span class="label">Treinador:</span>
+          <span class="value">{{ usuario.treinador.nome }}</span>
+        </div>
+      {% endif %}
+
+      <div class="profile-actions">
+        <button type="submit" class="btn">Salvar</button>
+      </div>
+    </form>
+  </section>
 {% endblock %}

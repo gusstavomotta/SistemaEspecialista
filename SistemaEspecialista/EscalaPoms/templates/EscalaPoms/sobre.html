@@ -1,6 +1,10 @@
 {% extends 'EscalaPoms/base.html' %}
 {% load static %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/sobre.css' %}">
+{% endblock %}
+
 {% block title %}Sobre o Projeto{% endblock %}
 
 {% block content %}

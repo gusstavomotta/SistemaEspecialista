@@ -1,0 +1,38 @@
+/* SOBRE (Sobre o Projeto) */
+.sobre {
+  max-width: 800px;
+  margin: 2.5rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #333333;
+}
+
+.sobre h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.sobre p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .sobre {
+    padding: 1.5rem 1rem;
+    margin: 1.5rem 1rem;
+  }
+  .sobre h1 {
+    font-size: 1.75rem;
+  }
+  .sobre p {
+    font-size: 0.95rem;
+  }
+}
