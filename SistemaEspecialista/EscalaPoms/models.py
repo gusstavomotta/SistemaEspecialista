@@ -7,6 +7,7 @@ class Pessoa(models.Model):
     senha       = models.CharField(max_length=128)
     genero      = models.CharField(max_length=12, choices=[('masculino','Masculino'),('feminino','Feminino')])
     num_telefone= models.CharField(max_length=100, null=True, blank=True)
+    foto = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
 
     class Meta:
         abstract = True

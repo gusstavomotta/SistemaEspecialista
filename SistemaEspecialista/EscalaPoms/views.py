@@ -193,8 +193,17 @@ def perfil(request):
     usuario = obter_usuario_por_cpf(cpf)
 
     if request.method == 'POST':
+        if 'remove_foto' in request.POST:
+            if usuario.foto:
+                usuario.foto.delete(save=False) 
+                usuario.foto = None              
+                usuario.save()
+                messages.success(request, 'Foto removida com sucesso.')
+            return redirect('perfil')
+        
         email = request.POST.get('email')
         telefone = request.POST.get('telefone')
+        foto = request.FILES.get('foto')
 
         if not validar_numero_telefone(telefone):
             messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
@@ -205,9 +214,11 @@ def perfil(request):
     
         usuario.email = email
         usuario.num_telefone = telefone
+        if foto:
+            usuario.foto = foto
+            
         usuario.save()
         messages.success(request, 'Perfil atualizado com sucesso.')
-
         return redirect('home')
 
     return render(request, 'EscalaPoms/perfil.html', {

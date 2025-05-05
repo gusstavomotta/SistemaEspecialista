@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import *
-
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', login_view, name='login'),
@@ -14,4 +14,4 @@ urlpatterns = [
     path('historico_aluno/<str:aluno_cpf>/', historico_aluno, name='historico_aluno'),
     path('redefinir_senha/', redefinir_senha, name='redefinir_senha'),
     path('sobre/' , sobre, name='sobre'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

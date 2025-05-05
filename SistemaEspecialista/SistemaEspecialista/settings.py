@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,11 +77,14 @@ WSGI_APPLICATION = 'SistemaEspecialista.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'teste',  
+        'USER': 'postgres',         
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -139,3 +144,8 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = 'login'
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_ROOT = BASE_DIR / 'media'  # Pasta onde as imagens serão salvas
+MEDIA_URL = '/media/'  # URL usada para acessar as imagens

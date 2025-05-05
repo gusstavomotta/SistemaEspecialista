@@ -30,12 +30,22 @@
     <ul class="aluno-list">
       {% for aluno in alunos %}
         <li class="aluno-item">
+          <!-- Exibe a foto do aluno -->
+          <div class="foto">
+            {% if aluno.foto %}
+              <img src="{{ aluno.foto.url }}" alt="Foto de {{ aluno.nome }}" class="foto-aluno" style="max-width: 80px; height: auto; border-radius: 50%;">
+            {% else %}
+              <img src="{% static 'images/no-photo.png' %}" alt="Sem foto" class="foto-aluno" style="max-width: 80px; height: auto; border-radius: 50%;">
+            {% endif %}
+          </div>
+
           <div class="info">
             <span class="label">Nome:</span>
             <span class="value aluno-nome">{{ aluno.nome }}</span>
             <span class="label">Email:</span>
             <span class="value">{{ aluno.email }}</span>
           </div>
+
           <a href="{% url 'historico_aluno' aluno.cpf %}" class="btn btn-sm btn-outline-primary">
             Ver Histórico
           </a>
@@ -45,6 +55,7 @@
       {% endfor %}
     </ul>
   </section>
+
   <script>
     const input = document.getElementById('searchInput');
     const items = document.querySelectorAll('.aluno-item');

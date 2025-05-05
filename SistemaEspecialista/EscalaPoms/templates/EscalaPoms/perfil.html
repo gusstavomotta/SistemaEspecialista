@@ -27,15 +27,15 @@
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
 
-      <!-- Campo de foto com preview -->
-      <div class="photo-field">
-        {% if usuario.foto %}
-          <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
-        {% else %}
-          <div class="photo-preview"></div>
-        {% endif %}
-        <input type="file" name="foto" accept="image/*">
-      </div>
+        <div class="photo-field">
+          {% if usuario.foto %}
+            <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
+            <button type="submit" name="remove_foto" value="1">Remover Foto</button>
+          {% else %}
+            <div class="photo-preview"></div>
+            <input type="file" name="foto" accept="image/*">
+          {% endif %}
+        </div>
 
       <div class="profile-field">
         <span class="label">CPF:</span>
