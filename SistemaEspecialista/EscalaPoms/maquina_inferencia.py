@@ -1,8 +1,6 @@
 import re
 from typing import Dict, List, Tuple
 
-# Função para carregar e interpretar regras POMS de um arquivo de texto
-
 def carregar_regras_poms(caminho_arquivo: str) -> Dict[str, List[Tuple[float, float, str]]]:
     """
     Lê o arquivo de regras POMS e retorna um mapa:
@@ -54,9 +52,6 @@ def carregar_regras_poms(caminho_arquivo: str) -> Dict[str, List[Tuple[float, fl
         lista_intervalos.sort(key=lambda intervalo: intervalo[0])
 
     return mapa_intervalos
-
-
-# Função para classificar níveis emocionais usando arquivo de regras POMS
 
 def classificar_niveis_emocoes(caminho_arquivo_regras: str,
                                 somas_emocoes: Dict[str, float]) -> Dict[str, str]:

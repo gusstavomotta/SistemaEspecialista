@@ -120,7 +120,7 @@ USE_TZ = True
 # ARQUIVOS ESTÁTICOS E MÍDIA
 # ========================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [BASE_DIR / 'EscalaPoms/static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
