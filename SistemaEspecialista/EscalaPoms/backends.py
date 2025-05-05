@@ -4,12 +4,8 @@ from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
-from django.contrib import messages
-from django.shortcuts import render
 from .models import Treinador, Aluno
-from .utils import normalizar_cpf
-
+from .validators import normalizar_cpf
 class CPFBackend(BaseBackend):
 
     def authenticate(self, request, username=None, password=None, **kwargs):

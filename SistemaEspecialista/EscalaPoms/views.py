@@ -1,8 +1,4 @@
-import datetime
-import os
-from django.conf        import settings
 import random
-from django.core.mail   import send_mail
 # Autenticação e controle de usuários
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as deslogar, authenticate, login
@@ -14,19 +10,11 @@ from django.contrib import messages
 
 # Imports de formulários, modelos e backends
 from .forms import *
-from .models import Treinador, Aluno, EscalaPoms, ClassificacaoRecomendacao
+from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
-from .maquina_inferencia import (
-    carregar_regras_poms,
-    classificar_niveis_emocoes
-)
-
-from .utils import (
-    validar_numero_telefone,
-    obter_usuario_por_cpf,
-    processar_dados_escala,
-    validar_cpf
-)
+from .validators import validar_cpf
+from .services.usuario_service import obter_usuario_por_cpf, remover_foto_usuario, atualizar_dados_usuario, processar_troca_treinador
+from .services.escala_service import confirmar_treinador, salvar_e_classificar_escala
 
 def login_view(request):
     if request.method == 'POST':
@@ -38,7 +26,7 @@ def login_view(request):
             messages.success(request, "Login efetuado com sucesso!")
             return redirect('home')
         messages.error(request, "CPF ou senha incorretos.")
-    return render(request, 'EscalaPoms/login.html')
+    return render(request, 'EscalaPoms/auth/login.html')
 
 def cadastro(request):
     if request.method == 'POST':
@@ -58,7 +46,7 @@ def cadastro(request):
         form = TreinadorForm()
 
     treinadores = Treinador.objects.all().values('cpf', 'nome')
-    return render(request, 'EscalaPoms/cadastro.html', {
+    return render(request, 'EscalaPoms/auth/cadastro.html', {
         'form': form,
         'treinadores': treinadores
     })
@@ -77,21 +65,17 @@ def redefinir_senha(request):
             messages.error(request, 'As senhas não coincidem.')
             return redirect('redefinir_senha')
 
-        try:
-            usuario = Treinador.objects.get(cpf=cpf)
-        except Treinador.DoesNotExist:
-            try:
-                usuario = Aluno.objects.get(cpf=cpf)
-            except Aluno.DoesNotExist:
-                messages.error(request, 'CPF não encontrado.')
-                return redirect('redefinir_senha')
+        usuario = obter_usuario_por_cpf(cpf) 
+        if not usuario:
+            messages.error(request, 'CPF não encontrado.')
+            return redirect('redefinir_senha')
 
         usuario.senha = make_password(nova_senha)
         usuario.save()
         messages.success(request, 'Senha redefinida com sucesso.')
         return redirect('login')
     
-    return render(request, 'EscalaPoms/redefinir_senha.html')
+    return render(request, 'EscalaPoms/auth/redefinir_senha.html')
 
 @login_required
 def home(request):
@@ -104,75 +88,29 @@ def home(request):
         tipo = 'Aluno'
 
     context = {'nome': usuario.nome, 'tipo': tipo}
-    return render(request, 'EscalaPoms/home.html', context)
+    return render(request, 'EscalaPoms/static/home.html', context)
 
 @login_required
 @aluno_required
 def escala(request):
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
+    treinadores = Treinador.objects.all()
 
     if request.method == 'POST' and 'confirmar_treinador' in request.POST:
-        cpf_sel = request.POST.get('treinador')
-        try:
-            treinador = Treinador.objects.get(cpf=cpf_sel)
-            aluno.treinador = treinador
-            aluno.save()
-            messages.success(request, "Treinador confirmado com sucesso!")
-        except Treinador.DoesNotExist:
-            messages.error(request, "Treinador inválido.")
-        return redirect('escala')
+        return confirmar_treinador(aluno, request)
 
-    # Se o aluno ainda não tiver treinador ativo, só renderiza o dropdown
     if not aluno.treinador or not aluno.treinador.ativo:
-        return render(request, 'EscalaPoms/escala.html', {
+        return render(request, 'EscalaPoms/escala/escala.html', {
             'usuario': aluno,
-            'treinadores': Treinador.objects.all(), 
+            'treinadores': treinadores,
         })
 
-    
     if request.method == 'POST':
-        try:
-            dados = processar_dados_escala(request)
-            observacoes = request.POST.get('observacoes', '').strip() or None
+        return salvar_e_classificar_escala(aluno, request)
 
-            escala = EscalaPoms.objects.create(
-                aluno=aluno,
-                data=datetime.date.today(),
-                observacoes=observacoes,
-                **dados
-            )
-            somas = {
-                'soma_tensao':      escala.soma_tensao,
-                'soma_depressao':   escala.soma_depressao,
-                'soma_hostilidade': escala.soma_hostilidade,
-                'soma_fadiga':      escala.soma_fadiga,
-                'soma_confusao':    escala.soma_confusao,
-                'soma_vigor':       escala.soma_vigor,
-                'soma_desajuste':   escala.soma_desajuste,
-            }
-            caminho_regras = os.path.join(settings.BASE_DIR, 'EscalaPoms', 'regras.txt')
-            niveis = classificar_niveis_emocoes(caminho_regras, somas)
-
-            ClassificacaoRecomendacao.objects.create(
-                escala=escala,
-                nivel_tensao      = niveis.get('nivel_tensao'),
-                nivel_depressao   = niveis.get('nivel_depressao'),
-                nivel_hostilidade = niveis.get('nivel_hostilidade'),
-                nivel_fadiga      = niveis.get('nivel_fadiga'),
-                nivel_confusao    = niveis.get('nivel_confusao'),
-                nivel_vigor       = niveis.get('nivel_vigor'),
-                nivel_desajuste   = niveis.get('nivel_desajuste'),
-            )
-
-            messages.success(request, "Dados salvos e classificados com sucesso!")
-            return redirect('home')
-
-        except ValueError as ev:
-            messages.error(request, str(ev))
-
-    return render(request, 'EscalaPoms/escala.html', {
+    return render(request, 'EscalaPoms/escala/escala.html', {
         'usuario': aluno,
-        'treinadores': Treinador.objects.all(),
+        'treinadores': treinadores,
     })
 
 @login_required
@@ -186,14 +124,14 @@ def meus_alunos(request):
         alunos = alunos.filter(nome__icontains=q)
     
     alunos = alunos.order_by('nome')
-    return render(request, 'EscalaPoms/meus_alunos.html', {'alunos': alunos, 'q': q,})
+    return render(request, 'EscalaPoms/escala/meus_alunos.html', {'alunos': alunos, 'q': q,})
 
 @login_required
 @treinador_required
 def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
     escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('classificacao')
-    return render(request, 'EscalaPoms/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
+    return render(request, 'EscalaPoms/escala/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
 
 @login_required
 def perfil(request):
@@ -201,49 +139,20 @@ def perfil(request):
     usuario = obter_usuario_por_cpf(cpf)
 
     form_troca = None
-    if hasattr(usuario, 'treinador') and usuario.treinador and not usuario.treinador.ativo:
-        if request.method == 'POST' and 'treinador' in request.POST:
-            form_troca = AlunoTrocaTreinadorForm(request.POST, instance=usuario)
-            if form_troca.is_valid():
-                form_troca.save()
-                messages.success(request, 'Treinador atualizado com sucesso!')
-                return redirect('perfil')
-            else:
-                messages.error(request, 'Selecione um treinador válido.')
-        else:
-            form_troca = AlunoTrocaTreinadorForm(instance=usuario)
-            
     if request.method == 'POST':
-        if 'remove_foto' in request.POST:
-            if usuario.foto:
-                usuario.foto.delete(save=False) 
-                usuario.foto = None              
-                usuario.save()
-                messages.success(request, 'Foto removida com sucesso.')
-            return redirect('perfil')
-        
-        email = request.POST.get('email')
-        telefone = request.POST.get('telefone')
-        foto = request.FILES.get('foto')
+        if 'treinador' in request.POST and hasattr(usuario, 'treinador') and usuario.treinador and not usuario.treinador.ativo:
+            return processar_troca_treinador(usuario, request)
+        elif 'remove_foto' in request.POST:
+            return remover_foto_usuario(usuario, request)
+        else:
+            return atualizar_dados_usuario(usuario, request, 'EscalaPoms/aluno/perfil.html')
 
-        if not validar_numero_telefone(telefone):
-            messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
-            return render(request, 'EscalaPoms/perfil.html', {
-                'usuario': usuario,
-                'url_dashboard': reverse('home')
-            })
-    
-        usuario.email = email
-        usuario.num_telefone = telefone
-        usuario.foto = foto
-            
-        usuario.save()
-        messages.success(request, 'Perfil atualizado com sucesso.')
-        return redirect('home')
+    if hasattr(usuario, 'treinador') and usuario.treinador and not usuario.treinador.ativo:
+        form_troca = AlunoTrocaTreinadorForm(instance=usuario)
 
-    return render(request, 'EscalaPoms/perfil.html', {
-        'usuario':     usuario,
-        'form_troca':  form_troca,
+    return render(request, 'EscalaPoms/aluno/perfil.html', {
+        'usuario': usuario,
+        'form_troca': form_troca,
         'url_dashboard': reverse('home'),
     })
 
@@ -264,7 +173,7 @@ def minhas_escalas(request):
 
     )
 
-    return render(request, 'EscalaPoms/minhas_escalas.html', {
+    return render(request, 'EscalaPoms/escala/minhas_escalas.html', {
         'aluno': aluno,
         'escalas': escalas_do_aluno,
         
@@ -294,7 +203,7 @@ def solicitar_exclusao(request):
         messages.success(request, "Um código foi enviado para o seu email. Por favor, insira o código na próxima tela para confirmar a exclusão.")
         return redirect('confirmar_exclusao')
     
-    return render(request, 'EscalaPoms/solicitar_exclusao.html', {'usuario': usuario})
+    return render(request, 'EscalaPoms/exclusao/solicitar_exclusao.html', {'usuario': usuario})
 
 @login_required
 def confirmar_exclusao(request):
@@ -321,7 +230,7 @@ def confirmar_exclusao(request):
             messages.error(request, "Código incorreto. Por favor, tente novamente.")
             return redirect('confirmar_exclusao')
     
-    return render(request, 'EscalaPoms/confirmar_exclusao.html', {'usuario': usuario})
+    return render(request, 'EscalaPoms/exclusao/confirmar_exclusao.html', {'usuario': usuario})
 
 @login_required
 def logout_view(request):
@@ -330,4 +239,4 @@ def logout_view(request):
 
 @login_required
 def sobre(request):
-    return render(request, 'EscalaPoms/sobre.html')
+    return render(request, 'EscalaPoms/static/sobre.html')

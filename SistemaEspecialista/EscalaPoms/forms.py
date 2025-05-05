@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from .models import Treinador, Aluno
-from .utils import validar_cpf, validar_numero_telefone
+from .validators import validar_cpf, validar_numero_telefone
 import re
 
 class PessoaForm(forms.ModelForm):
