@@ -9,1178 +9,1212 @@
 
 {% block content %}
   <h1 class="text-center mb-4">Cadastro da Escala POMS Reduzida</h1>
-  <form method="post" action="{% url 'escala' %}">
-    {% csrf_token %}
-    
-    <fieldset class="mb-4">
-      <legend>Tensão</legend>
-      <div class="mb-3">
-        <p>1. Sinto-me tenso(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_0" value="0" required>
-            <label class="form-check-label" for="tensao_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline"> 
-            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_1" value="1">
-            <label class="form-check-label" for="tensao_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_2" value="2">
-            <label class="form-check-label" for="tensao_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_3" value="3">
-            <label class="form-check-label" for="tensao_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_4" value="4">
-            <label class="form-check-label" for="tensao_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>2. Sinto-me inquieto(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_0" value="0" required>
-            <label class="form-check-label" for="tensao_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_1" value="1">
-            <label class="form-check-label" for="tensao_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_2" value="2">
-            <label class="form-check-label" for="tensao_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_3" value="3">
-            <label class="form-check-label" for="tensao_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_4" value="4">
-            <label class="form-check-label" for="tensao_2_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>3. Sinto que estou nervoso(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_0" value="0" required>
-            <label class="form-check-label" for="tensao_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_1" value="1">
-            <label class="form-check-label" for="tensao_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_2" value="2">
-            <label class="form-check-label" for="tensao_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_3" value="3">
-            <label class="form-check-label" for="tensao_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_4" value="4">
-            <label class="form-check-label" for="tensao_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>4. Sinto que estou ansioso(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_0" value="0" required>
-            <label class="form-check-label" for="tensao_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_1" value="1">
-            <label class="form-check-label" for="tensao_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_2" value="2">
-            <label class="form-check-label" for="tensao_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_3" value="3">
-            <label class="form-check-label" for="tensao_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_4" value="4">
-            <label class="form-check-label" for="tensao_4_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>5. Sinto que estou tranquilo(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_0" value="0" required>
-            <label class="form-check-label" for="tensao_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_1" value="1">
-            <label class="form-check-label" for="tensao_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_2" value="2">
-            <label class="form-check-label" for="tensao_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_3" value="3">
-            <label class="form-check-label" for="tensao_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_4" value="4">
-            <label class="form-check-label" for="tensao_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>6. Sinto que estou impaciente</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_0" value="0" required>
-            <label class="form-check-label" for="tensao_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_1" value="1">
-            <label class="form-check-label" for="tensao_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_2" value="2">
-            <label class="form-check-label" for="tensao_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_3" value="3">
-            <label class="form-check-label" for="tensao_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_4" value="4">
-            <label class="form-check-label" for="tensao_6_4">4</label>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Depressão</legend>
-      <div class="mb-3">
-        <p>7. Sinto-me triste</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_0" value="0" required>
-            <label class="form-check-label" for="depressao_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_1" value="1">
-            <label class="form-check-label" for="depressao_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_2" value="2">
-            <label class="form-check-label" for="depressao_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_3" value="3">
-            <label class="form-check-label" for="depressao_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_4" value="4">
-            <label class="form-check-label" for="depressao_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>8. Sinto-me só</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_0" value="0" required>
-            <label class="form-check-label" for="depressao_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_1" value="1">
-            <label class="form-check-label" for="depressao_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_2" value="2">
-            <label class="form-check-label" for="depressao_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_3" value="3">
-            <label class="form-check-label" for="depressao_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_4" value="4">
-            <label class="form-check-label" for="depressao_2_4">4</label>
-          </div>
-        </div>
-      </div>      
-
-      <div class="mb-3">
-        <p>9. Sinto-me deprimido(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_0" value="0" required>
-            <label class="form-check-label" for="depressao_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_1" value="1">
-            <label class="form-check-label" for="depressao_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_2" value="2">
-            <label class="form-check-label" for="depressao_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_3" value="3">
-            <label class="form-check-label" for="depressao_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_4" value="4">
-            <label class="form-check-label" for="depressao_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>10. Sinto-me desanimado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_0" value="0" required>
-            <label class="form-check-label" for="depressao_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_1" value="1">
-            <label class="form-check-label" for="depressao_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_2" value="2">
-            <label class="form-check-label" for="depressao_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_3" value="3">
-            <label class="form-check-label" for="depressao_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_4" value="4">
-            <label class="form-check-label" for="depressao_4_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>11. Sinto-me infeliz</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_0" value="0" required>
-            <label class="form-check-label" for="depressao_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_1" value="1">
-            <label class="form-check-label" for="depressao_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_2" value="2">
-            <label class="form-check-label" for="depressao_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_3" value="3">
-            <label class="form-check-label" for="depressao_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_4" value="4">
-            <label class="form-check-label" for="depressao_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>12. Sinto-me desencorajado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_0" value="0" required>
-            <label class="form-check-label" for="depressao_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_1" value="1">
-            <label class="form-check-label" for="depressao_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_2" value="2">
-            <label class="form-check-label" for="depressao_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_3" value="3">
-            <label class="form-check-label" for="depressao_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_4" value="4">
-            <label class="form-check-label" for="depressao_6_4">4</label>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Hostilidade</legend>
-      <div class="mb-3">
-        <p>13. Sinto-me irritado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_1" value="1">
-            <label class="form-check-label" for="hostilidade_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_2" value="2">
-            <label class="form-check-label" for="hostilidade_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_3" value="3">
-            <label class="form-check-label" for="hostilidade_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_4" value="4">
-            <label class="form-check-label" for="hostilidade_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>14. Sinto-me mal-humorado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_1" value="1">
-            <label class="form-check-label" for="hostilidade_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_2" value="2">
-            <label class="form-check-label" for="hostilidade_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_3" value="3">
-            <label class="form-check-label" for="hostilidade_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_4" value="4">
-            <label class="form-check-label" for="hostilidade_2_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>15. Sinto-me aborrecido(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_1" value="1">
-            <label class="form-check-label" for="hostilidade_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_2" value="2">
-            <label class="form-check-label" for="hostilidade_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_3" value="3">
-            <label class="form-check-label" for="hostilidade_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_4" value="4">
-            <label class="form-check-label" for="hostilidade_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>16. Sinto-me furioso(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_1" value="1">
-            <label class="form-check-label" for="hostilidade_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_2" value="2">
-            <label class="form-check-label" for="hostilidade_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_3" value="3">
-            <label class="form-check-label" for="hostilidade_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_4" value="4">
-            <label class="form-check-label" for="hostilidade_4_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>17. Sinto-me com mau feitio</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_1" value="1">
-            <label class="form-check-label" for="hostilidade_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_2" value="2">
-            <label class="form-check-label" for="hostilidade_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_3" value="3">
-            <label class="form-check-label" for="hostilidade_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_4" value="4">
-            <label class="form-check-label" for="hostilidade_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>18. Sinto-me enervado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_0" value="0" required>
-            <label class="form-check-label" for="hostilidade_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_1" value="1">
-            <label class="form-check-label" for="hostilidade_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_2" value="2">
-            <label class="form-check-label" for="hostilidade_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_3" value="3">
-            <label class="form-check-label" for="hostilidade_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_4" value="4">
-            <label class="form-check-label" for="hostilidade_6_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-    </fieldset>
-    
-    <fieldset>
-      <legend>Fadiga</legend>
-      <div class="mb-3">
-        <p>19. Sinto-me esgotado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_0" value="0" required>
-            <label class="form-check-label" for="fadiga_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_1" value="1">
-            <label class="form-check-label" for="fadiga_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_2" value="2">
-            <label class="form-check-label" for="fadiga_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_3" value="3">
-            <label class="form-check-label" for="fadiga_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_4" value="4">
-            <label class="form-check-label" for="fadiga_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>20. Sinto-me mal fatigado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_0" value="0" required>
-            <label class="form-check-label" for="fadiga_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_1" value="1">
-            <label class="form-check-label" for="fadiga_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_2" value="2">
-            <label class="form-check-label" for="fadiga_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_3" value="3">
-            <label class="form-check-label" for="fadiga_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_4" value="4">
-            <label class="form-check-label" for="fadiga_2_4">4</label>
-          </div>
-        </div>
-      </div>      
-    
-      <div class="mb-3">
-        <p>21. Sinto-me exausto(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_0" value="0" required>
-            <label class="form-check-label" for="fadiga_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_1" value="1">
-            <label class="form-check-label" for="fadiga_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_2" value="2">
-            <label class="form-check-label" for="fadiga_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_3" value="3">
-            <label class="form-check-label" for="fadiga_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_4" value="4">
-            <label class="form-check-label" for="fadiga_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>22. Sinto-me sem energia</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_0" value="0" required>
-            <label class="form-check-label" for="fadiga_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_1" value="1">
-            <label class="form-check-label" for="fadiga_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_2" value="2">
-            <label class="form-check-label" for="fadiga_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_3" value="3">
-            <label class="form-check-label" for="fadiga_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_4" value="4">
-            <label class="form-check-label" for="fadiga_4_4">4</label>
-          </div>
-        </div>
-      </div>      
-
-      <div class="mb-3">
-        <p>23. Sinto-me estourado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_0" value="0" required>
-            <label class="form-check-label" for="fadiga_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_1" value="1">
-            <label class="form-check-label" for="fadiga_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_2" value="2">
-            <label class="form-check-label" for="fadiga_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_3" value="3">
-            <label class="form-check-label" for="fadiga_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_4" value="4">
-            <label class="form-check-label" for="fadiga_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>24. Sinto-me cansado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_0" value="0" required>
-            <label class="form-check-label" for="fadiga_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_1" value="1">
-            <label class="form-check-label" for="fadiga_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_2" value="2">
-            <label class="form-check-label" for="fadiga_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_3" value="3">
-            <label class="form-check-label" for="fadiga_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_4" value="4">
-            <label class="form-check-label" for="fadiga_6_4">4</label>
-          </div>
-        </div>
-      </div>      
-    </fieldset>
-    
-    <fieldset>
-      <legend>Confusão</legend>
-      <div class="mb-3">
-        <p>25. Sinto-me confuso</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_0" value="0" required>
-            <label class="form-check-label" for="confusao_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_1" value="1">
-            <label class="form-check-label" for="confusao_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_2" value="2">
-            <label class="form-check-label" for="confusao_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_3" value="3">
-            <label class="form-check-label" for="confusao_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_4" value="4">
-            <label class="form-check-label" for="confusao_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>26. Sinto-me embaralhado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_0" value="0" required>
-            <label class="form-check-label" for="confusao_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_1" value="1">
-            <label class="form-check-label" for="confusao_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_2" value="2">
-            <label class="form-check-label" for="confusao_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_3" value="3">
-            <label class="form-check-label" for="confusao_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_4" value="4">
-            <label class="form-check-label" for="confusao_2_4">4</label>
-          </div>
-        </div>
-      </div>      
-    
-      <div class="mb-3">
-        <p>27. Sinto-me desnorteado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_0" value="0" required>
-            <label class="form-check-label" for="confusao_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_1" value="1">
-            <label class="form-check-label" for="confusao_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_2" value="2">
-            <label class="form-check-label" for="confusao_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_3" value="3">
-            <label class="form-check-label" for="confusao_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_4" value="4">
-            <label class="form-check-label" for="confusao_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>28. Sinto-me eficaz</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_0" value="0" required>
-            <label class="form-check-label" for="confusao_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_1" value="1">
-            <label class="form-check-label" for="confusao_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_2" value="2">
-            <label class="form-check-label" for="confusao_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_3" value="3">
-            <label class="form-check-label" for="confusao_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_4" value="4">
-            <label class="form-check-label" for="confusao_4_4">4</label>
-          </div>
-        </div>
+      {# Verifica se o aluno não tem treinador ou se está desativado #}
+      {% if not usuario.treinador or not usuario.treinador.ativo %}
+      {# Exibe alerta caso não haja treinador ativo #}
+      <div class="alert alert-warning">
+        Você precisa ter um treinador ativo para cadastrar a escala.
       </div>
 
-      <div class="mb-3">
-        <p>29. Sinto-me competente</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_0" value="0" required>
-            <label class="form-check-label" for="confusao_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_1" value="1">
-            <label class="form-check-label" for="confusao_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_2" value="2">
-            <label class="form-check-label" for="confusao_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_3" value="3">
-            <label class="form-check-label" for="confusao_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_4" value="4">
-            <label class="form-check-label" for="confusao_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>30. Sinto-me inseguro</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_0" value="0" required>
-            <label class="form-check-label" for="confusao_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_1" value="1">
-            <label class="form-check-label" for="confusao_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_2" value="2">
-            <label class="form-check-label" for="confusao_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_3" value="3">
-            <label class="form-check-label" for="confusao_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_4" value="4">
-            <label class="form-check-label" for="confusao_6_4">4</label>
-          </div>
-        </div>
-      </div>
-    </fieldset>
-    
-    <fieldset>
-      <legend>Vigor</legend>
-      <div class="mb-3">
-        <p>31. Sinto-me animado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_0" value="0" required>
-            <label class="form-check-label" for="vigor_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_1" value="1">
-            <label class="form-check-label" for="vigor_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_2" value="2">
-            <label class="form-check-label" for="vigor_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_3" value="3">
-            <label class="form-check-label" for="vigor_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_4" value="4">
-            <label class="form-check-label" for="vigor_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>32. Sinto-me ativo(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_0" value="0" required>
-            <label class="form-check-label" for="vigor_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_1" value="1">
-            <label class="form-check-label" for="vigor_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_2" value="2">
-            <label class="form-check-label" for="vigor_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_3" value="3">
-            <label class="form-check-label" for="vigor_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_4" value="4">
-            <label class="form-check-label" for="vigor_2_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>33. Sinto-me enérgico(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_0" value="0" required>
-            <label class="form-check-label" for="vigor_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_1" value="1">
-            <label class="form-check-label" for="vigor_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_2" value="2">
-            <label class="form-check-label" for="vigor_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_3" value="3">
-            <label class="form-check-label" for="vigor_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_4" value="4">
-            <label class="form-check-label" for="vigor_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>34. Sinto-me cheio(a) de vida</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_0" value="0" required>
-            <label class="form-check-label" for="vigor_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_1" value="1">
-            <label class="form-check-label" for="vigor_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_2" value="2">
-            <label class="form-check-label" for="vigor_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_3" value="3">
-            <label class="form-check-label" for="vigor_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_4" value="4">
-            <label class="form-check-label" for="vigor_4_4">4</label>
-          </div>
-        </div>
-      </div>      
-    
-      <div class="mb-3">
-        <p>35. Sinto-me cheio(a) de boa disposição</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_0" value="0" required>
-            <label class="form-check-label" for="vigor_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_1" value="1">
-            <label class="form-check-label" for="vigor_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_2" value="2">
-            <label class="form-check-label" for="vigor_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_3" value="3">
-            <label class="form-check-label" for="vigor_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_4" value="4">
-            <label class="form-check-label" for="vigor_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>36. Sinto-me alegre</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_0" value="0" required>
-            <label class="form-check-label" for="vigor_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_1" value="1">
-            <label class="form-check-label" for="vigor_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_2" value="2">
-            <label class="form-check-label" for="vigor_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_3" value="3">
-            <label class="form-check-label" for="vigor_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_4" value="4">
-            <label class="form-check-label" for="vigor_6_4">4</label>
-          </div>
-        </div>
-      </div>      
-    </fieldset>
-    
-    <fieldset>
-      <legend>Desajuste ao treino</legend>   
-      <div class="mb-3">
-        <p>37. Sinto-me imprestável</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_0" value="0" required>
-            <label class="form-check-label" for="desajuste_1_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_1" value="1">
-            <label class="form-check-label" for="desajuste_1_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_2" value="2">
-            <label class="form-check-label" for="desajuste_1_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_3" value="3">
-            <label class="form-check-label" for="desajuste_1_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_4" value="4">
-            <label class="form-check-label" for="desajuste_1_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>38. Sinto-me sem valor</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_0" value="0" required>
-            <label class="form-check-label" for="desajuste_2_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_1" value="1">
-            <label class="form-check-label" for="desajuste_2_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_2" value="2">
-            <label class="form-check-label" for="desajuste_2_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_3" value="3">
-            <label class="form-check-label" for="desajuste_2_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_4" value="4">
-            <label class="form-check-label" for="desajuste_2_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>39. Sinto-me miserável</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_0" value="0" required>
-            <label class="form-check-label" for="desajuste_3_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_1" value="1">
-            <label class="form-check-label" for="desajuste_3_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_2" value="2">
-            <label class="form-check-label" for="desajuste_3_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_3" value="3">
-            <label class="form-check-label" for="desajuste_3_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_4" value="4">
-            <label class="form-check-label" for="desajuste_3_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>40. Sinto-me inútil</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_0" value="0" required>
-            <label class="form-check-label" for="desajuste_4_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_1" value="1">
-            <label class="form-check-label" for="desajuste_4_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_2" value="2">
-            <label class="form-check-label" for="desajuste_4_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_3" value="3">
-            <label class="form-check-label" for="desajuste_4_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_4" value="4">
-            <label class="form-check-label" for="desajuste_4_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>41. Sinto-me culpado(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_0" value="0" required>
-            <label class="form-check-label" for="desajuste_5_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_1" value="1">
-            <label class="form-check-label" for="desajuste_5_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_2" value="2">
-            <label class="form-check-label" for="desajuste_5_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_3" value="3">
-            <label class="form-check-label" for="desajuste_5_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_4" value="4">
-            <label class="form-check-label" for="desajuste_5_4">4</label>
-          </div>
-        </div>
-      </div>
-      
-      <div class="mb-3">
-        <p>42. Sinto-me apático(a)</p>
-        <div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_0" value="0" required>
-            <label class="form-check-label" for="desajuste_6_0">0</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_1" value="1">
-            <label class="form-check-label" for="desajuste_6_1">1</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_2" value="2">
-            <label class="form-check-label" for="desajuste_6_2">2</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_3" value="3">
-            <label class="form-check-label" for="desajuste_6_3">3</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_4" value="4">
-            <label class="form-check-label" for="desajuste_6_4">4</label>
-          </div>
-        </div>
-      </div>      
-    </fieldset>
-
-    <fieldset class="mb-4">
-      <legend class="h5">Dados Adicionais – Opcional</legend>
-      
-      <div class="row g-3">
-        <div class="col-md-4">
-          <label for="sono" class="form-label">Horas de Sono</label>
-          <input
-            type="number"
-            class="form-control"
-            id="sono"
-            name="sono"
-            min="0"
-            placeholder="Ex: 8 horas"
-          >
-        </div>
-
-        <div class="col-md-4">
-          <label for="volume_treino" class="form-label">Volume de Treino</label>
-          <input
-            type="number"
-            class="form-control"
-            id="volume_treino"
-            name="volume_treino"
-            min="0"
-            placeholder="Ex: 50"
-          >
-        </div>
-
-        <div class="col-md-4">
-          <label for="freq_cardiaca_media" class="form-label">Frequência Cardíaca Média (BPM)</label>
-          <input
-            type="number"
-            class="form-control"
-            id="freq_cardiaca_media"
-            name="freq_cardiaca_media"
-            min="0"
-            placeholder="Ex: 80 BPM"
-          >
-        </div>
-
+      {# Formulário de seleção de treinador ativo #}
+      <form method="post" class="mb-4">
+        {% csrf_token %}
         <div class="mb-3">
-          <label for="observacoes" class="form-label">Informações Complementares</label>
-          <textarea
-            class="form-control"
-            id="observacoes"
-            name="observacoes"
-            rows="3"
-            placeholder="Ex: tomando remédio, cachorro morreu, etc."
-          ></textarea>
+          <label for="treinador" class="form-label">
+            Selecione um treinador ativo:
+          </label>
+          <select name="treinador" id="treinador" class="form-control" required>
+            <option value="" disabled selected>
+              Selecione um treinador
+            </option>
+            {# Itera sobre os treinadores ativos do contexto #}
+            {% for t in treinadores %}
+              <option value="{{ t.cpf }}">
+                {{ t.nome }}
+              </option>
+            {% endfor %}
+          </select>
         </div>
+        {# Botão para confirmar a escolha do treinador #}
+        <button type="submit" name="confirmar_treinador" class="btn btn-primary">
+          Confirmar Treinador
+        </button>
+      </form>
+
+    {% else %}
+      <form method="post" action="{% url 'escala' %}">
+        {% csrf_token %}
+        
+        <fieldset class="mb-4">
+          <legend>Tensão</legend>
+          <div class="mb-3">
+            <p>1. Sinto-me tenso(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_0" value="0" required>
+                <label class="form-check-label" for="tensao_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline"> 
+                <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_1" value="1">
+                <label class="form-check-label" for="tensao_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_2" value="2">
+                <label class="form-check-label" for="tensao_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_3" value="3">
+                <label class="form-check-label" for="tensao_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_1" id="tensao_1_4" value="4">
+                <label class="form-check-label" for="tensao_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>2. Sinto-me inquieto(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_0" value="0" required>
+                <label class="form-check-label" for="tensao_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_1" value="1">
+                <label class="form-check-label" for="tensao_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_2" value="2">
+                <label class="form-check-label" for="tensao_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_3" value="3">
+                <label class="form-check-label" for="tensao_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_2" id="tensao_2_4" value="4">
+                <label class="form-check-label" for="tensao_2_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>3. Sinto que estou nervoso(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_0" value="0" required>
+                <label class="form-check-label" for="tensao_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_1" value="1">
+                <label class="form-check-label" for="tensao_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_2" value="2">
+                <label class="form-check-label" for="tensao_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_3" value="3">
+                <label class="form-check-label" for="tensao_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_3" id="tensao_3_4" value="4">
+                <label class="form-check-label" for="tensao_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>4. Sinto que estou ansioso(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_0" value="0" required>
+                <label class="form-check-label" for="tensao_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_1" value="1">
+                <label class="form-check-label" for="tensao_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_2" value="2">
+                <label class="form-check-label" for="tensao_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_3" value="3">
+                <label class="form-check-label" for="tensao_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_4" id="tensao_4_4" value="4">
+                <label class="form-check-label" for="tensao_4_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>5. Sinto que estou tranquilo(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_0" value="0" required>
+                <label class="form-check-label" for="tensao_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_1" value="1">
+                <label class="form-check-label" for="tensao_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_2" value="2">
+                <label class="form-check-label" for="tensao_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_3" value="3">
+                <label class="form-check-label" for="tensao_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_5" id="tensao_5_4" value="4">
+                <label class="form-check-label" for="tensao_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>6. Sinto que estou impaciente</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_0" value="0" required>
+                <label class="form-check-label" for="tensao_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_1" value="1">
+                <label class="form-check-label" for="tensao_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_2" value="2">
+                <label class="form-check-label" for="tensao_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_3" value="3">
+                <label class="form-check-label" for="tensao_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="tensao_6" id="tensao_6_4" value="4">
+                <label class="form-check-label" for="tensao_6_4">4</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <legend>Depressão</legend>
+          <div class="mb-3">
+            <p>7. Sinto-me triste</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_0" value="0" required>
+                <label class="form-check-label" for="depressao_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_1" value="1">
+                <label class="form-check-label" for="depressao_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_2" value="2">
+                <label class="form-check-label" for="depressao_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_3" value="3">
+                <label class="form-check-label" for="depressao_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_1" id="depressao_1_4" value="4">
+                <label class="form-check-label" for="depressao_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>8. Sinto-me só</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_0" value="0" required>
+                <label class="form-check-label" for="depressao_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_1" value="1">
+                <label class="form-check-label" for="depressao_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_2" value="2">
+                <label class="form-check-label" for="depressao_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_3" value="3">
+                <label class="form-check-label" for="depressao_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_2" id="depressao_2_4" value="4">
+                <label class="form-check-label" for="depressao_2_4">4</label>
+              </div>
+            </div>
+          </div>      
+
+          <div class="mb-3">
+            <p>9. Sinto-me deprimido(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_0" value="0" required>
+                <label class="form-check-label" for="depressao_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_1" value="1">
+                <label class="form-check-label" for="depressao_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_2" value="2">
+                <label class="form-check-label" for="depressao_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_3" value="3">
+                <label class="form-check-label" for="depressao_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_3" id="depressao_3_4" value="4">
+                <label class="form-check-label" for="depressao_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>10. Sinto-me desanimado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_0" value="0" required>
+                <label class="form-check-label" for="depressao_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_1" value="1">
+                <label class="form-check-label" for="depressao_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_2" value="2">
+                <label class="form-check-label" for="depressao_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_3" value="3">
+                <label class="form-check-label" for="depressao_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_4" id="depressao_4_4" value="4">
+                <label class="form-check-label" for="depressao_4_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>11. Sinto-me infeliz</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_0" value="0" required>
+                <label class="form-check-label" for="depressao_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_1" value="1">
+                <label class="form-check-label" for="depressao_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_2" value="2">
+                <label class="form-check-label" for="depressao_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_3" value="3">
+                <label class="form-check-label" for="depressao_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_5" id="depressao_5_4" value="4">
+                <label class="form-check-label" for="depressao_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>12. Sinto-me desencorajado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_0" value="0" required>
+                <label class="form-check-label" for="depressao_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_1" value="1">
+                <label class="form-check-label" for="depressao_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_2" value="2">
+                <label class="form-check-label" for="depressao_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_3" value="3">
+                <label class="form-check-label" for="depressao_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="depressao_6" id="depressao_6_4" value="4">
+                <label class="form-check-label" for="depressao_6_4">4</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <legend>Hostilidade</legend>
+          <div class="mb-3">
+            <p>13. Sinto-me irritado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_1" value="1">
+                <label class="form-check-label" for="hostilidade_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_2" value="2">
+                <label class="form-check-label" for="hostilidade_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_3" value="3">
+                <label class="form-check-label" for="hostilidade_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_1" id="hostilidade_1_4" value="4">
+                <label class="form-check-label" for="hostilidade_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>14. Sinto-me mal-humorado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_1" value="1">
+                <label class="form-check-label" for="hostilidade_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_2" value="2">
+                <label class="form-check-label" for="hostilidade_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_3" value="3">
+                <label class="form-check-label" for="hostilidade_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_2" id="hostilidade_2_4" value="4">
+                <label class="form-check-label" for="hostilidade_2_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>15. Sinto-me aborrecido(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_1" value="1">
+                <label class="form-check-label" for="hostilidade_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_2" value="2">
+                <label class="form-check-label" for="hostilidade_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_3" value="3">
+                <label class="form-check-label" for="hostilidade_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_3" id="hostilidade_3_4" value="4">
+                <label class="form-check-label" for="hostilidade_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>16. Sinto-me furioso(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_1" value="1">
+                <label class="form-check-label" for="hostilidade_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_2" value="2">
+                <label class="form-check-label" for="hostilidade_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_3" value="3">
+                <label class="form-check-label" for="hostilidade_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_4" id="hostilidade_4_4" value="4">
+                <label class="form-check-label" for="hostilidade_4_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>17. Sinto-me com mau feitio</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_1" value="1">
+                <label class="form-check-label" for="hostilidade_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_2" value="2">
+                <label class="form-check-label" for="hostilidade_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_3" value="3">
+                <label class="form-check-label" for="hostilidade_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_5" id="hostilidade_5_4" value="4">
+                <label class="form-check-label" for="hostilidade_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>18. Sinto-me enervado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_0" value="0" required>
+                <label class="form-check-label" for="hostilidade_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_1" value="1">
+                <label class="form-check-label" for="hostilidade_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_2" value="2">
+                <label class="form-check-label" for="hostilidade_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_3" value="3">
+                <label class="form-check-label" for="hostilidade_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="hostilidade_6" id="hostilidade_6_4" value="4">
+                <label class="form-check-label" for="hostilidade_6_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+        </fieldset>
+        
+        <fieldset>
+          <legend>Fadiga</legend>
+          <div class="mb-3">
+            <p>19. Sinto-me esgotado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_0" value="0" required>
+                <label class="form-check-label" for="fadiga_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_1" value="1">
+                <label class="form-check-label" for="fadiga_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_2" value="2">
+                <label class="form-check-label" for="fadiga_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_3" value="3">
+                <label class="form-check-label" for="fadiga_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_1" id="fadiga_1_4" value="4">
+                <label class="form-check-label" for="fadiga_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>20. Sinto-me mal fatigado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_0" value="0" required>
+                <label class="form-check-label" for="fadiga_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_1" value="1">
+                <label class="form-check-label" for="fadiga_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_2" value="2">
+                <label class="form-check-label" for="fadiga_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_3" value="3">
+                <label class="form-check-label" for="fadiga_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_2" id="fadiga_2_4" value="4">
+                <label class="form-check-label" for="fadiga_2_4">4</label>
+              </div>
+            </div>
+          </div>      
+        
+          <div class="mb-3">
+            <p>21. Sinto-me exausto(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_0" value="0" required>
+                <label class="form-check-label" for="fadiga_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_1" value="1">
+                <label class="form-check-label" for="fadiga_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_2" value="2">
+                <label class="form-check-label" for="fadiga_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_3" value="3">
+                <label class="form-check-label" for="fadiga_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_3" id="fadiga_3_4" value="4">
+                <label class="form-check-label" for="fadiga_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>22. Sinto-me sem energia</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_0" value="0" required>
+                <label class="form-check-label" for="fadiga_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_1" value="1">
+                <label class="form-check-label" for="fadiga_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_2" value="2">
+                <label class="form-check-label" for="fadiga_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_3" value="3">
+                <label class="form-check-label" for="fadiga_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_4" id="fadiga_4_4" value="4">
+                <label class="form-check-label" for="fadiga_4_4">4</label>
+              </div>
+            </div>
+          </div>      
+
+          <div class="mb-3">
+            <p>23. Sinto-me estourado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_0" value="0" required>
+                <label class="form-check-label" for="fadiga_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_1" value="1">
+                <label class="form-check-label" for="fadiga_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_2" value="2">
+                <label class="form-check-label" for="fadiga_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_3" value="3">
+                <label class="form-check-label" for="fadiga_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_5" id="fadiga_5_4" value="4">
+                <label class="form-check-label" for="fadiga_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>24. Sinto-me cansado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_0" value="0" required>
+                <label class="form-check-label" for="fadiga_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_1" value="1">
+                <label class="form-check-label" for="fadiga_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_2" value="2">
+                <label class="form-check-label" for="fadiga_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_3" value="3">
+                <label class="form-check-label" for="fadiga_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="fadiga_6" id="fadiga_6_4" value="4">
+                <label class="form-check-label" for="fadiga_6_4">4</label>
+              </div>
+            </div>
+          </div>      
+        </fieldset>
+        
+        <fieldset>
+          <legend>Confusão</legend>
+          <div class="mb-3">
+            <p>25. Sinto-me confuso</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_0" value="0" required>
+                <label class="form-check-label" for="confusao_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_1" value="1">
+                <label class="form-check-label" for="confusao_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_2" value="2">
+                <label class="form-check-label" for="confusao_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_3" value="3">
+                <label class="form-check-label" for="confusao_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_1" id="confusao_1_4" value="4">
+                <label class="form-check-label" for="confusao_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>26. Sinto-me embaralhado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_0" value="0" required>
+                <label class="form-check-label" for="confusao_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_1" value="1">
+                <label class="form-check-label" for="confusao_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_2" value="2">
+                <label class="form-check-label" for="confusao_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_3" value="3">
+                <label class="form-check-label" for="confusao_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_2" id="confusao_2_4" value="4">
+                <label class="form-check-label" for="confusao_2_4">4</label>
+              </div>
+            </div>
+          </div>      
+        
+          <div class="mb-3">
+            <p>27. Sinto-me desnorteado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_0" value="0" required>
+                <label class="form-check-label" for="confusao_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_1" value="1">
+                <label class="form-check-label" for="confusao_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_2" value="2">
+                <label class="form-check-label" for="confusao_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_3" value="3">
+                <label class="form-check-label" for="confusao_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_3" id="confusao_3_4" value="4">
+                <label class="form-check-label" for="confusao_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>28. Sinto-me eficaz</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_0" value="0" required>
+                <label class="form-check-label" for="confusao_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_1" value="1">
+                <label class="form-check-label" for="confusao_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_2" value="2">
+                <label class="form-check-label" for="confusao_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_3" value="3">
+                <label class="form-check-label" for="confusao_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_4" id="confusao_4_4" value="4">
+                <label class="form-check-label" for="confusao_4_4">4</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <p>29. Sinto-me competente</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_0" value="0" required>
+                <label class="form-check-label" for="confusao_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_1" value="1">
+                <label class="form-check-label" for="confusao_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_2" value="2">
+                <label class="form-check-label" for="confusao_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_3" value="3">
+                <label class="form-check-label" for="confusao_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_5" id="confusao_5_4" value="4">
+                <label class="form-check-label" for="confusao_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>30. Sinto-me inseguro</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_0" value="0" required>
+                <label class="form-check-label" for="confusao_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_1" value="1">
+                <label class="form-check-label" for="confusao_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_2" value="2">
+                <label class="form-check-label" for="confusao_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_3" value="3">
+                <label class="form-check-label" for="confusao_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="confusao_6" id="confusao_6_4" value="4">
+                <label class="form-check-label" for="confusao_6_4">4</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <legend>Vigor</legend>
+          <div class="mb-3">
+            <p>31. Sinto-me animado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_0" value="0" required>
+                <label class="form-check-label" for="vigor_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_1" value="1">
+                <label class="form-check-label" for="vigor_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_2" value="2">
+                <label class="form-check-label" for="vigor_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_3" value="3">
+                <label class="form-check-label" for="vigor_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_1" id="vigor_1_4" value="4">
+                <label class="form-check-label" for="vigor_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>32. Sinto-me ativo(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_0" value="0" required>
+                <label class="form-check-label" for="vigor_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_1" value="1">
+                <label class="form-check-label" for="vigor_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_2" value="2">
+                <label class="form-check-label" for="vigor_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_3" value="3">
+                <label class="form-check-label" for="vigor_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_2" id="vigor_2_4" value="4">
+                <label class="form-check-label" for="vigor_2_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>33. Sinto-me enérgico(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_0" value="0" required>
+                <label class="form-check-label" for="vigor_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_1" value="1">
+                <label class="form-check-label" for="vigor_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_2" value="2">
+                <label class="form-check-label" for="vigor_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_3" value="3">
+                <label class="form-check-label" for="vigor_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_3" id="vigor_3_4" value="4">
+                <label class="form-check-label" for="vigor_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>34. Sinto-me cheio(a) de vida</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_0" value="0" required>
+                <label class="form-check-label" for="vigor_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_1" value="1">
+                <label class="form-check-label" for="vigor_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_2" value="2">
+                <label class="form-check-label" for="vigor_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_3" value="3">
+                <label class="form-check-label" for="vigor_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_4" id="vigor_4_4" value="4">
+                <label class="form-check-label" for="vigor_4_4">4</label>
+              </div>
+            </div>
+          </div>      
+        
+          <div class="mb-3">
+            <p>35. Sinto-me cheio(a) de boa disposição</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_0" value="0" required>
+                <label class="form-check-label" for="vigor_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_1" value="1">
+                <label class="form-check-label" for="vigor_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_2" value="2">
+                <label class="form-check-label" for="vigor_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_3" value="3">
+                <label class="form-check-label" for="vigor_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_5" id="vigor_5_4" value="4">
+                <label class="form-check-label" for="vigor_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>36. Sinto-me alegre</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_0" value="0" required>
+                <label class="form-check-label" for="vigor_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_1" value="1">
+                <label class="form-check-label" for="vigor_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_2" value="2">
+                <label class="form-check-label" for="vigor_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_3" value="3">
+                <label class="form-check-label" for="vigor_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="vigor_6" id="vigor_6_4" value="4">
+                <label class="form-check-label" for="vigor_6_4">4</label>
+              </div>
+            </div>
+          </div>      
+        </fieldset>
+        
+        <fieldset>
+          <legend>Desajuste ao treino</legend>   
+          <div class="mb-3">
+            <p>37. Sinto-me imprestável</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_0" value="0" required>
+                <label class="form-check-label" for="desajuste_1_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_1" value="1">
+                <label class="form-check-label" for="desajuste_1_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_2" value="2">
+                <label class="form-check-label" for="desajuste_1_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_3" value="3">
+                <label class="form-check-label" for="desajuste_1_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_1" id="desajuste_1_4" value="4">
+                <label class="form-check-label" for="desajuste_1_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>38. Sinto-me sem valor</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_0" value="0" required>
+                <label class="form-check-label" for="desajuste_2_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_1" value="1">
+                <label class="form-check-label" for="desajuste_2_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_2" value="2">
+                <label class="form-check-label" for="desajuste_2_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_3" value="3">
+                <label class="form-check-label" for="desajuste_2_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_2" id="desajuste_2_4" value="4">
+                <label class="form-check-label" for="desajuste_2_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>39. Sinto-me miserável</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_0" value="0" required>
+                <label class="form-check-label" for="desajuste_3_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_1" value="1">
+                <label class="form-check-label" for="desajuste_3_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_2" value="2">
+                <label class="form-check-label" for="desajuste_3_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_3" value="3">
+                <label class="form-check-label" for="desajuste_3_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_3" id="desajuste_3_4" value="4">
+                <label class="form-check-label" for="desajuste_3_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>40. Sinto-me inútil</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_0" value="0" required>
+                <label class="form-check-label" for="desajuste_4_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_1" value="1">
+                <label class="form-check-label" for="desajuste_4_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_2" value="2">
+                <label class="form-check-label" for="desajuste_4_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_3" value="3">
+                <label class="form-check-label" for="desajuste_4_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_4" id="desajuste_4_4" value="4">
+                <label class="form-check-label" for="desajuste_4_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>41. Sinto-me culpado(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_0" value="0" required>
+                <label class="form-check-label" for="desajuste_5_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_1" value="1">
+                <label class="form-check-label" for="desajuste_5_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_2" value="2">
+                <label class="form-check-label" for="desajuste_5_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_3" value="3">
+                <label class="form-check-label" for="desajuste_5_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_5" id="desajuste_5_4" value="4">
+                <label class="form-check-label" for="desajuste_5_4">4</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <p>42. Sinto-me apático(a)</p>
+            <div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_0" value="0" required>
+                <label class="form-check-label" for="desajuste_6_0">0</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_1" value="1">
+                <label class="form-check-label" for="desajuste_6_1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_2" value="2">
+                <label class="form-check-label" for="desajuste_6_2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_3" value="3">
+                <label class="form-check-label" for="desajuste_6_3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="desajuste_6" id="desajuste_6_4" value="4">
+                <label class="form-check-label" for="desajuste_6_4">4</label>
+              </div>
+            </div>
+          </div>      
+        </fieldset>
+
+        <fieldset class="mb-4">
+          <legend class="h5">Dados Adicionais – Opcional</legend>
+          
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="sono" class="form-label">Horas de Sono</label>
+              <input
+                type="number"
+                class="form-control"
+                id="sono"
+                name="sono"
+                min="0"
+                placeholder="Ex: 8 horas"
+              >
+            </div>
+
+            <div class="col-md-4">
+              <label for="volume_treino" class="form-label">Volume de Treino</label>
+              <input
+                type="number"
+                class="form-control"
+                id="volume_treino"
+                name="volume_treino"
+                min="0"
+                placeholder="Ex: 50"
+              >
+            </div>
+
+            <div class="col-md-4">
+              <label for="freq_cardiaca_media" class="form-label">Frequência Cardíaca Média (BPM)</label>
+              <input
+                type="number"
+                class="form-control"
+                id="freq_cardiaca_media"
+                name="freq_cardiaca_media"
+                min="0"
+                placeholder="Ex: 80 BPM"
+              >
+            </div>
+
+            <div class="mb-3">
+              <label for="observacoes" class="form-label">Informações Complementares</label>
+              <textarea
+                class="form-control"
+                id="observacoes"
+                name="observacoes"
+                rows="3"
+                placeholder="Ex: tomando remédio, cachorro morreu, etc."
+              ></textarea>
+            </div>
+          </div>
+        </fieldset>
+        
+        <button type="submit">Enviar Respostas</button>
+        
+        </form>
+    {% endif %}
       </div>
-    </fieldset>
-    
-    <button type="submit">Enviar Respostas</button>
-    
-    </form>
-  </div>
 {% endblock %}

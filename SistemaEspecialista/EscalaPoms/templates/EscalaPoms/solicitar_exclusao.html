@@ -1,0 +1,14 @@
+{% extends 'EscalaPoms/base.html' %}
+
+{% block title %}Solicitar Exclusão de Conta{% endblock %}
+
+{% block content %}
+  <h1>Excluir Conta</h1>
+  <p>Para confirmar a exclusão da sua conta, informe o seu email cadastrado:</p>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required>
+    <button type="submit">Enviar Link de Confirmação</button>
+  </form>
+{% endblock %}

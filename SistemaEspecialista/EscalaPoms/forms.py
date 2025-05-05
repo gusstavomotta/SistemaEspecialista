@@ -17,6 +17,12 @@ class PessoaForm(forms.ModelForm):
         cpf = re.sub(r'\D', '', self.cleaned_data['cpf'])
         if not validar_cpf(cpf):
             raise ValidationError("CPF inválido.")
+
+        from .models import Treinador, Aluno
+
+        if Treinador.objects.filter(cpf=cpf).exists() or Aluno.objects.filter(cpf=cpf).exists():
+            raise ValidationError("Já existe um usuário com este CPF.")
+
         return cpf
 
     def clean_num_telefone(self):
@@ -32,7 +38,6 @@ class PessoaForm(forms.ModelForm):
         return cleaned
 
     def save(self, commit=True):
-        # criptografa antes de persistir
         self.instance.senha = make_password(self.cleaned_data['senha'])
         return super().save(commit=commit)
 
@@ -62,3 +67,14 @@ class AlunoForm(PessoaForm):
         except Treinador.DoesNotExist:
             raise ValidationError({'treinador': "Treinador não encontrado."})
         return cleaned
+
+class AlunoTrocaTreinadorForm(forms.ModelForm):
+    treinador = forms.ModelChoiceField(
+        queryset=Treinador.objects.all(),   
+        empty_label="Selecione um treinador",
+        label="Novo Treinador"
+    )
+
+    class Meta:
+        model = Aluno
+        fields = ['treinador']

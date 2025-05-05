@@ -23,6 +23,9 @@ class CPFBackend(BaseBackend):
                 perfil = Aluno.objects.get(cpf=cpf)
             except Aluno.DoesNotExist:
                 return None
+            
+        if not perfil.ativo:
+            return None
 
         if not check_password(password, perfil.senha):
             return None
@@ -32,6 +35,12 @@ class CPFBackend(BaseBackend):
             user.set_unusable_password()
             user.save()
 
+        if not perfil.ativo:
+            user.is_active = False
+        else:
+            user.is_active = True
+        user.save()
+        
         if not user.is_active:
             return None
 

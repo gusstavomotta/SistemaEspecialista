@@ -1,5 +1,9 @@
 from django.db import models
 
+class ActiveManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(ativo=True)
+
 class Pessoa(models.Model):
     cpf         = models.CharField(max_length=11, primary_key=True, help_text="…")
     nome        = models.CharField(max_length=100)
@@ -8,16 +12,18 @@ class Pessoa(models.Model):
     genero      = models.CharField(max_length=12, choices=[('masculino','Masculino'),('feminino','Feminino')])
     num_telefone= models.CharField(max_length=100, null=True, blank=True)
     foto = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
+    ativo        = models.BooleanField(default=True) 
 
     class Meta:
         abstract = True
 
 class Treinador(Pessoa):
-    pass
+    objects = ActiveManager()
 
 class Aluno(Pessoa):
     
     treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
+    objects = ActiveManager()  # Apenas alunos ativos
 
 class EscalaPoms(models.Model):
 
@@ -84,3 +90,4 @@ class ClassificacaoRecomendacao(models.Model):
 
     def __str__(self):
         return f"Classificação para {self.escala.aluno.nome} em {self.escala.data}"
+    
