@@ -131,7 +131,7 @@ def meus_alunos(request):
 def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
     escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('classificacao')
-    return render(request, 'EscalaPoms/escala/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
+    return render(request, 'EscalaPoms/aluno/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
 
 @login_required
 def perfil(request):
@@ -153,7 +153,7 @@ def perfil(request):
     return render(request, 'EscalaPoms/aluno/perfil.html', {
         'usuario': usuario,
         'form_troca': form_troca,
-        'url_dashboard': reverse('home'),
+        'url_dashboard': reverse('perfil'),
     })
 
 @login_required
@@ -198,7 +198,7 @@ def solicitar_exclusao(request):
             'noreply@seusite.com',
             [usuario.email],
         )'''
-        print(f"Seu código para exclusão de conta é: {exclusao_codigo}")
+        print(f"\n\n\n\n\n\n\nSeu código para exclusão de conta é: {exclusao_codigo}\n\n\n\n\n\n\n")
         
         messages.success(request, "Um código foi enviado para o seu email. Por favor, insira o código na próxima tela para confirmar a exclusão.")
         return redirect('confirmar_exclusao')

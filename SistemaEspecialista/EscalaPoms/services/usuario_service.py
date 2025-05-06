@@ -21,7 +21,7 @@ def atualizar_dados_usuario(usuario, request, template):
         messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
         return render(request, template, {
             'usuario': usuario,
-            'url_dashboard': reverse('home')
+            'url_dashboard': reverse('perfil')
         })
 
     usuario.email = email
@@ -29,7 +29,7 @@ def atualizar_dados_usuario(usuario, request, template):
     usuario.foto = foto
     usuario.save()
     messages.success(request, 'Perfil atualizado com sucesso.')
-    return redirect('home')
+    return redirect('perfil')
 
 
 def processar_troca_treinador(usuario, request):

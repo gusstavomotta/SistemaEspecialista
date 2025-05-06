@@ -23,7 +23,7 @@ class Treinador(Pessoa):
 class Aluno(Pessoa):
     
     treinador = models.ForeignKey(Treinador, on_delete=models.CASCADE, related_name='alunos')
-    objects = ActiveManager()  # Apenas alunos ativos
+    objects = ActiveManager() 
 
 class EscalaPoms(models.Model):
 

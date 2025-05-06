@@ -42,8 +42,6 @@ def processar_dados_escala(request):
         'freq_cardiaca_media': converter_para_inteiro(request.POST.get('freq_cardiaca_media')),
     }
 
-
-
 def confirmar_treinador(aluno, request):
     from ..models import Treinador
     cpf_sel = request.POST.get('treinador')
