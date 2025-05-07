@@ -77,6 +77,16 @@
         <button type="submit" class="btn-success">Salvar</button>
       </div>
     </form>
+  {% if usuario.treinador %}
+    <div class="profile-field">
+      <span class="label">Treinador:</span>
+      <span class="value">{{ usuario.treinador.nome }}</span>
+      <span class="label">Email:</span>
+      <span class="value">{{ usuario.treinador.email }}</span>
+      <span class="label">Número de telefone:</span>
+      <span class="value">{{ usuario.treinador.num_telefone }}</span>
+    </div>
+{% endif %}
   </section>
 {% endblock %}
 
