@@ -1,0 +1,91 @@
+/* Container geral */
+.historico-aluno {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Título principal */
+.historico-title {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Dados do perfil */
+.perfil-dados {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #ccc;
+}
+
+.dados-basicos p {
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+/* Subtítulo */
+.subtitulo {
+  font-size: 1.25rem;
+  color: #555;
+}
+
+/* Lista de escalas */
+.escala-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.escala-item {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Linhas de valores */
+.escala-header .col,
+.escala-valores .col {
+  margin-bottom: 0.5rem;
+}
+
+/* Espaçamento interno */
+.escala-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.escala-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Link de voltar */
+.voltar-btn {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+/* Estado vazio */
+.vazio {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  background: transparent;
+  border: none;
+}

@@ -1,0 +1,41 @@
+.error-page {
+  max-width: 480px;
+  margin: 6rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.error-code {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  color: #52B788; /* vermelho de erro */
+}
+
+.error-msg {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.error-page .btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.btn-voltar {
+  background-color: #52B788;   /* verde */
+  color: #ffffff;              /* texto branco */
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+.btn-voltar:hover {
+  background-color: #74C69D;
+}
+

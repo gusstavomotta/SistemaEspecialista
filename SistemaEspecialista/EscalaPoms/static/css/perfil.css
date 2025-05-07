@@ -1,44 +1,61 @@
 /* perfil.css */
 
-/* Importa Poppins */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
-/* Reset e fonte */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Body: fundo geral da página */
+body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Body full height e coluna */
-body {
-  min-height: 100vh;
+/* Toasts fixados no topo */
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
 }
 
+.toast-container .alert {
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--border-radius);
+  background: #fff;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  opacity: 1;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.toast-container .alert.toast-hide {
+  opacity: 0;
+  transform: translateY(-10px);
+}
 
 /* Wrapper geral do perfil */
 .perfil {
   max-width: 800px;
   margin: 2.5rem auto;
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: var(--card-bg);
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  color: #333333;
+  color: var(--main-text-color);
 }
 
 /* Header */
 .perfil .header {
   margin-bottom: 1.5rem;
-}
-.perfil .header h1 {
   text-align: center;
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.perfil .header h1 {
   font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #2c3e50;
+  margin: 0;
+  color: var(--main-text-color);
   font-weight: 600;
 }
 
@@ -55,49 +72,87 @@ body {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 0.75rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--bg-gd);
+}
+.photo-field .photo-preview.empty {
+  background-color: var(--bg-start);
+}
+.remove-photo-btn {
+  background-color: var(--bg-gd);
+  color: var(--sidebar-link-color);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.remove-photo-btn:hover {
+  background-color: var(--bg-end);
 }
 
 /* Campos de perfil */
 .profile-field {
   display: flex;
+  align-items: center;
   margin-bottom: 1rem;
 }
 .profile-field .label {
   flex: 0 0 150px;
   font-weight: 500;
-  color: #555555;
+  color: var(--label-color);
 }
 .profile-field .value,
-.profile-field input {
+.profile-field input,
+.profile-field select {
   flex: 1;
-  color: #333333;
+  color: var(--text-color);
   font-size: 1rem;
 }
-.profile-field input {
+.profile-field input,
+.profile-field select {
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--bg-gd);
   border-radius: 0.25rem;
+  background-color: var(--card-bg);
 }
 
-/* Botão Salvar */
+/* Botões de ação (Salvar, Trocar, Excluir) */
 .profile-actions {
   margin-top: 2rem;
   text-align: center;
 }
-.profile-actions .btn {
+.profile-actions .btn-primary,
+.profile-actions .btn-success,
+.profile-actions .btn-danger {
   padding: 10px 25px;
-  background: linear-gradient(135deg, #74C69D, #52B788);
-  color: #ffffff;
   border: none;
   border-radius: 0.25rem;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease;
+  margin: 0 0.5rem;
 }
-.profile-actions .btn:hover {
-  background: linear-gradient(-135deg, #74C69D, #52B788);
+
+/* Botão Salvar / Trocar — gradiente */
+.profile-actions .btn-success,
+.profile-actions .btn-primary {
+  background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
+  color: #fff;
+}
+.profile-actions .btn-success:hover,
+.profile-actions .btn-primary:hover {
+  background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
+}
+
+/* Botão Excluir — cor de alerta */
+.profile-actions .btn-danger {
+  background-color: #E63946;
+  color: #fff;
+}
+.profile-actions .btn-danger:hover {
+  background-color: #D62828;
 }
 
 /* Responsividade */
@@ -115,6 +170,7 @@ body {
   }
   .profile-field {
     flex-direction: column;
+    align-items: flex-start;
   }
   .profile-field .label {
     margin-bottom: 0.5rem;

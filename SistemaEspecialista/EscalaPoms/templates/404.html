@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Página não encontrada</title>
-</head>
-<body>
-    <h1>404 - Página não encontrada</h1>
-    <p>Desculpe, a página que você está procurando não existe.</p>
-</body>
-</html>
+{% extends 'EscalaPoms/base.html' %}
+{% load static %}
+
+{% block title %}404 – Página não encontrada{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/errors.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="error-page">
+  <h1 class="error-code">404</h1>
+  <p class="error-msg">Desculpe, a página que você procura não existe.</p>
+  <a href="{% url 'home' %}" class="btn-voltar">Voltar ao Início</a>
+</div>
+{% endblock %}

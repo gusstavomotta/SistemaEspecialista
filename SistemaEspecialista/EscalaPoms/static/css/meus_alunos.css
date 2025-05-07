@@ -30,8 +30,8 @@
 /* ----- Cada item (card) ----- */
 .aluno-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 1rem;                 /* Espaçamento uniforme entre foto, infos e botão */
   background: #fafafa;
   border: 1px solid #e0e0e0;
   border-radius: 0.5rem;
@@ -44,23 +44,35 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* ----- Foto redonda ----- */
+.foto-aluno {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;        /* Círculo perfeito */
+  object-fit: cover;         /* Corta e centraliza a imagem */
+  flex-shrink: 0;            /* Não permite encolher */
+}
+
 /* ----- Informação do aluno ----- */
 .aluno-item .info {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  flex-direction: column;
+  gap: 0.25rem;              /* Espaço entre label e value */
+  flex: 1;                   /* Ocupa o espaço restante */
 }
-.aluno-item .label {
+.aluno-item .info .label {
   font-weight: 600;
   color: #444;
 }
-.aluno-item .value {
+.aluno-item .info .value {
   color: #222;
+  margin-left: 0.5rem;       /* Pequeno recuo após o label */
 }
 
 /* ----- Botão ----- */
 .aluno-item .btn {
   white-space: nowrap;
+  flex-shrink: 0;            /* Mantém o botão no tamanho */
 }
 
 /* ----- Estado vazio ----- */

@@ -8,20 +8,21 @@
 {% block title %}Meu Perfil{% endblock %}
 
 {% block content %}
+  <!-- Toasts fixados no topo -->
+  {% if messages %}
+    <div class="toast-container">
+      {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <section class="perfil">
     <header class="header">
       <h1>Meu Perfil</h1>
     </header>
-
-    {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <div class="alert {{ message.tags }}">
-            {{ message }}
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
 
     <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
@@ -30,7 +31,7 @@
       <div class="photo-field">
         {% if usuario.foto %}
           <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
-          <button type="submit" name="remove_foto" value="1" class="btn btn-secondary">Remover Foto</button>
+          <button type="submit" name="remove_foto" value="1" class="remove-photo-btn">Remover Foto</button>
         {% else %}
           <div class="photo-preview empty"></div>
           <input type="file" name="foto" accept="image/*">
@@ -59,46 +60,52 @@
         <span class="value">{{ usuario.genero }}</span>
       </div>
 
-      <!-- Treinador atual -->
-      {% if usuario.treinador %}
-        <div class="profile-field">
-          <span class="label">Treinador Atual:</span>
-          <span class="value">{{ usuario.treinador.nome }}</span>
-        </div>
-      {% endif %}
-
-      <!-- Dropdown de troca, se aplicável -->
+      <!-- Troca de treinador -->
       {% if form_troca %}
         <div class="alert alert-warning">
-          Seu treinador atual está desativado. Selecione um novo treinador ativo:
+          Seu treinador atual está desativado. Selecione um novo treinador:
         </div>
         <div class="profile-field">
-          <select name="treinador" class="form-control" required>
-            <option value="" disabled selected>Selecione um treinador</option>
+          <span class="label">Novo Treinador:</span>
+          <select name="treinador" required>
+            <option value="" disabled selected>Selecione…</option>
             {% for t in form_troca.fields.treinador.queryset %}
               <option value="{{ t.cpf }}" {% if form_troca.initial.treinador == t or form_troca.data.treinador == t.cpf %}selected{% endif %}>
                 {{ t.nome }}
               </option>
             {% endfor %}
           </select>
-          {% if form_troca.errors.treinador %}
-            <div class="invalid-feedback d-block">{{ form_troca.errors.treinador|first }}</div>
-          {% endif %}
-        </div>
-        <div class="profile-actions">
-          <button type="submit" name="trocar_treinador" class="btn btn-primary">Trocar Treinador</button>
         </div>
       {% endif %}
 
-      <!-- Botão salvar perfil padrão -->
+      <!-- Ações -->
       <div class="profile-actions">
-        <button type="submit" class="btn btn-success">Salvar Perfil</button>
-      </div>
-
-      <!-- Excluir conta -->
-      <div class="delete-account">
-        <a href="{% url 'solicitar_exclusao' %}" class="btn btn-danger">Excluir Conta</a>
+        {% if form_troca %}
+          <button type="submit" name="trocar_treinador" class="btn-primary">Trocar</button>
+        {% endif %}
+        <a href="{% url 'solicitar_exclusao' %}" class="btn-danger">Excluir</a>
+        <button type="submit" class="btn-success">Salvar</button>
       </div>
     </form>
   </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.toast-container');
+    if (container) {
+      container.querySelectorAll('.alert').forEach(el => {
+        setTimeout(() => {
+          el.classList.add('toast-hide');
+          el.addEventListener('transitionend', () => {
+            el.remove();
+            // se não houver mais alerts, remove container
+            if (!container.querySelector('.alert')) container.remove();
+          });
+        }, 3000);
+      });
+    }
+  });
+</script>
 {% endblock %}

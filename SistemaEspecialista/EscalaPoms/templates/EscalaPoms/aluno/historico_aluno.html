@@ -1,89 +1,97 @@
+{# templates/EscalaPoms/aluno/historico.html #}
 {% extends 'EscalaPoms/base.html' %}
 {% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/historico_aluno.css' %}">
+{% endblock %}
 
 {% block title %}Histórico de {{ aluno.nome }}{% endblock %}
 
 {% block content %}
-  <h1 class="mb-4">Histórico de Escalas de {{ aluno.nome }}</h1>
+  <section class="historico-aluno">
+    <h1 class="historico-title mb-4">Histórico de Escalas de {{ aluno.nome }}</h1>
 
-  <!-- Exibe a foto do aluno, se existir -->
-  {% if aluno.foto %}
-    <div class="foto-aluno mb-3">
-      <img src="{{ aluno.foto.url }}" alt="Foto de {{ aluno.nome }}" class="foto-perfil" style="max-width: 150px; height: auto; border-radius: 50%;">
-    </div>
-  {% else %}
-    <!-- Se desejar, exibe um placeholder caso não haja foto -->
-    <div class="foto-aluno mb-3">
-      <img src="{% static 'images/no-photo.png' %}" alt="Sem foto" class="foto-perfil" style="max-width: 150px; height: auto; border-radius: 50%;">
-    </div>
-  {% endif %}
-
-  <div class="mb-3">
-    <p><strong>Email:</strong> {{ aluno.email }}</p>
-    <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
-  </div>
-
-  <h2 class="h4 mb-3">Escalas Registradas</h2>
-  <ul class="list-group mb-4">
-    {% for escala in escalas %}
-      <li class="list-group-item">
-        <div class="row">
-          <div class="col-md-3"><strong>Data:</strong><br>{{ escala.data|date:"d/m/Y" }}</div>
-          <div class="col-md-3"><strong>PTH:</strong><br>{{ escala.pth }}</div>
-          <div class="col-md-3"><strong>Sono:</strong><br>{{ escala.sono|default:"–" }}</div>
-          <div class="col-md-3"><strong>Freq. Cardíaca:</strong><br>{{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
-        </div>
-
-        <div class="row mt-2">
-          <div class="col-md-3"><strong>Σ Tensão:</strong><br>{{ escala.soma_tensao }}</div>
-          <div class="col-md-3"><strong>Σ Depressão:</strong><br>{{ escala.soma_depressao }}</div>
-          <div class="col-md-3"><strong>Σ Hostilidade:</strong><br>{{ escala.soma_hostilidade }}</div>
-          <div class="col-md-3"><strong>Σ Fadiga:</strong><br>{{ escala.soma_fadiga }}</div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-3"><strong>Σ Confusão:</strong><br>{{ escala.soma_confusao }}</div>
-          <div class="col-md-3"><strong>Σ Vigor:</strong><br>{{ escala.soma_vigor }}</div>
-          <div class="col-md-3"><strong>Σ Desajuste:</strong><br>{{ escala.soma_desajuste }}</div>
-          <div class="col-md-3"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
-        </div>
-
-        {% if escala.observacoes %}
-          <div class="row mt-2">
-            <div class="col-12">
-              <strong>Observações:</strong><br>
-              {{ escala.observacoes }}
-            </div>
-          </div>
-        {% endif %}
-        
-        {% if escala.classificacao %}
-          <div class="row mt-4">
-            <div class="col-12"><strong>Níveis Emocionais:</strong></div>
-          </div>
-          <div class="row">
-            <div class="col-md-3"><strong>Tensão:</strong><br>{{ escala.classificacao.nivel_tensao }}</div>
-            <div class="col-md-3"><strong>Depressão:</strong><br>{{ escala.classificacao.nivel_depressao }}</div>
-            <div class="col-md-3"><strong>Hostilidade:</strong><br>{{ escala.classificacao.nivel_hostilidade }}</div>
-            <div class="col-md-3"><strong>Fadiga:</strong><br>{{ escala.classificacao.nivel_fadiga }}</div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-3"><strong>Confusão:</strong><br>{{ escala.classificacao.nivel_confusao }}</div>
-            <div class="col-md-3"><strong>Vigor:</strong><br>{{ escala.classificacao.nivel_vigor }}</div>
-            <div class="col-md-3"><strong>Desajuste:</strong><br>{{ escala.classificacao.nivel_desajuste }}</div>
-          </div>
+    <div class="perfil-dados mb-4">
+      <div class="foto-aluno">
+        {% if aluno.foto %}
+          <img src="{{ aluno.foto.url }}"
+               alt="Foto de {{ aluno.nome }}"
+               class="foto-perfil">
         {% else %}
-          <div class="row mt-3">
-            <div class="col-12 text-warning">Classificação emocional ainda não disponível.</div>
-          </div>
+          <img src="{% static 'images/no-photo.png' %}"
+               alt="Sem foto"
+               class="foto-perfil">
         {% endif %}
-      </li>
-      <br>
-    {% empty %}
-      <li class="list-group-item">Nenhuma escala registrada para este aluno.</li>
-    {% endfor %}
-  </ul>
+      </div>
+      <div class="dados-basicos">
+        <p><strong>Email:</strong> {{ aluno.email }}</p>
+        <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+      </div>
+    </div>
 
-  <a href="{% url 'meus_alunos' %}" class="btn btn-secondary">
-    ← Voltar para Meus Alunos
-  </a>
+    <h2 class="subtitulo mb-3">Escalas Registradas</h2>
+    <ul class="escala-list list-group mb-4">
+      {% for escala in escalas %}
+        <li class="list-group-item escala-item">
+          <div class="escala-header row">
+            <div class="col"><strong>Data:</strong><br>{{ escala.data|date:"d/m/Y" }}</div>
+            <div class="col"><strong>PTH:</strong><br>{{ escala.pth }}</div>
+            <div class="col"><strong>Sono:</strong><br>{{ escala.sono|default:"–" }}</div>
+            <div class="col"><strong>FC Média:</strong><br>{{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
+          </div>
+          <div class="escala-valores row mt-2">
+            <div class="col"><strong>Σ Tensão:</strong><br>{{ escala.soma_tensao }}</div>
+            <div class="col"><strong>Σ Depressão:</strong><br>{{ escala.soma_depressao }}</div>
+            <div class="col"><strong>Σ Hostilidade:</strong><br>{{ escala.soma_hostilidade }}</div>
+            <div class="col"><strong>Σ Fadiga:</strong><br>{{ escala.soma_fadiga }}</div>
+          </div>
+          <div class="escala-valores row mt-2">
+            <div class="col"><strong>Σ Confusão:</strong><br>{{ escala.soma_confusao }}</div>
+            <div class="col"><strong>Σ Vigor:</strong><br>{{ escala.soma_vigor }}</div>
+            <div class="col"><strong>Σ Desajuste:</strong><br>{{ escala.soma_desajuste }}</div>
+            <div class="col"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
+          </div>
+
+          {% if escala.observacoes %}
+            <div class="row mt-2">
+              <div class="col-12">
+                <strong>Observações:</strong><br>
+                {{ escala.observacoes }}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if escala.classificacao %}
+            <div class="row mt-4">
+              <div class="col-12"><strong>Níveis Emocionais:</strong></div>
+            </div>
+            <div class="row escala-valores mt-1">
+              <div class="col"><strong>Tensão:</strong><br>{{ escala.classificacao.nivel_tensao }}</div>
+              <div class="col"><strong>Depressão:</strong><br>{{ escala.classificacao.nivel_depressao }}</div>
+              <div class="col"><strong>Hostilidade:</strong><br>{{ escala.classificacao.nivel_hostilidade }}</div>
+              <div class="col"><strong>Fadiga:</strong><br>{{ escala.classificacao.nivel_fadiga }}</div>
+            </div>
+            <div class="row escala-valores mt-2">
+              <div class="col"><strong>Confusão:</strong><br>{{ escala.classificacao.nivel_confusao }}</div>
+              <div class="col"><strong>Vigor:</strong><br>{{ escala.classificacao.nivel_vigor }}</div>
+              <div class="col"><strong>Desajuste:</strong><br>{{ escala.classificacao.nivel_desajuste }}</div>
+            </div>
+          {% else %}
+            <div class="row mt-3">
+              <div class="col-12 text-warning">
+                Classificação emocional ainda não disponível.
+              </div>
+            </div>
+          {% endif %}
+        </li>
+      {% empty %}
+        <li class="list-group-item vazio">Nenhuma escala registrada para este aluno.</li>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url 'meus_alunos' %}" class="btn btn-secondary voltar-btn">
+      ← Voltar para Meus Alunos
+    </a>
+  </section>
 {% endblock %}
