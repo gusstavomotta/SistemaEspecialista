@@ -1,21 +1,27 @@
 {% extends 'EscalaPoms/base.html' %}
 {% load static %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/minhas_escalas.css' %}">
+{% endblock %}
+
 {% block title %}Minhas Escalas{% endblock %}
 
 {% block content %}
-  <h1 class="mb-4">Minhas Escalas</h1>
+<div class="minhas-escalas">
+  <h1 class="title mb-4">Minhas Escalas</h1>
 
   <!-- Foto e dados do aluno -->
-  <div class="mb-4 d-flex align-items-center">
+  <div class="perfil-info mb-4">
     {% if aluno.foto %}
       <img src="{{ aluno.foto.url }}" alt="Foto de {{ aluno.nome }}"
-           class="foto-perfil mr-3" style="width: 120px; height: 120px; border-radius: 50%;">
+           class="foto-perfil">
     {% else %}
       <img src="{% static 'images/no-photo.png' %}" alt="Sem foto"
-           class="foto-perfil mr-3" style="width: 120px; height: 120px; border-radius: 50%;">
+           class="foto-perfil">
     {% endif %}
-    <div>
+
+    <div class="dados-basicos">
       <p><strong>Nome:</strong> {{ aluno.nome }}</p>
       <p><strong>Email:</strong> {{ aluno.email }}</p>
       <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
@@ -84,13 +90,13 @@
           </div>
         {% endif %}
       </li>
-      <br>
     {% empty %}
-      <li class="list-group-item">Você ainda não registrou nenhuma escala.</li>
+      <li class="list-group-item vazio">Você ainda não registrou nenhuma escala.</li>
     {% endfor %}
   </ul>
 
   <a href="{% url 'home' %}" class="btn btn-secondary">
     ← Voltar
   </a>
+</div>
 {% endblock %}

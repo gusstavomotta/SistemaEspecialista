@@ -8,16 +8,6 @@
 {% block title %}Meu Perfil{% endblock %}
 
 {% block content %}
-  <!-- Toasts fixados no topo -->
-  {% if messages %}
-    <div class="toast-container">
-      {% for message in messages %}
-        <div class="alert {{ message.tags }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
 
   <section class="perfil">
     <header class="header">
@@ -91,21 +81,4 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.querySelector('.toast-container');
-    if (container) {
-      container.querySelectorAll('.alert').forEach(el => {
-        setTimeout(() => {
-          el.classList.add('toast-hide');
-          el.addEventListener('transitionend', () => {
-            el.remove();
-            // se não houver mais alerts, remove container
-            if (!container.querySelector('.alert')) container.remove();
-          });
-        }, 3000);
-      });
-    }
-  });
-</script>
 {% endblock %}

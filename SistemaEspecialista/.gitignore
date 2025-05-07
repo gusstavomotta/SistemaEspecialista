@@ -1,6 +1,8 @@
 # Ignorar a virtual environment
 venv/
+media/
 
 # Ignorar arquivos Python compilados
 *.pyc
 __pycache__/
+

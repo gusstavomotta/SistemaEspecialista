@@ -1,0 +1,94 @@
+/* minhas_escalas.css */
+
+/* Container geral */
+.minhas-escalas {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #333333;
+}
+
+/* Título principal */
+.minhas-escalas .title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Seção de dados do aluno */
+.minhas-escalas .perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.minhas-escalas .perfil-info .foto-perfil {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+  flex-shrink: 0;
+}
+
+.minhas-escalas .perfil-info .dados-basicos p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  color: #444444;
+}
+
+/* Lista de escalas */
+.minhas-escalas .list-group {
+  border: none;
+}
+
+.minhas-escalas .list-group-item {
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+}
+
+/* Cabeçalhos das colunas */
+.minhas-escalas .list-group-item .row > div strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.25rem;
+}
+
+/* Valores das escalas */
+.minhas-escalas .list-group-item .row > div {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Separador interno */
+.minhas-escalas .list-group-item + .list-group-item {
+  margin-top: 1rem;
+}
+
+/* Aviso de classificação não disponível */
+.minhas-escalas .text-warning {
+  font-style: italic;
+}
+
+/* Botão de voltar */
+.minhas-escalas .btn-secondary {
+  margin-top: 1.5rem;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.minhas-escalas .btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}

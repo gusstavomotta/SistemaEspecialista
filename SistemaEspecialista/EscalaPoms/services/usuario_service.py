@@ -17,6 +17,9 @@ def atualizar_dados_usuario(usuario, request, template):
     telefone = request.POST.get('telefone')
     foto = request.FILES.get('foto')
 
+    if foto:
+        usuario.foto = foto
+
     if not validar_numero_telefone(telefone):
         messages.error(request, 'Telefone inválido. Use DDD e apenas números.')
         return render(request, template, {
@@ -26,7 +29,6 @@ def atualizar_dados_usuario(usuario, request, template):
 
     usuario.email = email
     usuario.num_telefone = telefone
-    usuario.foto = foto
     usuario.save()
     messages.success(request, 'Perfil atualizado com sucesso.')
     return redirect('perfil')
