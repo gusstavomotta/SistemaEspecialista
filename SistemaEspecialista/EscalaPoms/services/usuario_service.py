@@ -48,7 +48,30 @@ def processar_troca_treinador(usuario, request):
 
 def obter_usuario_por_cpf(cpf):
     from ..models import Treinador, Aluno
+    from ..validators import normalizar_cpf
+
+    cpf_numeros = normalizar_cpf(cpf)
     try:
-        return Treinador.objects.get(cpf=cpf)
+        return Treinador.objects.get(cpf=cpf_numeros)
     except Treinador.DoesNotExist:
-        return Aluno.objects.get(cpf=cpf)
+        pass
+
+    try:
+        return Aluno.objects.get(cpf=cpf_numeros)
+    except Aluno.DoesNotExist:
+        return None
+
+def enviar_email(codigo, email):
+    from django.core.mail import send_mail
+    from django.conf import settings
+
+    subject = 'Código de Verificação'
+    message = f'Seu código de verificação é: {codigo}'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+
+    send_mail(subject, message, email_from, recipient_list)
+    
+def erro_redirect(request, mensagem, rota):
+    messages.error(request, mensagem)
+    return redirect(rota)

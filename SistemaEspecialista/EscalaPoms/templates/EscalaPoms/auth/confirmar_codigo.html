@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recuperar Senha</title>
+  <title>Confirmar Código</title>
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
   <link rel="stylesheet" href="{% static 'css/esqueceu_senha.css' %}" />
 </head>
@@ -17,34 +17,44 @@
             <div class="card-body p-md-5">
               
               <div class="text-center mb-4">
-                <h2 class="fw-bold display-6">Redefinir Senha</h2>
-                <p>Informe seu CPF e e-mail para receber um código de verificação.</p>
+                <h2 class="fw-bold display-6">Confirme o Código</h2>
+                <p>Digite o código enviado para o seu e-mail e a nova senha.</p>
               </div>
 
-              <form method="post" action="{% url 'redefinir_senha' %}">
+              <form method="post" action="{% url 'confirmar_codigo' %}">
                 {% csrf_token %}
 
                 <div class="form-outline mb-4">
                   <input
                     type="text"
-                    id="cpf"
-                    name="cpf"
+                    id="codigo"
+                    name="codigo"
                     class="form-control form-control-lg"
-                    placeholder="Digite seu CPF"
-                    maxlength="14"
+                    placeholder="Código de verificação"
+                    maxlength="6"
                     required
-                    value="{{ cpf }}"
                   />
                 </div>
+                
                 <div class="form-outline mb-4">
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
+                    type="password"
+                    id="nova_senha"
+                    name="nova_senha"
                     class="form-control form-control-lg"
-                    placeholder="Digite seu e-mail"
+                    placeholder="Nova senha"
                     required
-                    value="{{ email }}"
+                  />
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input
+                    type="password"
+                    id="confirmar_senha"
+                    name="confirmar_senha"
+                    class="form-control form-control-lg"
+                    placeholder="Confirmar nova senha"
+                    required
                   />
                 </div>
 
@@ -53,7 +63,7 @@
                     type="submit"
                     class="btn btn-lg gradient-custom-2 w-100 mb-3"
                   >
-                    Enviar Código
+                    Redefinir Senha
                   </button>
                   <a href="{% url 'login' %}" class="text-muted small d-block">
                     Voltar ao login

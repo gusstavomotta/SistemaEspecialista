@@ -5,6 +5,7 @@ from django.contrib.auth import logout as deslogar, authenticate, login
 from django.contrib.auth.hashers import make_password
 
 # Manipulação de requisições e respostas
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 
@@ -13,80 +14,124 @@ from .forms import *
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
 from .validators import validar_cpf
-from .services.usuario_service import obter_usuario_por_cpf, remover_foto_usuario, atualizar_dados_usuario, processar_troca_treinador
+from .services.usuario_service import obter_usuario_por_cpf, remover_foto_usuario, atualizar_dados_usuario, processar_troca_treinador,enviar_email,erro_redirect
 from .services.escala_service import confirmar_treinador, salvar_e_classificar_escala
+from django.core.mail import send_mail
+
 
 def login_view(request):
+    cpf_digitado = '' 
     if request.method == 'POST':
-        cpf = request.POST.get('cpf')
-        senha = request.POST.get('senha')
-        usuario = authenticate(request, username=cpf, password=senha)
+        cpf_digitado = request.POST.get('cpf', '').strip()
+        senha = request.POST.get('senha', '')
+        usuario = authenticate(request, username=cpf_digitado, password=senha)
         if usuario:
             login(request, usuario)
             messages.success(request, "Login efetuado com sucesso!")
             return redirect('home')
         messages.error(request, "CPF ou senha incorretos.")
-    return render(request, 'EscalaPoms/auth/login.html')
+
+    return render(request, 'EscalaPoms/auth/login.html', {
+        'cpf': cpf_digitado,
+    })
 
 def cadastro(request):
     if request.method == 'POST':
-        tipo = request.POST.get('tipo_usuario')
+        tipo = request.POST.get('tipo_usuario', 'aluno')
+    else:
+        tipo = request.GET.get('tipo', 'aluno')
+
+    if request.method == 'POST':
         if tipo == 'treinador':
             form = TreinadorForm(request.POST)
         else:
             form = AlunoForm(request.POST)
+    else:
+        form = TreinadorForm() if tipo == 'treinador' else AlunoForm()
 
+    if request.method == 'POST':
         if form.is_valid():
             form.save()
             messages.success(request, "Cadastro realizado com sucesso!")
             return redirect('login')
         else:
-            messages.error(request, "Verifique os erros abaixo.")
-    else:
-        form = TreinadorForm()
+            messages.error(request, "Por favor, corrija os erros abaixo.")
 
-    treinadores = Treinador.objects.all().values('cpf', 'nome')
+    treinadores = []
+    if tipo != 'treinador':
+        treinadores = Treinador.objects.all().values('cpf', 'nome')
+
     return render(request, 'EscalaPoms/auth/cadastro.html', {
         'form': form,
-        'treinadores': treinadores
+        'treinadores': treinadores,
+        'tipo_usuario': tipo,
     })
 
 def redefinir_senha(request):
+    cpf_digitado = ''
+    email_digitado = ''
+
     if request.method == 'POST':
-        cpf = request.POST.get('cpf')
+        cpf_digitado = request.POST.get('cpf', '').strip()
+        email_digitado = request.POST.get('email', '').strip()
+
+        if not validar_cpf(cpf_digitado):
+            messages.error(request, 'CPF inválido.')
+        else:
+            usuario = obter_usuario_por_cpf(cpf_digitado)
+            if not usuario:
+                messages.error(request, 'CPF não encontrado.')
+            elif usuario.email.strip().lower() != email_digitado.lower():
+                messages.error(request, 'Email não corresponde ao CPF.')
+            else:
+                codigo = f"{random.randint(100000, 999999):06}"
+                request.session['reset_cpf'] = cpf_digitado
+                request.session['reset_codigo'] = codigo
+                enviar_email(codigo, usuario.email)
+                messages.info(request, 'Enviamos um código para o seu e-mail. Insira-o abaixo.')
+                return redirect('confirmar_codigo')
+
+    return render(request, 'EscalaPoms/auth/redefinir_senha.html', {
+        'cpf': cpf_digitado,
+        'email': email_digitado,
+    })
+
+def confirmar_codigo(request):
+    if request.method == 'POST':
+        codigo_digitado = request.POST.get('codigo')
         nova_senha = request.POST.get('nova_senha')
         confirmar_senha = request.POST.get('confirmar_senha')
 
-        if not validar_cpf(cpf):
-            messages.error(request, 'CPF inválido.')
-            return redirect('redefinir_senha')
+        codigo_sessao = request.session.get('reset_codigo')
+        cpf = request.session.get('reset_cpf')
+
+        if not codigo_sessao or not codigo_digitado or codigo_digitado != codigo_sessao:
+            return erro_redirect(request, 'Código inválido ou expirado.', 'confirmar_codigo')
 
         if nova_senha != confirmar_senha:
-            messages.error(request, 'As senhas não coincidem.')
-            return redirect('redefinir_senha')
+            return erro_redirect(request, 'As senhas não coincidem.', 'confirmar_codigo')
 
-        usuario = obter_usuario_por_cpf(cpf) 
+        usuario = obter_usuario_por_cpf(cpf)
         if not usuario:
-            messages.error(request, 'CPF não encontrado.')
-            return redirect('redefinir_senha')
+            return erro_redirect(request, 'Sessão expirada. Tente novamente.', 'redefinir_senha')
 
         usuario.senha = make_password(nova_senha)
         usuario.save()
+
+        request.session.pop('reset_codigo', None)
+        request.session.pop('reset_cpf', None)
+
         messages.success(request, 'Senha redefinida com sucesso.')
         return redirect('login')
-    
-    return render(request, 'EscalaPoms/auth/redefinir_senha.html')
+
+    return render(request, 'EscalaPoms/auth/confirmar_codigo.html')
 
 @login_required
 def home(request):
     cpf = request.user.username 
     usuario = obter_usuario_por_cpf(cpf)  
 
-    if isinstance(usuario, Treinador):
-        tipo = 'Treinador'
-    elif isinstance(usuario, Aluno):
-        tipo = 'Aluno'
-
+    tipo = 'Treinador' if isinstance(usuario, Treinador) else 'Aluno'
     context = {'nome': usuario.nome, 'tipo': tipo}
     return render(request, 'EscalaPoms/static/home.html', context)
 
@@ -124,7 +169,7 @@ def meus_alunos(request):
         alunos = alunos.filter(nome__icontains=q)
     
     alunos = alunos.order_by('nome')
-    return render(request, 'EscalaPoms/escala/meus_alunos.html', {'alunos': alunos, 'q': q,})
+    return render(request, 'EscalaPoms/escala/meus_alunos.html', {'alunos': alunos, 'q': q})
 
 @login_required
 @treinador_required
@@ -132,6 +177,7 @@ def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
     escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('classificacao')
     return render(request, 'EscalaPoms/aluno/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
+
 
 @login_required
 def perfil(request):
@@ -159,78 +205,70 @@ def perfil(request):
 @login_required
 @aluno_required
 def minhas_escalas(request):
-
-    aluno = get_object_or_404(
-        Aluno,
-        cpf=request.user.username
-    )
+    aluno = get_object_or_404(Aluno, cpf=request.user.username)
 
     escalas_do_aluno = (
         EscalaPoms.objects
         .filter(aluno=aluno)
         .order_by('data')
         .select_related('classificacao')
-
     )
 
     return render(request, 'EscalaPoms/escala/minhas_escalas.html', {
         'aluno': aluno,
         'escalas': escalas_do_aluno,
-        
     })
-        
+    
 @login_required
 def solicitar_exclusao(request):
     cpf = request.user.username
     usuario = obter_usuario_por_cpf(cpf)
+    email_digitado = ''
 
     if request.method == 'POST':
-        email_input = request.POST.get('email')
-        if email_input != usuario.email:
+        email_digitado = request.POST.get('email', '').strip()
+
+        if email_digitado.lower() != usuario.email.strip().lower():
             messages.error(request, "O email informado não corresponde ao email registrado.")
-            return render(request, 'EscalaPoms/solicitar_exclusao.html', {'usuario': usuario})
-        
-        exclusao_codigo = random.randint(100000, 999999)
-        request.session['exclusao_codigo'] = exclusao_codigo
-        '''send_mail(
-            'Código de Exclusão de Conta',
-            f'Seu código para exclusão de conta é: {exclusao_codigo}',
-            'noreply@seusite.com',
-            [usuario.email],
-        )'''
-        print(f"\n\n\n\n\n\n\nSeu código para exclusão de conta é: {exclusao_codigo}\n\n\n\n\n\n\n")
-        
-        messages.success(request, "Um código foi enviado para o seu email. Por favor, insira o código na próxima tela para confirmar a exclusão.")
-        return redirect('confirmar_exclusao')
-    
-    return render(request, 'EscalaPoms/exclusao/solicitar_exclusao.html', {'usuario': usuario})
+        else:
+            exclusao_codigo = f"{random.randint(100000, 999999):06}"
+            request.session['exclusao_codigo'] = exclusao_codigo
+            enviar_email(exclusao_codigo, usuario.email)
+            return redirect('confirmar_exclusao')
+
+    return render(request, 'EscalaPoms/exclusao/solicitar_exclusao.html', {
+        'usuario': usuario,
+        'email': email_digitado,
+    })
 
 @login_required
 def confirmar_exclusao(request):
-    
     cpf = request.user.username
     usuario = obter_usuario_por_cpf(cpf)
+    codigo_digitado = ''
 
     if request.method == 'POST':
-        codigo_digitado = request.POST.get('codigo')
+        codigo_digitado = request.POST.get('codigo', '').strip()
         exclusao_codigo = request.session.get('exclusao_codigo')
+
         if not exclusao_codigo:
             messages.error(request, "Código expirado ou não gerado. Tente solicitar exclusão novamente.")
             return redirect('solicitar_exclusao')
-        
-        if str(exclusao_codigo) == codigo_digitado.strip():
+
+        if codigo_digitado != str(exclusao_codigo):
+            messages.error(request, "Código incorreto. Por favor, tente novamente.")
+        else:
             usuario.ativo = False
             usuario.save()
-            
-            del request.session['exclusao_codigo']
+            request.session.pop('exclusao_codigo', None)
             deslogar(request)
             messages.success(request, "Sua conta foi desativada com sucesso.")
             return redirect('login')
-        else:
-            messages.error(request, "Código incorreto. Por favor, tente novamente.")
-            return redirect('confirmar_exclusao')
-    
-    return render(request, 'EscalaPoms/exclusao/confirmar_exclusao.html', {'usuario': usuario})
+
+    return render(request, 'EscalaPoms/exclusao/confirmar_exclusao.html', {
+        'usuario': usuario,
+        'codigo': codigo_digitado,
+    })
 
 @login_required
 def logout_view(request):
@@ -240,3 +278,4 @@ def logout_view(request):
 @login_required
 def sobre(request):
     return render(request, 'EscalaPoms/static/sobre.html')
+

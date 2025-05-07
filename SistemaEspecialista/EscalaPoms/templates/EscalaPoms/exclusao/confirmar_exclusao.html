@@ -5,10 +5,20 @@
 {% block content %}
   <h1>Confirmar Exclusão de Conta</h1>
   <p>Um código de 6 dígitos foi enviado para o seu email. Por favor, insira o código abaixo para confirmar a exclusão da sua conta:</p>
-  <form method="POST">
+
+  <form method="POST" class="mt-3">
     {% csrf_token %}
-    <label for="codigo">Código:</label>
-    <input type="text" name="codigo" id="codigo" required>
-    <button type="submit">Confirmar Exclusão</button>
+    <div class="mb-3">
+      <label for="codigo" class="form-label">Código:</label>
+      <input
+        type="text"
+        name="codigo"
+        id="codigo"
+        class="form-control"
+        required
+        value="{{ codigo|default_if_none:'' }}"
+      />
+    </div>
+    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
   </form>
 {% endblock %}

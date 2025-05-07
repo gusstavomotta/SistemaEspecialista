@@ -5,10 +5,21 @@
 {% block content %}
   <h1>Excluir Conta</h1>
   <p>Para confirmar a exclusão da sua conta, informe o seu email cadastrado:</p>
-  <form method="POST">
+
+  <form method="POST" class="mt-3">
     {% csrf_token %}
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
-    <button type="submit">Enviar Link de Confirmação</button>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        placeholder="Digite seu email"
+        required
+        value="{{ email|default_if_none:'' }}"
+      />
+    </div>
+    <button type="submit" class="btn btn-warning">Enviar Código de Confirmação</button>
   </form>
 {% endblock %}

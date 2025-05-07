@@ -1,6 +1,10 @@
 import re
 
+def normalizar_cpf(texto: str) -> str:
+    return re.sub(r'\D', '', texto or '')
+
 def validar_cpf(cpf: str) -> bool:
+    cpf = normalizar_cpf(cpf)
     cpf = ''.join(filter(str.isdigit, cpf or ''))
     if len(cpf) != 11 or cpf == cpf[0] * 11:
         return False
@@ -17,10 +21,6 @@ def validar_cpf(cpf: str) -> bool:
 def validar_numero_telefone(telefone: str) -> bool:
     telefone = re.sub(r'\D', '', telefone or '')
     return len(telefone) in (10, 11)
-
-
-def normalizar_cpf(texto: str) -> str:
-    return re.sub(r'\D', '', texto or '')
 
 def converter_para_inteiro(valor):
     return int(valor) if valor and valor.isdigit() else None
