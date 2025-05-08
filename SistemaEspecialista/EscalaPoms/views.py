@@ -304,3 +304,25 @@ def logout_view(request):
 @login_required
 def sobre(request):
     return render(request, 'EscalaPoms/static/sobre.html')
+
+@login_required
+@aluno_required
+def trocar_treinador(request):
+    aluno = get_object_or_404(Aluno, cpf=request.user.username)
+    treinadores = Treinador.objects.all()
+
+    if request.method == 'POST':
+        novo_cpf = request.POST.get('treinador_id')
+        try:
+            novo = Treinador.objects.get(cpf=novo_cpf)
+            aluno.treinador = novo
+            aluno.save()
+            messages.success(request, "Treinador atualizado com sucesso!")
+            return redirect('perfil')
+        except Treinador.DoesNotExist:
+            messages.error(request, "Treinador não encontrado.")
+
+    return render(request, 'EscalaPoms/aluno/trocar_treinador.html', {
+        'usuario':     aluno,
+        'treinadores': treinadores,
+    })

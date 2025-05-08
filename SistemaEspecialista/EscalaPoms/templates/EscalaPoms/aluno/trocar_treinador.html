@@ -1,0 +1,24 @@
+{% extends 'EscalaPoms/base.html' %}
+{% block title %}Trocar Treinador{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Olá, {{ usuario.nome }}. Escolha seu novo treinador:</h2>
+  <form method="post" action="{% url 'trocar_treinador' %}">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+      <label for="treinadorSelect">Treinador:</label>
+      <select class="form-select" name="treinador_id" id="treinadorSelect" required>
+        <option value="" disabled selected>Selecione um treinador</option>
+        {% for treinador in treinadores %}
+          <option value="{{ treinador.cpf }}">
+            {{ treinador.nome }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-success">Confirmar</button>
+    <a href="{% url 'perfil' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

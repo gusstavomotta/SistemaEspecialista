@@ -27,6 +27,8 @@ urlpatterns = [
     path('sobre/' , sobre, name='sobre'),
 
     path('logout/', logout_view, name='logout'),
+    
+    path('trocar_treinador/', trocar_treinador, name='trocar_treinador'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
