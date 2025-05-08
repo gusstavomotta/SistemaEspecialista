@@ -1,11 +1,14 @@
 from functools import wraps
+
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.backends import BaseBackend
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
+
 from .models import Treinador, Aluno
 from .validators import normalizar_cpf
+
 class CPFBackend(BaseBackend):
 
     def authenticate(self, request, username=None, password=None, **kwargs):

@@ -1,4 +1,5 @@
 import re
+
 from typing import Dict, List, Tuple
 
 def carregar_regras_poms(caminho_arquivo: str) -> Dict[str, List[Tuple[float, float, str]]]:

@@ -11,14 +11,17 @@ class Pessoa(models.Model):
     senha       = models.CharField(max_length=128)
     genero      = models.CharField(max_length=12, choices=[('masculino','Masculino'),('feminino','Feminino')])
     num_telefone= models.CharField(max_length=100, null=True, blank=True)
-    foto = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
-    ativo        = models.BooleanField(default=True) 
+    foto        = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
+    ativo       = models.BooleanField(default=True) 
 
     class Meta:
         abstract = True
 
 class Treinador(Pessoa):
     objects = ActiveManager()
+    
+    def __str__(self):
+        return self.nome
 
 class Aluno(Pessoa):
     
@@ -32,7 +35,7 @@ class EscalaPoms(models.Model):
         on_delete=models.CASCADE,
         related_name='escalas'
     )
-    data = models.DateField()
+    data = models.DateTimeField()
 
     soma_tensao      = models.IntegerField()
     soma_depressao   = models.IntegerField()
@@ -65,7 +68,6 @@ class EscalaPoms(models.Model):
     )
 
     def __str__(self):
-        # Retorna uma string que relaciona o aluno e a data da escala, facilitando a identificação do registro.
         return f"Escala de {self.aluno.nome} em {self.data}"
 
 class ClassificacaoRecomendacao(models.Model):
@@ -82,8 +84,6 @@ class ClassificacaoRecomendacao(models.Model):
     nivel_confusao    = models.CharField(max_length=20)
     nivel_vigor       = models.CharField(max_length=20)
     nivel_desajuste   = models.CharField(max_length=20)
-
-    # Campo opcional para recomendação textual baseada nos níveis
     recomendacao = models.TextField(blank=True, null=True)
 
     criado_em = models.DateTimeField(auto_now_add=True)

@@ -1,9 +1,14 @@
-from django.contrib import messages
-from django.shortcuts import redirect
 import os
 import datetime
+
 from django.conf import settings
+from django.contrib import messages
+from django.shortcuts import redirect
+
 from ..validators import converter_para_inteiro
+from ..models import EscalaPoms, ClassificacaoRecomendacao, Treinador
+from ..maquina_inferencia import classificar_niveis_emocoes
+
 
 def somar_campos_post(request, prefixo, quantidade=6):
     total = 0
@@ -41,44 +46,25 @@ def processar_dados_escala(request):
         'volume_treino': converter_para_inteiro(request.POST.get('volume_treino')),
         'freq_cardiaca_media': converter_para_inteiro(request.POST.get('freq_cardiaca_media')),
     }
-
-def confirmar_treinador(aluno, request):
-    from ..models import Treinador
-    cpf_sel = request.POST.get('treinador')
-    try:
-        treinador = Treinador.objects.get(cpf=cpf_sel)
-        aluno.treinador = treinador
-        aluno.save()
-        messages.success(request, "Treinador confirmado com sucesso!")
-    except Treinador.DoesNotExist:
-        messages.error(request, "Treinador inválido.")
-    return redirect('escala')
-
-
+    
 def salvar_e_classificar_escala(aluno, request):
-    from ..models import EscalaPoms, ClassificacaoRecomendacao
-    from ..maquina_inferencia import classificar_niveis_emocoes
+    campos_soma = ['tensao', 'depressao', 'hostilidade', 'fadiga', 'confusao', 'vigor', 'desajuste']
     try:
         dados = processar_dados_escala(request)
         observacoes = request.POST.get('observacoes', '').strip() or None
 
-        # Cria a escala
         escala = EscalaPoms.objects.create(
             aluno=aluno,
-            data=datetime.date.today(),
+            data=datetime.datetime.now(),
             observacoes=observacoes,
             **dados
         )
 
-        # Monta dict de somas para passar ao motor de inferência
-        somas = { f'soma_{k}': getattr(escala, f'soma_{k}') 
-                  for k in ['tensao', 'depressao', 'hostilidade', 'fadiga', 'confusao', 'vigor', 'desajuste'] }
+        somas = { f'soma_{campo}': getattr(escala, f'soma_{campo}') for campo in campos_soma }
 
-        # Classifica níveis
         regras = os.path.join(settings.BASE_DIR, 'EscalaPoms', 'regras.txt')
         niveis = classificar_niveis_emocoes(regras, somas)
 
-        # Persiste classificação
         ClassificacaoRecomendacao.objects.create(
             escala=escala,
             nivel_tensao      = niveis['nivel_tensao'],
@@ -93,6 +79,17 @@ def salvar_e_classificar_escala(aluno, request):
         messages.success(request, "Dados salvos e classificados com sucesso!")
         return redirect('home')
 
-    except ValueError as ve:
-        messages.error(request, str(ve))
+    except Exception as e:
+        messages.error(request, f"Ocorreu um erro ao salvar e classificar a escala: {str(e)}")
         return redirect('escala')
+        
+def confirmar_treinador(aluno, request):
+    cpf_sel = request.POST.get('treinador')
+    try:
+        treinador = Treinador.objects.get(cpf=cpf_sel)
+        aluno.treinador = treinador
+        aluno.save()
+        messages.success(request, "Treinador confirmado com sucesso!")
+    except Treinador.DoesNotExist:
+        messages.error(request, "Treinador inválido.")
+    return redirect('escala')

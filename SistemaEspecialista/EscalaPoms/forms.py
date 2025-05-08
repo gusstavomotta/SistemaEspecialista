@@ -1,9 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
+
 from .models import Treinador, Aluno
-from .validators import validar_cpf, validar_numero_telefone
-import re
+from .validators import validar_cpf, validar_numero_telefone, normalizar_cpf
 
 class PessoaForm(forms.ModelForm):
     senha2 = forms.CharField(widget=forms.PasswordInput, label="Confirmar Senha")
@@ -14,22 +14,26 @@ class PessoaForm(forms.ModelForm):
         widgets = {'senha': forms.PasswordInput()}
 
     def clean_cpf(self):
-        cpf = re.sub(r'\D', '', self.cleaned_data['cpf'])
-        if not validar_cpf(cpf):
-            raise ValidationError("CPF inválido.")
-
-        from .models import Treinador, Aluno
-
-        if Treinador.objects.filter(cpf=cpf).exists() or Aluno.objects.filter(cpf=cpf).exists():
+        cpf = self.cleaned_data['cpf']
+        cpf_normalizado = validar_cpf(cpf)
+        
+        if Treinador.objects.filter(cpf=cpf_normalizado).exists() or Aluno.objects.filter(cpf=cpf_normalizado).exists():
             raise ValidationError("Já existe um usuário com este CPF.")
 
-        return cpf
+        return cpf_normalizado
 
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Treinador.objects.filter(email=email).exists() or Aluno.objects.filter(email=email).exists():
+            raise ValidationError("Este e-mail já está cadastrado.")
+        return email
+    
     def clean_num_telefone(self):
-        tel = re.sub(r'\D', '', self.cleaned_data.get('num_telefone',''))
-        if tel and not validar_numero_telefone(tel):
+        tel = self.cleaned_data.get('num_telefone', '')
+        tel_normalizado = validar_numero_telefone(tel)
+        if not tel_normalizado:
             raise ValidationError("Telefone inválido.")
-        return tel
+        return tel_normalizado
 
     def clean(self):
         cleaned = super().clean()
@@ -48,25 +52,22 @@ class TreinadorForm(PessoaForm):
 
 
 class AlunoForm(PessoaForm):
-    treinador = forms.CharField(
-        max_length=11,
-        help_text="CPF do treinador (obrigatório para aluno)"
+    treinador = forms.ModelChoiceField(
+        queryset=Treinador.objects.all(),
+        empty_label="Selecione o treinador",
+        help_text="Treinador responsável",
+        to_field_name="cpf"
     )
 
     class Meta(PessoaForm.Meta):
         model = Aluno
         fields = PessoaForm.Meta.fields + ['treinador']
 
-    def clean(self):
-        cleaned = super().clean()
-        cpf_t = cleaned.get('treinador')
-        if not cpf_t:
-            raise ValidationError({'treinador': "Informe o CPF do treinador."})
-        try:
-            cleaned['treinador'] = Treinador.objects.get(cpf=cpf_t)
-        except Treinador.DoesNotExist:
-            raise ValidationError({'treinador': "Treinador não encontrado."})
-        return cleaned
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['treinador'].widget.attrs.update({
+            'class': 'form-control form-control-lg'
+        })
 
 class AlunoTrocaTreinadorForm(forms.ModelForm):
     treinador = forms.ModelChoiceField(
