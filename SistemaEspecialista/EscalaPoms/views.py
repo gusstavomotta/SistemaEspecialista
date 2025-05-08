@@ -40,24 +40,34 @@ def login_view(request):
     
 def cadastro(request):
     if request.method == 'POST':
-        tipo_usuario = request.POST.get('tipo_usuario', '')
+        tipo = request.POST.get('tipo_usuario', 'aluno')
     else:
-        tipo_usuario = ''
-        
-    FormClass = TreinadorForm if tipo_usuario == 'treinador' else AlunoForm
-    form = FormClass(request.POST or None)
+        tipo = request.GET.get('tipo', 'aluno')
+
+    if request.method == 'POST':
+        if tipo == 'treinador':
+            form = TreinadorForm(request.POST)
+        else:
+            form = AlunoForm(request.POST)
+    else:
+        form = TreinadorForm() if tipo == 'treinador' else AlunoForm()
 
     if request.method == 'POST':
         if form.is_valid():
             form.save()
-            messages.success(request, 'Cadastro realizado com sucesso!')
+            messages.success(request, "Cadastro realizado com sucesso!")
             return redirect('login')
         else:
-            messages.error(request, 'Por favor, corrija os erros abaixo.')
+            messages.error(request, "Por favor, corrija os erros abaixo.")
+
+    treinadores = []
+    if tipo != 'treinador':
+        treinadores = Treinador.objects.all().values('cpf', 'nome')
 
     return render(request, 'EscalaPoms/auth/cadastro.html', {
         'form': form,
-        'tipo_usuario': tipo_usuario,
+        'treinadores': treinadores,
+        'tipo_usuario': tipo,
     })
 
 

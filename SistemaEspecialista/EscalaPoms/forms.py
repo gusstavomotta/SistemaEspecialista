@@ -52,22 +52,25 @@ class TreinadorForm(PessoaForm):
 
 
 class AlunoForm(PessoaForm):
-    treinador = forms.ModelChoiceField(
-        queryset=Treinador.objects.all(),
-        empty_label="Selecione o treinador",
-        help_text="Treinador responsável",
-        to_field_name="cpf"
+    treinador = forms.CharField(
+        max_length=11,
+        help_text="CPF do treinador (obrigatório para aluno)"
     )
 
     class Meta(PessoaForm.Meta):
         model = Aluno
         fields = PessoaForm.Meta.fields + ['treinador']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['treinador'].widget.attrs.update({
-            'class': 'form-control form-control-lg'
-        })
+    def clean(self):
+        cleaned = super().clean()
+        cpf_t = cleaned.get('treinador')
+        if not cpf_t:
+            raise ValidationError({'treinador': "Informe o CPF do treinador."})
+        try:
+            cleaned['treinador'] = Treinador.objects.get(cpf=cpf_t)
+        except Treinador.DoesNotExist:
+            raise ValidationError({'treinador': "Treinador não encontrado."})
+        return cleaned
 
 class AlunoTrocaTreinadorForm(forms.ModelForm):
     treinador = forms.ModelChoiceField(
