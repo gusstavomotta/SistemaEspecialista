@@ -27,10 +27,6 @@
     </div>
 
     <div class="profile-field">
-      <span class="label">CPF:</span>
-      <span class="value">{{ usuario.cpf }}</span>
-    </div>
-    <div class="profile-field">
       <span class="label">Nome:</span>
       <span class="value">{{ usuario.nome }}</span>
     </div>
@@ -42,10 +38,7 @@
       <span class="label">Telefone:</span>
       <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
     </div>
-    <div class="profile-field">
-      <span class="label">Gênero:</span>
-      <span class="value">{{ usuario.genero }}</span>
-    </div>
+
 
     <div class="profile-actions" style="margin-top: 1em;">
       <a href="{% url 'solicitar_exclusao' %}" class="btn-danger">Excluir Conta</a>
@@ -53,6 +46,12 @@
     </div>
   </form>
 
+  {% if not usuario.treinador or not usuario.treinador.ativo %}
+      {# Exibe alerta caso não haja treinador ativo #}
+      <div class="alert alert-warning">
+        Você ainda não possui um treinador ativo. Selecione um novo
+      </div>
+  {% endif %}
   {% if usuario.treinador.ativo %}
   <div class="profile-section" style="margin-top: 1.5em;">
     <h2 class="section-title">Treinador Atual</h2>

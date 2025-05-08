@@ -6,6 +6,8 @@ from ..validators import validar_numero_telefone, normalizar_cpf
 from ..models import Aluno, Treinador
 from ..forms import AlunoTrocaTreinadorForm
 
+from django.db import IntegrityError
+
 def obter_usuario_por_cpf(cpf):
     cpf_numeros = normalizar_cpf(cpf)
     return (
@@ -14,11 +16,16 @@ def obter_usuario_por_cpf(cpf):
     )
     
 def atualizar_dados_usuario(usuario, request, template):
+    is_aluno  = isinstance(usuario, Aluno)
+    form_troca = AlunoTrocaTreinadorForm(instance=usuario) if is_aluno else None
+
     def erro(mensagem):
         messages.error(request, mensagem)
         return render(request, template, {
-            'usuario': usuario,
+            'usuario':      usuario,
             'url_dashboard': reverse('perfil'),
+            'is_aluno':     is_aluno,
+            'form_troca':   form_troca,
         })
 
     email = request.POST.get('email')
@@ -42,7 +49,11 @@ def atualizar_dados_usuario(usuario, request, template):
     if foto:
         usuario.foto = foto
 
-    usuario.save()
+    try:
+        usuario.save()
+    except IntegrityError:
+        return erro('Não foi possível atualizar: conflito de dados no banco.')
+    
     messages.success(request, 'Dados atualizados com sucesso!')
     return redirect('perfil')
 
