@@ -3,6 +3,7 @@ import random
 from django.contrib.auth import logout as deslogar, authenticate, login
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from django.utils.dateformat import DateFormat
 
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
@@ -161,7 +162,6 @@ def home(request):
 
     if isinstance(usuario, Treinador):
         tipo = 'Treinador'
-
         total_alunos = Aluno.objects.filter(treinador=usuario).count()
 
         ultima_escala = (
@@ -209,6 +209,7 @@ def home(request):
             'escalas_ultima_semana': escalas_ultima_semana,
             'alunos_sem_escala': alunos_sem_escala,
         }
+        
     else:
         tipo = 'Aluno'
         treinador = usuario.treinador
@@ -243,9 +244,22 @@ def meus_alunos(request):
 @treinador_required
 def historico_aluno(request, aluno_cpf):
     aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
-    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('-data').select_related('classificacao')
-    return render(request, 'EscalaPoms/aluno/historico_aluno.html', {'aluno': aluno, 'escalas': escalas})
+    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('aluno')
 
+    # Dados para os gráficos
+    labels = [DateFormat(e.data).format('d/m') for e in escalas]
+    pth = [e.pth for e in escalas]
+    desajuste = [e.soma_desajuste for e in escalas]
+
+    context = {
+        'aluno': aluno,
+        'escalas': escalas,
+        'labels': labels,
+        'pth': pth,
+        'desajuste': desajuste,
+    }
+
+    return render(request, 'EscalaPoms/aluno/historico_aluno.html', context)
 
 @login_required
 @aluno_required
@@ -270,17 +284,26 @@ def escala(request):
 def minhas_escalas(request):
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
 
-    escalas_do_aluno = (
+    escalas = (
         EscalaPoms.objects
         .filter(aluno=aluno)
-        .order_by('-data')
+        .order_by('data')  # Ordem crescente para os gráficos
         .select_related('classificacao')
     )
 
-    return render(request, 'EscalaPoms/escala/minhas_escalas.html', {
+    labels = [DateFormat(e.data).format('d/m') for e in escalas]
+    pth = [e.pth for e in escalas]
+    desajuste = [e.soma_desajuste for e in escalas]
+
+    context = {
         'aluno': aluno,
-        'escalas': escalas_do_aluno,
-    })
+        'escalas': escalas,
+        'labels': labels,
+        'pth': pth,
+        'desajuste': desajuste,
+    }
+
+    return render(request, 'EscalaPoms/escala/minhas_escalas.html', context)
     
 
 @login_required

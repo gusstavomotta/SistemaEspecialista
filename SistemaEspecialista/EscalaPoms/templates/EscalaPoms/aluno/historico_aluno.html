@@ -1,9 +1,9 @@
-{# templates/EscalaPoms/aluno/historico.html #}
 {% extends 'EscalaPoms/base.html' %}
 {% load static %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/historico_aluno.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
 {% block title %}Histórico de {{ aluno.nome }}{% endblock %}
@@ -90,8 +90,69 @@
       {% endfor %}
     </ul>
 
-    <a href="{% url 'meus_alunos' %}" class="btn btn-secondary voltar-btn">
+    <!-- Gráficos posicionados ao fim da lista de escalas dentro de um card -->
+    <div class="card mt-5">
+      <div class="card-body">
+        <h2 class="subtitulo mb-3">Gráficos de Evolução</h2>
+        <div class="mb-4">
+          <canvas id="pthChart"></canvas>
+        </div>
+        <div class="mb-4">
+          <canvas id="desajusteChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <a href="{% url 'meus_alunos' %}" class="btn btn-secondary voltar-btn mt-4">
       ← Voltar para Meus Alunos
     </a>
   </section>
+
+  <script>
+    const labels = {{ labels|safe }};
+    const pthData = {{ pth|safe }};
+    const desajusteData = {{ desajuste|safe }};
+
+    const pthChart = new Chart(document.getElementById('pthChart'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'PTH (Humor)',
+          data: pthData,
+          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          fill: true,
+          tension: 0.3,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+
+    const desajusteChart = new Chart(document.getElementById('desajusteChart'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Desajuste ao Treino',
+          data: desajusteData,
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          fill: true,
+          tension: 0.3,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
 {% endblock %}
