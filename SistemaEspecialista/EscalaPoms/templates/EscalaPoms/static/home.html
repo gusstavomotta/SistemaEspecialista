@@ -101,5 +101,67 @@
       </div>
     </div>
   {% endif %}
+
+  {% if tem_escalas %}
+  <div class="col-12 mt-4">
+    <div class="card text-bg-light">
+      <div class="card-body">
+        <h5 class="card-title">Evolução de Humor e Desajuste ao treino</h5>
+        <div class="mb-4">
+          <canvas id="pthChart" style="max-height: 200px;"></canvas>
+        </div>
+        <div>
+          <canvas id="desajusteChart" style="max-height: 200px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
 </section>
+{% if tem_escalas %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const labels = {{ labels|safe }};
+    const pthData = {{ pth|safe }};
+    const desajusteData = {{ desajuste|safe }};
+
+    new Chart(document.getElementById('pthChart'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'PTH',
+          data: pthData,
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } }
+      }
+    });
+
+    new Chart(document.getElementById('desajusteChart'), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Desajuste',
+          data: desajusteData,
+          fill: false,
+          borderColor: 'rgb(255, 99, 132)',
+          tension: 0.2
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } }
+      }
+    });
+  </script>
+{% endif %}
+
 {% endblock %}

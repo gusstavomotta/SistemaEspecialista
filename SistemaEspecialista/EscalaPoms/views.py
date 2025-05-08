@@ -213,9 +213,14 @@ def home(request):
     else:
         tipo = 'Aluno'
         treinador = usuario.treinador
-        escalas = EscalaPoms.objects.filter(aluno=usuario).order_by('-data')
+        escalas = EscalaPoms.objects.filter(aluno=usuario).order_by('data')
+
         total_escalas = escalas.count()
-        ultima_escala = escalas.first()
+        ultima_escala = escalas.last()
+
+        labels = [DateFormat(e.data).format('d/m') for e in escalas]
+        pth = [e.pth for e in escalas]
+        desajuste = [e.soma_desajuste for e in escalas]
 
         context = {
             'nome': usuario.nome,
@@ -223,7 +228,11 @@ def home(request):
             'treinador': treinador,
             'total_escalas': total_escalas,
             'ultima_escala': ultima_escala.data if ultima_escala else None,
-        }
+            'labels': labels,
+            'pth': pth,
+            'desajuste': desajuste,
+            'tem_escalas': escalas.exists(),
+    }
 
     return render(request, 'EscalaPoms/static/home.html', context)
 
