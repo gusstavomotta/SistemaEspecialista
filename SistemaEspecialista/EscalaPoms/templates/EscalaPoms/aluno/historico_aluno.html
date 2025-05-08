@@ -30,33 +30,36 @@
       </div>
     </div>
 
-    <h2 class="subtitulo mb-3">Escalas Registradas</h2>
+    <h2 class="subtitulo mb-3 text-body">Escalas Registradas</h2>
     <ul class="escala-list list-group mb-4">
       {% for escala in escalas %}
         <li class="list-group-item escala-item">
+          <div class="row mt-1">
+            <div class="subtitulo mb-3 text-success"><strong>Dados da escala:</strong></div>
+          </div>
           <div class="escala-header row">
-            <div class="col"><strong>Data:</strong><br>{{ escala.data|date:"d/m/Y" }}</div>
-            <div class="col"><strong>PTH:</strong><br>{{ escala.pth }}</div>
-            <div class="col"><strong>Sono:</strong><br>{{ escala.sono|default:"–" }}</div>
-            <div class="col"><strong>FC Média:</strong><br>{{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
+            <div class="col"><strong>Data:</strong> {{ escala.data|date:"d/m/Y" }}</div>
+            <div class="col"><strong>PTH:</strong> {{ escala.pth }}</div>
+            <div class="col"><strong>Sono:</strong> {{ escala.sono|default:"–" }}</div>
+            <div class="col"><strong>FC Média:</strong> {{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
           </div>
           <div class="escala-valores row mt-2">
-            <div class="col"><strong>Σ Tensão:</strong><br>{{ escala.soma_tensao }}</div>
-            <div class="col"><strong>Σ Depressão:</strong><br>{{ escala.soma_depressao }}</div>
-            <div class="col"><strong>Σ Hostilidade:</strong><br>{{ escala.soma_hostilidade }}</div>
-            <div class="col"><strong>Σ Fadiga:</strong><br>{{ escala.soma_fadiga }}</div>
+            <div class="col"><strong>Σ Tensão:</strong> {{ escala.soma_tensao }}</div>
+            <div class="col"><strong>Σ Depressão:</strong> {{ escala.soma_depressao }}</div>
+            <div class="col"><strong>Σ Hostilidade:</strong> {{ escala.soma_hostilidade }}</div>
+            <div class="col"><strong>Σ Fadiga:</strong> {{ escala.soma_fadiga }}</div>
           </div>
           <div class="escala-valores row mt-2">
-            <div class="col"><strong>Σ Confusão:</strong><br>{{ escala.soma_confusao }}</div>
-            <div class="col"><strong>Σ Vigor:</strong><br>{{ escala.soma_vigor }}</div>
-            <div class="col"><strong>Σ Desajuste:</strong><br>{{ escala.soma_desajuste }}</div>
-            <div class="col"><strong>Vol. Treino:</strong><br>{{ escala.volume_treino|default:"–" }}</div>
+            <div class="col"><strong>Σ Confusão:</strong> {{ escala.soma_confusao }}</div>
+            <div class="col"><strong>Σ Vigor:</strong> {{ escala.soma_vigor }}</div>
+            <div class="col"><strong>Σ Desajuste:</strong> {{ escala.soma_desajuste }}</div>
+            <div class="col"><strong>Vol. Treino:</strong> {{ escala.volume_treino|default:"–" }}</div>
           </div>
 
           {% if escala.observacoes %}
             <div class="row mt-2">
               <div class="col-12">
-                <strong>Observações:</strong><br>
+                <strong>Observações:</strong> 
                 {{ escala.observacoes }}
               </div>
             </div>
@@ -64,18 +67,18 @@
 
           {% if escala.classificacao %}
             <div class="row mt-4">
-              <div class="col-12"><strong>Níveis Emocionais:</strong></div>
+              <div class="subtitulo mb-3 text-success"><strong>Níveis Emocionais:</strong></div>
             </div>
             <div class="row escala-valores mt-1">
-              <div class="col"><strong>Tensão:</strong><br>{{ escala.classificacao.nivel_tensao }}</div>
-              <div class="col"><strong>Depressão:</strong><br>{{ escala.classificacao.nivel_depressao }}</div>
-              <div class="col"><strong>Hostilidade:</strong><br>{{ escala.classificacao.nivel_hostilidade }}</div>
-              <div class="col"><strong>Fadiga:</strong><br>{{ escala.classificacao.nivel_fadiga }}</div>
+              <div class="col"><strong>Tensão:</strong> {{ escala.classificacao.nivel_tensao }}</div>
+              <div class="col"><strong>Depressão:</strong> {{ escala.classificacao.nivel_depressao }}</div>
+              <div class="col"><strong>Hostilidade:</strong> {{ escala.classificacao.nivel_hostilidade }}</div>
+              <div class="col"><strong>Fadiga:</strong> {{ escala.classificacao.nivel_fadiga }}</div>
             </div>
             <div class="row escala-valores mt-2">
-              <div class="col"><strong>Confusão:</strong><br>{{ escala.classificacao.nivel_confusao }}</div>
-              <div class="col"><strong>Vigor:</strong><br>{{ escala.classificacao.nivel_vigor }}</div>
-              <div class="col"><strong>Desajuste:</strong><br>{{ escala.classificacao.nivel_desajuste }}</div>
+              <div class="col"><strong>Confusão:</strong> {{ escala.classificacao.nivel_confusao }}</div>
+              <div class="col"><strong>Vigor:</strong> {{ escala.classificacao.nivel_vigor }}</div>
+              <div class="col"><strong>Desajuste:</strong> {{ escala.classificacao.nivel_desajuste }}</div>
             </div>
           {% else %}
             <div class="row mt-3">

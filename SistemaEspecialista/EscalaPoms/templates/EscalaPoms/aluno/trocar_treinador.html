@@ -2,23 +2,26 @@
 {% block title %}Trocar Treinador{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2>Olá, {{ usuario.nome }}. Escolha seu novo treinador:</h2>
-  <form method="post" action="{% url 'trocar_treinador' %}">
-    {% csrf_token %}
-    <div class="form-group mb-3">
-      <label for="treinadorSelect">Treinador:</label>
-      <select class="form-select" name="treinador_id" id="treinadorSelect" required>
-        <option value="" disabled selected>Selecione um treinador</option>
-        {% for treinador in treinadores %}
-          <option value="{{ treinador.cpf }}">
-            {{ treinador.nome }}
-          </option>
-        {% endfor %}
-      </select>
-    </div>
-    <button type="submit" class="btn btn-success">Confirmar</button>
-    <a href="{% url 'perfil' %}" class="btn btn-secondary">Cancelar</a>
-  </form>
+
+<div class="d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 3rem;">
+  <div class="card shadow-sm p-4" style="width: 100%; max-width: 500px;">
+    <h2 class="mb-4">Olá, {{ usuario.nome }}. Escolha seu novo treinador:</h2>
+    <form method="post" action="{% url 'trocar_treinador' %}">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <label for="treinadorSelect">Treinador:</label>
+        <select class="form-select" name="treinador_id" id="treinadorSelect" required>
+          <option value="" disabled selected>Selecione um treinador</option>
+          {% for treinador in treinadores %}
+            <option value="{{ treinador.cpf }}">{{ treinador.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'perfil' %}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-success">Confirmar</button>
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock %}

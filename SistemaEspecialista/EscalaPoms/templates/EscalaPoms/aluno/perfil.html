@@ -39,30 +39,27 @@
       <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
     </div>
 
+    {% if usuario.treinador.ativo %}
+      <div class="profile-section">
+        <h2 class="section-title">Treinador Atual</h2>
+        <div class="profile-field">
+          <span class="label">Nome:</span>
+          <span class="value">{{ usuario.treinador.nome }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Email:</span>
+          <span class="value">{{ usuario.treinador.email }}</span>
+        </div>
+        <div class="profile-field">
+          <span class="label">Telefone:</span>
+          <span class="value">{{ usuario.treinador.num_telefone }}</span>
+        </div>
+      </div>
+    {% endif %}
+
     <div class="profile-actions" style="margin-top: 1em;">
       <button type="submit" class="btn-success">Salvar Perfil</button>
     </div>
   </form>
-
-  {% if usuario.treinador.ativo %}
-  <div class="profile-section" style="margin-top: 1.5em;">
-    <h2 class="section-title">Treinador Atual</h2>
-
-    <div class="profile-field">
-      <span class="label">Nome:</span>
-      <span class="value">{{ usuario.treinador.nome }}</span>
-    </div>
-    <div class="profile-field">
-      <span class="label">Email:</span>
-      <span class="value">{{ usuario.treinador.email }}</span>
-    </div>
-    <div class="profile-field">
-      <span class="label">Telefone:</span>
-      <span class="value">{{ usuario.treinador.num_telefone }}</span>
-    </div>
-  </div>
-{% endif %}
-
-
 </section>
 {% endblock %}

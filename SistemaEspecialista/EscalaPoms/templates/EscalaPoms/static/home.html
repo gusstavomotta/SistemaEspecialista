@@ -21,7 +21,7 @@
       <div class="col-md-4">
         <div class="card text-bg-light h-100">
           <div class="card-body">
-            <h5 class="card-title">Escalas na última semana</h5>
+            <h5 class="card-title">Escalas cadastradas</h5>
             <p class="card-text fs-4"><strong>{{ escalas_ultima_semana }}</strong></p>
           </div>
         </div>
@@ -31,7 +31,7 @@
       <div class="col-md-4">
         <div class="card text-bg-light h-100">
           <div class="card-body">
-            <h5 class="card-title">Última Escala</h5>
+            <h5 class="card-title">Última escala cadastrada</h5>
             {% if aluno_mais_recente %}
               <p class="card-text"><strong>Nome:</strong> {{ aluno_mais_recente.nome }}</p>
               <p class="card-text"><strong>Data:</strong> {{ data_mais_recente|date:"d/m/Y H:i" }}</p>
@@ -90,7 +90,7 @@
       <div class="col-md-4">
         <div class="card text-bg-light h-100">
           <div class="card-body">
-            <h5 class="card-title">Última Escala</h5>
+            <h5 class="card-title">Última escala cadastrada</h5>
             {% if ultima_escala %}
               <p class="card-text">{{ ultima_escala|date:"d/m/Y H:i" }}</p>
             {% else %}
@@ -131,7 +131,7 @@
       data: {
         labels: labels,
         datasets: [{
-          label: 'PTH',
+          label: 'PTH (Humor)',
           data: pthData,
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
@@ -149,7 +149,7 @@
       data: {
         labels: labels,
         datasets: [{
-          label: 'Desajuste',
+          label: 'Desajuste ao treino',
           data: desajusteData,
           fill: false,
           borderColor: 'rgb(255, 99, 132)',

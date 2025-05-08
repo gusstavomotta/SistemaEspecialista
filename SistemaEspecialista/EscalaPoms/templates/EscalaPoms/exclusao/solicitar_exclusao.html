@@ -3,23 +3,30 @@
 {% block title %}Solicitar Exclusão de Conta{% endblock %}
 
 {% block content %}
-  <h1>Excluir Conta</h1>
-  <p>Para confirmar a exclusão da sua conta, informe o seu email cadastrado:</p>
+  <div class="container d-flex justify-content-center align-items-start min-vh-100 pt-5">
+    <div class="w-100" style="max-width: 500px;">
+      <!-- Caixa com borda e fundo -->
+      <div class="p-4 border rounded shadow-sm">
+        <h1 class="text-center mb-4">Excluir Conta</h1>
+        <p class="text-center mb-4">Para confirmar a exclusão da sua conta, informe o seu email cadastrado:</p>
 
-  <form method="POST" class="mt-3">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        class="form-control"
-        placeholder="Digite seu email"
-        required
-        value="{{ email|default_if_none:'' }}"
-      />
+        <form method="POST" class="mt-3">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              placeholder="Digite seu email"
+              required
+              value="{{ email|default_if_none:'' }}"
+            />
+          </div>
+          <button type="submit" class="btn btn-warning w-100">Enviar Código de Confirmação</button>
+        </form>
+      </div>
     </div>
-    <button type="submit" class="btn btn-warning">Enviar Código de Confirmação</button>
-  </form>
+  </div>
 {% endblock %}
