@@ -39,8 +39,12 @@ def login_view(request):
     
     
 def cadastro(request):
-    tipo = request.POST.get('tipo_usuario') if request.method == 'POST' else request.GET.get('tipo', 'aluno')
-    FormClass = TreinadorForm if tipo == 'treinador' else AlunoForm
+    if request.method == 'POST':
+        tipo_usuario = request.POST.get('tipo_usuario', '')
+    else:
+        tipo_usuario = ''
+        
+    FormClass = TreinadorForm if tipo_usuario == 'treinador' else AlunoForm
     form = FormClass(request.POST or None)
 
     if request.method == 'POST':
@@ -53,7 +57,7 @@ def cadastro(request):
 
     return render(request, 'EscalaPoms/auth/cadastro.html', {
         'form': form,
-        'tipo_usuario': tipo,
+        'tipo_usuario': tipo_usuario,
     })
 
 
