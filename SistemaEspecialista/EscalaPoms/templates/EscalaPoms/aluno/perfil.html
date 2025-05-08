@@ -53,9 +53,9 @@
     </div>
   </form>
 
-  {% if usuario.treinador %}
+  {% if usuario.treinador.ativo %}
   <div class="profile-section" style="margin-top: 1.5em;">
-    <h1 class="section-title">Treinador Atual</h1>
+    <h2 class="section-title">Treinador Atual</h2>
 
     <div class="profile-field">
       <span class="label">Nome:</span>
@@ -73,48 +73,48 @@
 {% endif %}
 
 {% if is_aluno %}
-<div class="profile-actions" style="margin-top: 1em;">
-  <button type="button" id="mostrar-troca" class="btn-success">
-    Trocar Treinador
-  </button>
-</div>
+  <div class="profile-actions" style="margin-top: 1em;">
+    <button type="button" id="mostrar-troca" class="btn-success">
+      Trocar Treinador
+    </button>
+  </div>
 
   <div id="form-troca" style="display: none; margin-top: 1em;">
     {% if form_troca %}
+      <form method="post">
+        {% csrf_token %}
 
-      <div class="profile-field">
-        <span class="label">Novo Treinador:</span>
-        <select name="treinador" required>
-          <option value="" disabled {% if not usuario.treinador %}selected{% endif %}>Selecione…</option>
-          {% for t in form_troca.fields.treinador.queryset %}
-            <option value="{{ t.cpf }}"
-              {% if usuario.treinador and usuario.treinador.cpf == t.cpf %}selected{% endif %}>
-              {{ t.nome }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="profile-actions" style="margin-top: .5em;">
-        <button type="submit" name="trocar_treinador" class="btn-primary">
-          Confirmar Troca
-        </button>
-      </div>
+        <div class="profile-field">
+          <label for="id_treinador" class="label">Novo Treinador:</label>
+          {{ form_troca.treinador }}
+          {% if form_troca.treinador.errors %}
+            <div class="invalid-feedback d-block">
+              {{ form_troca.treinador.errors.0 }}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="profile-actions" style="margin-top: .5em;">
+          <!-- basta o name existir no POST -->
+          <button type="submit" name="trocar_treinador" class="btn-primary">
+            Confirmar Troca
+          </button>
+        </div>
+      </form>
     {% endif %}
   </div>
-{% endif %}
 
-  {% if is_aluno %}
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const btn = document.getElementById('mostrar-troca');
-        const formTroca = document.getElementById('form-troca');
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('mostrar-troca');
+      const formTroca = document.getElementById('form-troca');
 
-        btn.addEventListener('click', function () {
-          formTroca.style.display = 'block';
-          btn.style.display      = 'none';
-        });
+      btn.addEventListener('click', function () {
+        formTroca.style.display = 'block';
+        btn.style.display  = 'none';
       });
-    </script>
-  {% endif %}
+    });
+  </script>
+{% endif %}
 </section>
 {% endblock %}
