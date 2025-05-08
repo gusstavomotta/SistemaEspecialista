@@ -1,8 +1,105 @@
 {% extends 'EscalaPoms/base.html' %}
-{% load static %}
-
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <h1>BEM VINDO {{ tipo }}: {{ nome }}</h1>
+<section class="container mt-4">
+  <h1 class="mb-4">Bem-vindo {{ tipo }}: {{ nome }}</h1>
+
+  {% if tipo == 'Treinador' %}
+    <div class="row g-4">
+      <!-- Card: Total de Alunos -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Total de Alunos</h5>
+            <p class="card-text fs-4"><strong>{{ total_alunos }}</strong> aluno{{ total_alunos|pluralize }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Escalas nos últimos 7 dias -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Escalas na última semana</h5>
+            <p class="card-text fs-4"><strong>{{ escalas_ultima_semana }}</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Última Escala Cadastrada -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Última Escala</h5>
+            {% if aluno_mais_recente %}
+              <p class="card-text"><strong>Nome:</strong> {{ aluno_mais_recente.nome }}</p>
+              <p class="card-text"><strong>Data:</strong> {{ data_mais_recente|date:"d/m/Y H:i" }}</p>
+            {% else %}
+              <p class="card-text">Nenhuma escala cadastrada ainda.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Card: Alunos sem escala -->
+    <div class="card bg-light mt-5">
+      <div class="card-body">
+        <h5 class="card-title">Alunos sem escala nos últimos 7 dias</h5>
+        {% if alunos_sem_escala %}
+          <ul class="list-group list-group-flush">
+            {% for info in alunos_sem_escala %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ info.aluno.nome }} - última escala em {{ info.ultima_escala|date:"d/m/Y H:i" }}</span>
+                <a href="{% url 'historico_aluno' info.aluno.cpf %}" class="btn btn-sm btn-outline-primary">
+                  Ver Histórico
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="card-text">Todos os seus alunos registraram uma escala recentemente.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if tipo == 'Aluno' %}
+    <div class="row g-4">
+      <!-- Card: Treinador atual -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Treinador Atual</h5>
+            <p class="card-text">{{ treinador.nome }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Total de escalas -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Total de Escalas</h5>
+            <p class="card-text fs-4">{{ total_escalas }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Última escala -->
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Última Escala</h5>
+            {% if ultima_escala %}
+              <p class="card-text">{{ ultima_escala|date:"d/m/Y H:i" }}</p>
+            {% else %}
+              <p class="card-text">Nenhuma escala cadastrada ainda.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</section>
 {% endblock %}

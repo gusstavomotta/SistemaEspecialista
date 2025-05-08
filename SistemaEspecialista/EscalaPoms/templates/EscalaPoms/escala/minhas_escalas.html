@@ -12,15 +12,7 @@
   <h1 class="title mb-4">Minhas Escalas</h1>
 
   <!-- Foto e dados do aluno -->
-  <div class="perfil-info mb-4">
-    {% if aluno.foto %}
-      <img src="{{ aluno.foto.url }}" alt="Foto de {{ aluno.nome }}"
-           class="foto-perfil">
-    {% else %}
-      <img src="{% static 'images/no-photo.png' %}" alt="Sem foto"
-           class="foto-perfil">
-    {% endif %}
-  </div>
+
 
   <h2 class="h4 mb-3">Escalas Registradas</h2>
   <ul class="list-group mb-4">

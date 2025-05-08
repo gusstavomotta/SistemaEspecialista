@@ -44,11 +44,6 @@
     </div>
   </form>
 
-  {% if not usuario.treinador or not usuario.treinador.ativo %}
-      <div class="alert alert-warning">
-        Você não possui um treinador ativo, Vá para o menu ajustes e selecione um novo treinador!
-      </div>
-  {% endif %}
   {% if usuario.treinador.ativo %}
   <div class="profile-section" style="margin-top: 1.5em;">
     <h2 class="section-title">Treinador Atual</h2>

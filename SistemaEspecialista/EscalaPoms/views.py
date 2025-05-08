@@ -11,6 +11,9 @@ from .forms import *
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
 from .validators import validar_cpf
+from django.db.models import Count, Avg, Max
+from datetime import timedelta
+from django.utils import timezone
 
 from .services.usuario_service import (
     obter_usuario_por_cpf,
@@ -154,12 +157,74 @@ def confirmar_codigo(request):
 @login_required
 def home(request):
     cpf = request.user.username 
-    usuario = obter_usuario_por_cpf(cpf)  
+    usuario = obter_usuario_por_cpf(cpf)
 
-    tipo = 'Treinador' if isinstance(usuario, Treinador) else 'Aluno'
-    context = {'nome': usuario.nome, 'tipo': tipo}
+    if isinstance(usuario, Treinador):
+        tipo = 'Treinador'
+
+        total_alunos = Aluno.objects.filter(treinador=usuario).count()
+
+        ultima_escala = (
+            EscalaPoms.objects
+                .filter(aluno__treinador=usuario)
+                .select_related('aluno')
+                .order_by('-data')
+                .first()
+        )
+        if ultima_escala:
+            aluno_mais_recente = ultima_escala.aluno
+            data_mais_recente  = ultima_escala.data
+        else:
+            aluno_mais_recente = None
+            data_mais_recente  = None
+
+        hoje = timezone.now()
+        inicio_semana = hoje - timedelta(days=7)
+
+        escalas_ultima_semana = EscalaPoms.objects.filter(
+            aluno__treinador=usuario,
+            data__gte=inicio_semana
+        ).count()
+
+        ultimas_por_aluno = (
+            EscalaPoms.objects
+                .filter(aluno__treinador=usuario)
+                .values('aluno')
+                .annotate(ultima_escala=Max('data'))
+        )
+        alunos_sem_escala = []
+        for item in ultimas_por_aluno:
+            if item['ultima_escala'] < inicio_semana:
+                aluno_obj = Aluno.objects.get(pk=item['aluno'])
+                alunos_sem_escala.append({
+                    'aluno': aluno_obj,
+                    'ultima_escala': item['ultima_escala'],
+                })
+        context = {
+            'nome': usuario.nome,
+            'tipo': 'Treinador',
+            'total_alunos': total_alunos,
+            'aluno_mais_recente': aluno_mais_recente,
+            'data_mais_recente': data_mais_recente,
+            'escalas_ultima_semana': escalas_ultima_semana,
+            'alunos_sem_escala': alunos_sem_escala,
+        }
+    else:
+        tipo = 'Aluno'
+        treinador = usuario.treinador
+        escalas = EscalaPoms.objects.filter(aluno=usuario).order_by('-data')
+        total_escalas = escalas.count()
+        ultima_escala = escalas.first()
+
+        context = {
+            'nome': usuario.nome,
+            'tipo': tipo,
+            'treinador': treinador,
+            'total_escalas': total_escalas,
+            'ultima_escala': ultima_escala.data if ultima_escala else None,
+        }
+
     return render(request, 'EscalaPoms/static/home.html', context)
-
 
 @login_required
 @treinador_required
