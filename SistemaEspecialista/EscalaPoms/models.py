@@ -5,7 +5,7 @@ class ActiveManager(models.Manager):
         return super().get_queryset().filter(ativo=True)
 
 class Pessoa(models.Model):
-    cpf         = models.CharField(max_length=14, primary_key=True, help_text="…")
+    cpf         = models.CharField(primary_key=True)
     nome        = models.CharField(max_length=100)
     email       = models.EmailField(unique=True)
     senha       = models.CharField(max_length=128)

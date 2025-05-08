@@ -35,7 +35,7 @@
             {% if aluno.foto %}
               <img src="{{ aluno.foto.url }}" alt="Foto de {{ aluno.nome }}" class="foto-aluno">
             {% else %}
-              <img src="{% static 'images/no-photo.png' %}" alt="Sem foto" class="foto-aluno">
+              <img src="{% static 'images/teste.png' %}" alt="Foto padrão" class="foto-aluno">
             {% endif %}
           </div>
           
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <a href="{% url 'historico_aluno' aluno.cpf %}" class="btn btn-sm btn-outline-primary">
+          <a href="{% url 'historico_aluno' aluno.cpf %}" class="btn btn-sm btn-outline-success">
             Ver Histórico
           </a>
         </li>
