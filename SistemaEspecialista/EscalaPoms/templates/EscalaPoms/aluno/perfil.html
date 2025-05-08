@@ -39,17 +39,14 @@
       <input type="text" name="telefone" value="{{ usuario.num_telefone }}" required>
     </div>
 
-
     <div class="profile-actions" style="margin-top: 1em;">
-      <a href="{% url 'solicitar_exclusao' %}" class="btn-danger">Excluir Conta</a>
       <button type="submit" class="btn-success">Salvar Perfil</button>
     </div>
   </form>
 
   {% if not usuario.treinador or not usuario.treinador.ativo %}
-      {# Exibe alerta caso não haja treinador ativo #}
       <div class="alert alert-warning">
-        Você ainda não possui um treinador ativo. Selecione um novo
+        Você não possui um treinador ativo, Vá para o menu ajustes e selecione um novo treinador!
       </div>
   {% endif %}
   {% if usuario.treinador.ativo %}
@@ -71,49 +68,6 @@
   </div>
 {% endif %}
 
-{% if is_aluno %}
-  <div class="profile-actions" style="margin-top: 1em;">
-    <button type="button" id="mostrar-troca" class="btn-success">
-      Trocar Treinador
-    </button>
-  </div>
 
-  <div id="form-troca" style="display: none; margin-top: 1em;">
-    {% if form_troca %}
-      <form method="post">
-        {% csrf_token %}
-
-        <div class="profile-field">
-          <label for="id_treinador" class="label">Novo Treinador:</label>
-          {{ form_troca.treinador }}
-          {% if form_troca.treinador.errors %}
-            <div class="invalid-feedback d-block">
-              {{ form_troca.treinador.errors.0 }}
-            </div>
-          {% endif %}
-        </div>
-
-        <div class="profile-actions" style="margin-top: .5em;">
-          <!-- basta o name existir no POST -->
-          <button type="submit" name="trocar_treinador" class="btn-primary">
-            Confirmar Troca
-          </button>
-        </div>
-      </form>
-    {% endif %}
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById('mostrar-troca');
-      const formTroca = document.getElementById('form-troca');
-
-      btn.addEventListener('click', function () {
-        formTroca.style.display = 'block';
-        btn.style.display  = 'none';
-      });
-    });
-  </script>
-{% endif %}
 </section>
 {% endblock %}

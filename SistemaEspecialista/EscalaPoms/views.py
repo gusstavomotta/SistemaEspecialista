@@ -259,6 +259,7 @@ def solicitar_exclusao(request):
             exclusao_codigo = f"{random.randint(100000, 999999):06}"
             request.session['exclusao_codigo'] = exclusao_codigo
             enviar_codigo_email(exclusao_codigo, usuario.email)
+            print(f"Código de exclusão enviado para {usuario.email}: {exclusao_codigo}")
             return redirect('confirmar_exclusao')
 
     return render(request, 'EscalaPoms/exclusao/solicitar_exclusao.html', {
