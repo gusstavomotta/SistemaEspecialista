@@ -84,33 +84,29 @@
                   <div class="text-danger small">{{ form.genero.errors|first }}</div>
                 </div>
 
-                <!-- Função -->
-                <div class="mt-3">
+                <!-- Tipo de Usuário -->
+                <div class="mt-3 mb-4 text-start">
                   <label class="form-label me-3">Função:</label>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-aluno" value="aluno"
-                      {% if tipo_usuario == "aluno" %}checked{% endif %}>
+                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-aluno" value="aluno" required {% if tipo_usuario == "aluno" %}checked{% endif %}>
                     <label class="form-check-label" for="tipo-aluno">Aluno</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-treinador" value="treinador"
-                      {% if tipo_usuario == "treinador" %}checked{% endif %}>
+                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-treinador" value="treinador" required {% if tipo_usuario == "treinador" %}checked{% endif %}>
                     <label class="form-check-label" for="tipo-treinador">Treinador</label>
-                  </div>
-                  <div class="text-danger small">
-                    {% if form.non_field_errors %}
-                      {{ form.non_field_errors|first }}
-                    {% endif %}
                   </div>
                 </div>
 
-                <!-- Treinador -->
-                <div class="mt-3" id="treinador-field">
-                  {{ form.treinador }}
-                  {% if form.treinador.errors %}
-                    <div class="invalid-feedback d-block">{{ form.treinador.errors.0 }}</div>
-                  {% endif %}
-                </div>
+                <!-- Treinador: sempre renderiza se o form tiver o campo -->
+                {% if 'treinador' in form.fields %}
+                  <div class="mt-3 mb-4 text-start" id="treinador-field" style="display:none;">
+                    <label class="form-label" for="id_treinador">Treinador</label>
+                    {{ form.treinador }}
+                    {% if form.treinador.errors %}
+                      <div class="invalid-feedback d-block">{{ form.treinador.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                {% endif %}
 
                 <!-- Botões -->
                 <div class="text-center mt-4">
@@ -121,7 +117,6 @@
                   <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-sm">Login</a>
                 </div>
               </form>
-
             </div>
           </div>
         </div>
@@ -129,16 +124,21 @@
     </div>
   </section>
 
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script>
     const radios = document.querySelectorAll('input[name="tipo_usuario"]');
     const treinadorField = document.getElementById("treinador-field");
     function toggleTreinadorField() {
       const sel = document.querySelector('input[name="tipo_usuario"]:checked');
-      treinadorField.style.display = (sel && sel.value === "aluno") ? 'block' : 'none';
+      if (treinadorField) {
+        // se for aluno e o form tiver o campo, mostra
+        treinadorField.style.display = (sel && sel.value === "aluno") ? 'block' : 'none';
+      }
     }
-    radios.forEach(r => r.addEventListener("change", toggleTreinadorField));
+    radios.forEach(r => r.addEventListener('change', toggleTreinadorField));
+    // Ao carregar, garante esconder/mostrar
     toggleTreinadorField();
   </script>
-  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
+
