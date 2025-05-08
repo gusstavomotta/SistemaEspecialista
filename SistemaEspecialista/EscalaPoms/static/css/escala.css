@@ -7,7 +7,7 @@ fieldset {
   padding: 0;
 }
 fieldset > legend {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: #333;
@@ -29,12 +29,17 @@ fieldset.card .card-body {
   margin-bottom: 1rem;
 }
 .item p {
+  font-size: 1.5rem;
   margin-bottom: .5rem;
   font-weight: 500;
 }
 .item .form-check {
   display: inline-block;
   margin-right: 1rem;
+}
+
+.form-check-label {
+  font-size: 1.05rem; /* Aumenta os números das opções */
 }
 
 /* Botão principal */
@@ -74,3 +79,11 @@ fieldset.card .card-body {
   background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
 }
 
+.escala-wrapper {
+  width: 100%;
+  max-width: 900px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
