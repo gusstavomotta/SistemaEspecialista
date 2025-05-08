@@ -38,11 +38,39 @@ fieldset.card .card-body {
 }
 
 /* Botão principal */
-button[type="submit"] {
-  display: block;
-  width: 50%;
-  margin: 2rem auto 0;
+.button-respostas {
+  background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
+  color: #fff;
+  border: none;
+  border-radius: .375rem;
   padding: .75rem 1.25rem;
   font-size: 1.125rem;
   font-weight: 500;
+  margin: 1rem auto 0;
+  display: block;
+  width: 50%;
+  transition: background-color 0.3s ease;
 }
+
+.button-respostas:hover {
+  background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
+}
+
+.button-treinador {
+  background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
+  color: #fff;
+  border: none;
+  border-radius: .375rem;
+  padding: .75rem 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: 1rem auto 0;
+  display: block;
+  width: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.button-treinador:hover {
+  background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
+}
+

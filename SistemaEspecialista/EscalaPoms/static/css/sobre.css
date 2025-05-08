@@ -13,7 +13,7 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #2c3e50;
+  color: var(--main-text-color);
   font-weight: 600;
 }
 
