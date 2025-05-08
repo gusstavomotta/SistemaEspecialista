@@ -204,18 +204,35 @@
             </li>
           </ul>
         </li>
+
         <li class="sidebar-item">
-          <a href="{% url 'trocar_treinador' %}" class="sidebar-link">
-            <i class="bi bi-person-arrows"></i>
-            <span>Trocar Treinador</span>
+          <a
+            href="#ajustesMenu"
+            class="sidebar-link collapsed has-dropdown"
+            data-bs-toggle="collapse"
+            aria-expanded="false"
+            aria-controls="ajustesMenu"
+          >
+            <i class="bi bi-person"></i>
+            <span>Ajustes</span>
           </a>
+          <ul id="ajustesMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+
+            <li class="sidebar-item">
+              <a href="{% url 'trocar_treinador' %}" class="sidebar-link">
+                <i class="bi bi-person-arrows"></i>
+                <span>Trocar Treinador</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a href="{% url 'solicitar_exclusao' %}" class="sidebar-link">
+                <i class="bi bi-person-arrows"></i>
+                <span>Solicitar Exclusao</span>
+              </a>
+            </li>
+          </ul>
         </li>
-        <li class="sidebar-item">
-          <a href="{% url 'solicitar_exclusao' %}" class="sidebar-link">
-            <i class="bi bi-person-arrows"></i>
-            <span>Solicitar Exclusao</span>
-          </a>
-        </li>
+
         <!-- Menu Perfil -->
         <li class="sidebar-item">
           <a href="{% url 'perfil' %}" class="sidebar-link">
