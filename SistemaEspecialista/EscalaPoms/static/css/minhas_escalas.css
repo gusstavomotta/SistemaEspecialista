@@ -1,128 +1,149 @@
-/* minhas_escalas.css */
-
 /* Container geral */
-.minhas-escalas {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  color: var(--main-text-color);
+.historico-aluno {
+  margin: 2rem 4rem;
+  max-width: 100%;
+  padding: 4rem;
+  box-sizing: border-box;
+  background: #fafafa;
+  border-radius: 32px;
 }
 
 /* Título principal */
-.minhas-escalas .title {
-  font-size: 2rem;
+.historico-title {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+  color: #333;
   text-align: center;
   margin-bottom: 1.5rem;
-  color: var(--main-text-color);
-  font-weight: 600;
 }
 
-/* Seção de dados do aluno */
-.minhas-escalas .perfil-info {
+/* Dados do perfil */
+.perfil-dados {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.minhas-escalas .perfil-info .foto-perfil {
+.foto-perfil {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #e0e0e0;
   flex-shrink: 0;
+  border: 2px solid #ccc;
 }
 
-.minhas-escalas .perfil-info .dados-basicos p {
-  margin: 0.25rem 0;
-  font-size: 1rem;
-  color: #444444;
+.dados-basicos {
+  flex: 1;
+  min-width: 200px;
+}
+
+.dados-basicos p {
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+/* Subtítulo */
+.subtitulo {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 0.5rem;
 }
 
 /* Lista de escalas */
-.minhas-escalas .list-group {
-  border: none;
+.escala-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.minhas-escalas .list-group-item {
+.escala-item {
   background: #fafafa;
   border: 1px solid #e0e0e0;
   border-radius: 0.5rem;
-  padding: 1.5rem;
+  padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Cabeçalhos das colunas */
-.minhas-escalas .list-group-item .row > div strong {
-  display: block;
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.25rem;
+/* Espaçamento interno */
+.escala-header,
+.escala-valores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-/* Valores das escalas */
-.minhas-escalas .list-group-item .row > div {
-  font-size: 1rem;
-  color: #333;
+.escala-header .col,
+.escala-valores .col {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 0.5rem;
 }
 
-/* Separador interno */
-.minhas-escalas .list-group-item + .list-group-item {
+/* Link de voltar */
+.voltar-btn {
+  display: inline-block;
   margin-top: 1rem;
+  align-self: center;
 }
 
-/* Aviso de classificação não disponível */
-.minhas-escalas .text-warning {
+/* Estado vazio */
+.vazio {
+  text-align: center;
+  color: #777;
   font-style: italic;
+  background: transparent;
+  border: none;
+  padding: 1rem;
 }
 
-/* Botão de voltar */
-.minhas-escalas .btn-secondary {
-  margin-top: 1.5rem;
-  background-color: #6c757d;
-  border-color: #6c757d;
-}
-
-.minhas-escalas .btn-secondary:hover {
-  background-color: #5a6268;
-  border-color: #545b62;
-}
-
+/* Ajustes para gráficos */
 canvas {
   width: 100% !important;
-  max-width: 100%;
-  aspect-ratio: 2 / 1; /* Mantém proporção */
   height: auto !important;
-  display: block;
 }
 
 /* Responsividade para telas menores */
-@media (max-width: 768px) {
-  .minhas-escalas .perfil-info {
+@media (max-width: 600px) {
+  .perfil-dados {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
 
-  .minhas-escalas .row > div {
-    margin-bottom: 1rem;
-  }
-
-  .minhas-escalas .list-group-item .row {
-    flex-direction: column;
-  }
-
-  .minhas-escalas .list-group-item .row > div {
+  .dados-basicos {
     width: 100%;
   }
-}
 
-/* Responsividade para os gráficos */
-.minhas-escalas canvas {
-  max-width: 100%;
-  height: auto !important;
+  .foto-perfil {
+    width: 100px;
+    height: 100px;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+  }
+
+  .escala-header,
+  .escala-valores {
+    flex-direction: column;
+  }
+
+  .escala-header .col,
+  .escala-valores .col {
+    flex: 1 1 100%;
+  }
+
+  .voltar-btn {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .historico-aluno {
+    margin: 2rem auto;
+    padding: 2rem;
+  }
 }

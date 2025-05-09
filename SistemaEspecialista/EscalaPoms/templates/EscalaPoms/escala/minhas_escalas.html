@@ -3,104 +3,89 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/minhas_escalas.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
 {% block title %}Minhas Escalas{% endblock %}
 
 {% block content %}
-<div class="minhas-escalas">
-  <h1 class="title mb-4">Minhas Escalas</h1>
+<section class="historico-aluno">
+  <h1 class="historico-title mb-4">Minhas Escalas</h1>
 
-  <!-- Foto e dados do aluno -->
-
-
-  <h2 class="h4 mb-3">Escalas Registradas</h2>
-  <ul class="list-group mb-4">
+  <h2 class="subtitulo mb-3 text-body">Escalas Registradas</h2>
+  <ul class="escala-list list-group mb-4">
     {% for escala in escalas %}
-      <li class="list-group-item">
-        <div class="row mt-4">
-          <div class="col-12"><strong>Dados da escala:</strong></div>
+      <li class="list-group-item escala-item">
+        <div class="row mt-1">
+          <div class="subtitulo mb-3 text-success"><strong>Dados da escala:</strong></div>
         </div>
-        <br>
-        <div class="row">
-          <div class="col-md-2">
-            <strong>Data:</strong>{{ escala.data|date:"d/m/Y" }}
-          </div>
-          <div class="col-md-2">
-            <strong>PTH:</strong>{{ escala.pth }}
-          </div>
-          <div class="col-md-2">
-            <strong>Sono:</strong>{{ escala.sono|default:"–" }}
-          </div>
-          <div class="col-md-2">
-            <strong>Freq. Cardíaca:</strong>
-            {{ escala.freq_cardiaca_media|default:"–" }} bpm
-          </div>
-          <div class="col-md-2">
-            <strong>Vol. Treino:</strong>{{ escala.volume_treino|default:"–" }}
-          </div>
-          <div class="col-md-2">
-            <strong>Observações:</strong>
-            {{ escala.observacoes|default:"–" }}
-          </div>
+        <div class="escala-header row">
+          <div class="col"><strong>Data:</strong> {{ escala.data|date:"d/m/Y" }}</div>
+          <div class="col"><strong>PTH:</strong> {{ escala.pth }}</div>
+          <div class="col"><strong>Sono:</strong> {{ escala.sono|default:"–" }}</div>
+          <div class="col"><strong>Freq. Cardíaca:</strong> {{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
         </div>
-
-        <div class="row mt-3">
-          <div class="col-md-2"><strong>Σ Tensão:</strong>{{ escala.soma_tensao }}</div>
-          <div class="col-md-2"><strong>Σ Depressão:</strong>{{ escala.soma_depressao }}</div>
-          <div class="col-md-2"><strong>Σ Hostilidade:</strong>{{ escala.soma_hostilidade }}</div>
-          <div class="col-md-2"><strong>Σ Fadiga:</strong>{{ escala.soma_fadiga }}</div>
-          <div class="col-md-2"><strong>Σ Confusão:</strong>{{ escala.soma_confusao }}</div>
-          <div class="col-md-2"><strong>Σ Vigor:</strong>{{ escala.soma_vigor }}</div>
+        <div class="escala-valores row mt-2">
+          <div class="col"><strong>Σ Tensão:</strong> {{ escala.soma_tensao }}</div>
+          <div class="col"><strong>Σ Depressão:</strong> {{ escala.soma_depressao }}</div>
+          <div class="col"><strong>Σ Hostilidade:</strong> {{ escala.soma_hostilidade }}</div>
+          <div class="col"><strong>Σ Fadiga:</strong> {{ escala.soma_fadiga }}</div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-2"><strong>Σ Desajuste:</strong>{{ escala.soma_desajuste }}</div>
+        <div class="escala-valores row mt-2">
+          <div class="col"><strong>Σ Confusão:</strong> {{ escala.soma_confusao }}</div>
+          <div class="col"><strong>Σ Vigor:</strong> {{ escala.soma_vigor }}</div>
+          <div class="col"><strong>Σ Desajuste:</strong> {{ escala.soma_desajuste }}</div>
+          <div class="col"><strong>Vol. Treino:</strong> {{ escala.volume_treino|default:"–" }}</div>
         </div>
-
+        <div class="escala-valores row mt-2">
+          <div class="col"><strong>Observações:</strong> {{ escala.observacoes|default:"–" }}</div>
+        </div>
         {% if escala.classificacao %}
           <div class="row mt-4">
-            <div class="col-12"><strong>Níveis Emocionais:</strong></div>
+            <div class="subtitulo mb-3 text-success"><strong>Níveis Emocionais:</strong></div>
           </div>
-          <br>
-          <div class="row">
-            <div class="col-md-2"><strong>Tensão:</strong>{{ escala.classificacao.nivel_tensao }}</div>
-            <div class="col-md-2"><strong>Depressão:</strong>{{ escala.classificacao.nivel_depressao }}</div>
-            <div class="col-md-2"><strong>Hostilidade:</strong>{{ escala.classificacao.nivel_hostilidade }}</div>
-            <div class="col-md-2"><strong>Fadiga:</strong>{{ escala.classificacao.nivel_fadiga }}</div>
-            <div class="col-md-2"><strong>Confusão:</strong>{{ escala.classificacao.nivel_confusao }}</div>
-            <div class="col-md-2"><strong>Vigor:</strong>{{ escala.classificacao.nivel_vigor }}</div>
+          <div class="escala-valores row mt-1">
+            <div class="col"><strong>Tensão:</strong> {{ escala.classificacao.nivel_tensao }}</div>
+            <div class="col"><strong>Depressão:</strong> {{ escala.classificacao.nivel_depressao }}</div>
+            <div class="col"><strong>Hostilidade:</strong> {{ escala.classificacao.nivel_hostilidade }}</div>
+            <div class="col"><strong>Fadiga:</strong> {{ escala.classificacao.nivel_fadiga }}</div>
           </div>
-          <div class="row mt-2">
-            <div class="col-md-2"><strong>Desajuste:</strong>{{ escala.classificacao.nivel_desajuste }}</div>
+          <div class="escala-valores row mt-2">
+            <div class="col"><strong>Confusão:</strong> {{ escala.classificacao.nivel_confusao }}</div>
+            <div class="col"><strong>Vigor:</strong> {{ escala.classificacao.nivel_vigor }}</div>
+            <div class="col"><strong>Desajuste:</strong> {{ escala.classificacao.nivel_desajuste }}</div>
           </div>
         {% else %}
-          <div class="row mt-4">
+          <div class="row mt-3">
             <div class="col-12 text-warning">
               Classificação emocional ainda não disponível.
             </div>
           </div>
         {% endif %}
       </li>
+      <br>
     {% empty %}
       <li class="list-group-item vazio">Você ainda não registrou nenhuma escala.</li>
     {% endfor %}
   </ul>
-  <div class="card mt-4">
+  
+  <div class="card mt-5">
     <div class="card-body">
-      <h5 class="card-title">Gráficos de Evolução</h5>
+      <h2 class="subtitulo mb-3">Gráficos de Evolução</h2>
       <div class="mb-4">
         <canvas id="pthChart"></canvas>
       </div>
-      <div>
+      <div class="mb-4">
         <canvas id="desajusteChart"></canvas>
       </div>
     </div>
   </div>
-  <a href="{% url 'home' %}" class="btn btn-success alignment-self-center mt-4">
+
+  <a href="{% url 'home' %}" class="btn btn-success voltar-btn mt-4">
     ← Voltar
   </a>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</section>
+
 <script>
   const labels = {{ labels|safe }};
   const pthData = {{ pth|safe }};
@@ -109,7 +94,7 @@
   new Chart(document.getElementById('pthChart'), {
     type: 'line',
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: 'PTH (Humor)',
         data: pthData,
@@ -121,16 +106,14 @@
     },
     options: {
       responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
+      scales: { y: { beginAtZero: true } }
     }
   });
 
   new Chart(document.getElementById('desajusteChart'), {
     type: 'line',
     data: {
-      labels: labels,
+      labels,
       datasets: [{
         label: 'Desajuste ao Treino',
         data: desajusteData,
@@ -142,11 +125,8 @@
     },
     options: {
       responsive: true,
-      scales: {
-        y: { beginAtZero: true }
-      }
+      scales: { y: { beginAtZero: true } }
     }
   });
 </script>
-
 {% endblock %}
