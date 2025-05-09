@@ -156,6 +156,7 @@
         <li class="sidebar-header">Ferramentas</li>
 
         <!-- Menu Treinador -->
+        {% if request.session.tipo_usuario == 'treinador' %}
         <li class="sidebar-item">
           <a
             href="#treinadorMenu"
@@ -176,8 +177,10 @@
             </li>
           </ul>
         </li>
+        {% endif %}
 
         <!-- Menu Aluno -->
+        {% if request.session.tipo_usuario == 'aluno' %}
         <li class="sidebar-item">
           <a
             href="#alunoMenu"
@@ -204,6 +207,7 @@
             </li>
           </ul>
         </li>
+        {% endif %}
 
         <li class="sidebar-item">
           <a
@@ -240,14 +244,16 @@
             <span>Perfil</span>
           </a>
         </li>
+        <li class="sidebar-item">
+          <a href="{% url 'sobre' %}" class="sidebar-link">
+            <i class="bi bi-info-circle"></i>
+            <span>Sobre</span>
+          </a>
+        </li>
       </ul>
 
       <!-- Rodapé com botões adicionais -->
       <div class="sidebar-item">
-        <a href="{% url 'sobre' %}" class="sidebar-link">
-          <i class="bi bi-info-circle"></i>
-          <span>Sobre</span>
-        </a>
         <a href="{% url 'logout' %}" class="sidebar-link">
           <i class="bi bi-box-arrow-right"></i>
           <span>Logout</span>
@@ -285,5 +291,30 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"
   ></script>
+  <!-- TOASTS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toastElList = [].slice.call(document.querySelectorAll('.toast'));
+      toastElList.forEach(function (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      });
+    });
+  </script>
+  
 </body>
+{% if messages %}
+  <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+    {% for message in messages %}
+      <div class="toast align-items-center text-white bg-{{ message.tags }} border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
+        <div class="d-flex">
+          <div class="toast-body">
+            {{ message }}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
 </html>

@@ -33,6 +33,13 @@ def login_view(request):
         usuario = authenticate(request, username=cpf_digitado, password=senha)
         if usuario:
             login(request, usuario)
+            # Identifica se o usuário é Treinador ou Aluno
+            obj = obter_usuario_por_cpf(usuario.username)
+            if isinstance(obj, Treinador):
+                request.session['tipo_usuario'] = 'treinador'
+            elif isinstance(obj, Aluno):
+                request.session['tipo_usuario'] = 'aluno'
+
             messages.success(request, "Login efetuado com sucesso!")
             return redirect('home')
         messages.error(request, "CPF ou senha incorretos.")
@@ -44,9 +51,9 @@ def login_view(request):
     
 def cadastro(request):
     if request.method == 'POST':
-        tipo = request.POST.get('tipo_usuario', 'aluno')
+        tipo = request.POST.get('tipo_usuario')
     else:
-        tipo = request.GET.get('tipo', 'aluno')
+        tipo = request.GET.get('tipo')
 
     if request.method == 'POST':
         if tipo == 'treinador':
