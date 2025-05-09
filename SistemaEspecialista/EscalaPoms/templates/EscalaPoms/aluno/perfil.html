@@ -21,8 +21,19 @@
         <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
         <button type="submit" name="remove_foto" value="1" class="remove-photo-btn">Remover Foto</button>
       {% else %}
-        <img src="{% static 'images/teste.png' %}" alt="Foto padrão" class="photo-preview">
-        <input type="file" name="foto" accept="image/*">
+        <!-- Preview padrão ou foto existente -->
+        {% if usuario.foto %}
+          <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
+          <button type="submit" name="remove_foto" value="1" class="remove-photo-btn">Remover Foto</button>
+        {% else %}
+          <img id="preview-img" src="{% static 'images/teste.png' %}" alt="Foto padrão" class="photo-preview">
+
+          <!-- Botão customizado -->
+          <label for="foto-upload" class="btn btn-secondary mt-2">Selecionar Foto</label>
+          <input type="file" id="foto-upload" name="foto" accept="image/*" style="display: none;">
+          <div class="mt-2 text-muted" id="file-name">Nenhum arquivo selecionado</div>
+        {% endif %}
+
       {% endif %}
     </div>
 
