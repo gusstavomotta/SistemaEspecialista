@@ -21,7 +21,7 @@ fieldset.card {
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 fieldset.card .card-body {
-  padding: 1rem 1.25rem;
+  padding: 1rem;
 }
 
 /* Itens inline usando form-check */
@@ -35,11 +35,12 @@ fieldset.card .card-body {
 }
 .item .form-check {
   display: inline-block;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
+/* Estilo do label */
 .form-check-label {
-  font-size: 1.05rem; /* Aumenta os números das opções */
+  font-size: 0.95rem;
 }
 
 /* Botão principal */
@@ -53,7 +54,6 @@ fieldset.card .card-body {
   font-weight: 500;
   margin: 1rem auto 0;
   display: block;
-  width: 50%;
   transition: background-color 0.3s ease;
 }
 
@@ -61,6 +61,7 @@ fieldset.card .card-body {
   background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
 }
 
+/* Botão treinador */
 .button-treinador {
   background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
   color: #fff;
@@ -79,6 +80,7 @@ fieldset.card .card-body {
   background: linear-gradient(-135deg, var(--btn-start), var(--btn-end));
 }
 
+/* Container */
 .escala-wrapper {
   width: 100%;
   max-width: 900px;

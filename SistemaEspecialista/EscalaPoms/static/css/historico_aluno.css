@@ -1,32 +1,42 @@
 /* Container geral */
 .historico-aluno {
-  margin: 2rem auto;
-  max-width: 90%;
-  padding: 1rem;
+  margin: 2rem 4rem;
+  max-width: 100%;
+  padding: 4rem;
+  box-sizing: border-box;
+  background: #fafafa;
+  border-radius: 32px;
 }
 
 /* Título principal */
 .historico-title {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
   color: #333;
   text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 /* Dados do perfil */
 .perfil-dados {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .foto-perfil {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
   border: 2px solid #ccc;
+}
+
+.dados-basicos {
+  flex: 1;
+  min-width: 200px;
 }
 
 .dados-basicos p {
@@ -38,6 +48,7 @@
 .subtitulo {
   font-size: 1.25rem;
   color: #555;
+  margin-bottom: 0.5rem;
 }
 
 /* Lista de escalas */
@@ -53,32 +64,29 @@
   border-radius: 0.5rem;
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-/* Linhas de valores */
-.escala-header .col,
-.escala-valores .col {
-  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 /* Espaçamento interno */
-.escala-header {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
+.escala-header,
 .escala-valores {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
+.escala-header .col,
+.escala-valores .col {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 0.5rem;
+}
+
 /* Link de voltar */
 .voltar-btn {
   display: inline-block;
   margin-top: 1rem;
+  align-self: center;
 }
 
 /* Estado vazio */
@@ -88,4 +96,57 @@
   font-style: italic;
   background: transparent;
   border: none;
+  padding: 1rem;
+}
+.grafico-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+}
+canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+  .perfil-dados {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dados-basicos {
+    width: 100%;
+  }
+
+  .foto-perfil {
+    width: 100px;
+    height: 100px;
+  }
+
+  .subtitulo {
+    font-size: 1.1rem;
+  }
+
+  .escala-header,
+  .escala-valores {
+    flex-direction: column;
+  }
+
+  .escala-header .col,
+  .escala-valores .col {
+    flex: 1 1 100%;
+  }
+
+  .voltar-btn {
+    width: 100%;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .historico-aluno {
+    margin: 2rem auto;
+    padding: 2rem;
+  }
 }

@@ -1,13 +1,14 @@
 /* ----- Container geral ----- */
 .meus-alunos {
-  max-width: 800px;
+  max-width: 100%;
   margin: 2rem auto;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 /* ----- Títulos ----- */
 .meus-alunos h1 {
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
   margin-bottom: 0.5rem;
   color: #333;
   text-align: center;
@@ -23,42 +24,45 @@
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
 }
 
 /* ----- Cada item (card) ----- */
 .aluno-item {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 1rem;                 /* Espaçamento uniforme entre foto, infos e botão */
+  gap: 1rem;
   background: #fafafa;
   border: 1px solid #e0e0e0;
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.2s;
+  flex-wrap: wrap;
 }
 .aluno-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* ----- Foto redonda ----- */
 .foto-aluno {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;        /* Círculo perfeito */
-  object-fit: cover;         /* Corta e centraliza a imagem */
-  flex-shrink: 0;            /* Não permite encolher */
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 /* ----- Informação do aluno ----- */
 .aluno-item .info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;              /* Espaço entre label e value */
-  flex: 1;                   /* Ocupa o espaço restante */
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 150px;
 }
 .aluno-item .info .label {
   font-weight: 600;
@@ -66,13 +70,15 @@
 }
 .aluno-item .info .value {
   color: #222;
-  margin-left: 0.5rem;       /* Pequeno recuo após o label */
+  margin-left: 0.5rem;
 }
 
 /* ----- Botão ----- */
 .aluno-item .btn {
   white-space: nowrap;
-  flex-shrink: 0;            /* Mantém o botão no tamanho */
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 12px 16px;
 }
 
 /* ----- Estado vazio ----- */
@@ -83,4 +89,31 @@
   background: transparent;
   border: none;
   box-shadow: none;
+}
+
+/* ----- Responsividade extrema ----- */
+@media (max-width: 600px) {
+  .aluno-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.5rem;
+  }
+
+  .foto-aluno {
+    width: 48px;
+    height: 48px;
+  }
+
+  .aluno-item .btn {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    width: 60%;
+    align-self: center;
+    padding: 8px 12px;
+  }
+
+  .aluno-item .info {
+    width: 100%;
+  }
 }
