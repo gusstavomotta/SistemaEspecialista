@@ -354,7 +354,7 @@ def solicitar_exclusao(request):
         email_digitado = request.POST.get('email', '').strip()
 
         if email_digitado.lower() != usuario.email.strip().lower():
-            messages.error(request, "O email informado não corresponde ao email registrado.")
+            messages.warning(request, "Email diferente do da sua conta.")
         else:
             exclusao_codigo = f"{random.randint(100000, 999999):06}"
             request.session['exclusao_codigo'] = exclusao_codigo
