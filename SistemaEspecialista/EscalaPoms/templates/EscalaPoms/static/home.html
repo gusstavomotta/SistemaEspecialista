@@ -15,7 +15,9 @@
 {% block content %}
 
 <section class="container mt-4">
-  <h1 class="mb-4">Bem-vindo {{ tipo }}: {{ nome }}</h1>
+  <div class="d-flex justify-content-center align-items-center">
+    <h1 class="mb-4 text-center">Bem-vindo {{ tipo }}: {{ nome }}</h1>
+  </div>
 
   {% if tipo == 'Treinador' %}
     <div class="row g-4">

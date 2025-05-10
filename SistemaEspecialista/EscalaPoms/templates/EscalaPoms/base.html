@@ -59,6 +59,7 @@
 
     /* Empurra o conteúdo no desktop */
     .main {
+      padding-top: 3.5rem;
       margin-left: 264px;
       overflow-y: auto;
       color: #2D6A4F;
@@ -205,6 +206,7 @@
         </ul>
       </li>
       {% endif %}
+
       {% if request.session.tipo_usuario == 'aluno' %}
       <li class="sidebar-item">
         <a href="#alunoMenu" class="sidebar-link collapsed" data-bs-toggle="collapse">
@@ -218,13 +220,16 @@
         </ul>
       </li>
       {% endif %}
+      
       <li class="sidebar-item">
         <a href="#ajustesMenu" class="sidebar-link collapsed" data-bs-toggle="collapse">
           <i class="bi bi-gear"></i> Ajustes
         </a>
         <ul id="ajustesMenu" class="collapse list-unstyled ps-4">
+          {% if request.session.tipo_usuario == 'aluno' %}
           <li><a href="{% url 'trocar_treinador' %}" class="sidebar-link"><i class="bi bi-repeat"></i> Trocar
               Treinador</a></li>
+          {% endif %}
           <li><a href="{% url 'solicitar_exclusao' %}" class="sidebar-link"><i class="bi bi-trash"></i> Solicitar
               Exclusão</a></li>
         </ul>
@@ -234,14 +239,14 @@
       <li class="sidebar-item"><a href="{% url 'sobre' %}" class="sidebar-link"><i class="bi bi-info-circle"></i>
           Sobre</a></li>
     </ul>
-    <div class="sidebar-footer">
-      <a href="{% url 'logout' %}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    <div class="sidebar-item">
+      <a href="{% url 'logout' %}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Sair</a>
     </div>
   </aside>
 
   <div class="main">
     <nav class="navbar">
-      <button class="toggler-btn" aria-label="Abrir menu"><i class="bi bi-list-nested"></i></button>
+      <button class="toggler-btn btn btn-light" aria-label="Abrir menu"><i class="bi bi-list-nested" style="font-size:1.75rem"></i></button>
       {% block navbar_extra %}{% endblock %}
     </nav>
     <main class="container-fluid p-3">
