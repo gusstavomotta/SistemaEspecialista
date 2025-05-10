@@ -25,6 +25,8 @@ from .services.usuario_service import (
 )
 from .services.escala_service import confirmar_treinador, salvar_e_classificar_escala
 
+from django.core import signing
+
 def login_view(request):
     cpf_digitado = '' 
     if request.method == 'POST':
@@ -243,6 +245,7 @@ def home(request):
 
     return render(request, 'EscalaPoms/static/home.html', context)
 
+
 @login_required
 @treinador_required
 def meus_alunos(request):
@@ -254,15 +257,19 @@ def meus_alunos(request):
         alunos = alunos.filter(nome__icontains=q)
     
     alunos = alunos.order_by('nome')
+
+    for aluno in alunos:
+        aluno.cpf_assinado = signing.dumps(aluno.cpf, salt='aluno-cpf-salt')
+
     return render(request, 'EscalaPoms/escala/meus_alunos.html', {'alunos': alunos, 'q': q})
 
 @login_required
 @treinador_required
 def historico_aluno(request, aluno_cpf):
-    aluno = get_object_or_404(Aluno, cpf=aluno_cpf, treinador__cpf=request.user.username)
+    cpf = signing.loads(aluno_cpf, salt='aluno-cpf-salt')
+    aluno = get_object_or_404(Aluno, cpf=cpf, treinador__cpf=request.user.username)
     escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('aluno')
 
-    # Dados para os gráficos
     labels = [DateFormat(e.data).format('d/m') for e in escalas]
     pth = [e.pth for e in escalas]
     desajuste = [e.soma_desajuste for e in escalas]
@@ -327,14 +334,7 @@ def perfil(request):
     cpf = request.user.username
     usuario = obter_usuario_por_cpf(cpf)
 
-    is_aluno = isinstance(usuario, Aluno)
-
-    form_troca = AlunoTrocaTreinadorForm(instance=usuario) if is_aluno else None
-
     if request.method == 'POST':
-        if 'trocar_treinador' in request.POST and is_aluno:
-            return processar_troca_treinador(usuario, request)
-
         if 'remove_foto' in request.POST:
             return remover_foto_usuario(usuario, request)
 
@@ -342,9 +342,7 @@ def perfil(request):
 
     return render(request, 'EscalaPoms/aluno/perfil.html', {
         'usuario': usuario,
-        'form_troca': form_troca,
         'url_dashboard': reverse('perfil'),
-        'is_aluno': is_aluno,
     })
     
 
