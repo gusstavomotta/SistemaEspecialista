@@ -12,7 +12,7 @@ from .forms import *
 from .models import Treinador, Aluno, EscalaPoms
 from .backends import aluno_required, treinador_required
 from .validators import validar_cpf
-from django.db.models import Count, Avg, Max
+from django.db.models import Max
 from datetime import timedelta
 from django.utils import timezone
 
@@ -20,7 +20,6 @@ from .services.usuario_service import (
     obter_usuario_por_cpf,
     remover_foto_usuario,
     atualizar_dados_usuario,
-    processar_troca_treinador,
     enviar_codigo_email
 )
 from .services.escala_service import confirmar_treinador, salvar_e_classificar_escala
@@ -35,7 +34,6 @@ def login_view(request):
         usuario = authenticate(request, username=cpf_digitado, password=senha)
         if usuario:
             login(request, usuario)
-            # Identifica se o usuário é Treinador ou Aluno
             obj = obter_usuario_por_cpf(usuario.username)
             if isinstance(obj, Treinador):
                 request.session['tipo_usuario'] = 'treinador'
