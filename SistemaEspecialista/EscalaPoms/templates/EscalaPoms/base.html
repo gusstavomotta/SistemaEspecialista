@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -9,312 +10,272 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
-  <!-- Icones -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="{% static 'css/colors.css' %}">
 
-
-  <!-- Ponto para CSS extra de cada página -->
   {% block extra_css %}{% endblock %}
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
-  
-    /* Reset básico e fonte */
-    html, body {
+
+    html,
+    body {
       height: 100%;
       margin: 0;
       padding: 0;
-      overflow: hidden;
       font-family: 'Poppins', sans-serif;
+      overflow: auto;
     }
-    h1 { font-weight: 800; }
-    li { list-style: none; }
-    a { text-decoration: none; }
-  
-    #sidebar.collapsed + .main {
-      left: 0;
+
+    h1 {
+      font-weight: 800;
     }
-  
-    /* === SIDEBAR FIXA === */
+
+    li {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* === SIDEBAR (desktop fixo, mobile overlay) === */
     #sidebar {
       position: fixed;
       top: 0;
+      bottom: 0;
+      /* cobre toda a altura */
       left: 0;
+      /* desktop: visível; mobile será deslocada */
       width: 264px;
-      height: 100vh;
-      overflow-y: auto;
       background-color: #1b4332;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      transition: all 0.35s ease-in-out;
       z-index: 1000;
+      transition: left 0.35s ease-in-out;
+      /* usado só no mobile */
     }
-    #sidebar.collapsed {
-      margin-left: -264px;
+
+    /* Empurra o conteúdo no desktop */
+    .main {
+      margin-left: 264px;
+      overflow-y: auto;
+      color: #2D6A4F;
+      transition: margin-left 0.35s ease-in-out;
     }
-  
+
+    /* Oculta o botão no desktop */
+    .toggler-btn {
+      display: none;
+    }
+
+    /* === ESTILO INTERNO DA SIDEBAR === */
     .sidebar-logo {
       padding: 1.15rem 1.5rem;
       text-align: center;
     }
+
     .sidebar-logo a {
       color: #fff;
       font-weight: 800;
       font-size: 1.5rem;
     }
-  
+
     .sidebar-nav {
-      flex: 1 1 auto;
+      flex: 1;
       padding: 0;
       margin: 0;
     }
+
     .sidebar-header {
-      color: #fff;
+      color: #ccc;
       font-size: 0.75rem;
-      padding: 1.5rem 1.5rem 0.375rem;
+      text-transform: uppercase;
+      padding: 1rem 1.5rem 0.5rem;
     }
-    .sidebar-item {
-      margin: 0;
+
+    .sidebar-item+.sidebar-item {
+      margin-top: 0.25rem;
     }
-    a.sidebar-link {
-      display: block;
-      padding: 0.625rem 1.625rem;
-      color: #fff;
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: #f1f1f1;
       position: relative;
-      transition: background 0.35s;
-      font-size: 1.25rem;
+      transition: background 0.2s;
     }
-    a.sidebar-link:hover {
-      background-color: rgba(7, 156, 94, 0.377);
+
+    .sidebar-link i {
+      margin-right: 0.75rem;
+      font-size: 1.2rem;
     }
+
+    .sidebar-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
     .sidebar-link[data-bs-toggle="collapse"]::after {
-      border: solid;
-      border-width: 0 0.075rem 0.075rem 0;
-      content: "";
+      content: '';
+      border: solid #f1f1f1;
+      border-width: 0 2px 2px 0;
       display: inline-block;
-      padding: 2px;
+      padding: 3px;
       position: absolute;
       right: 1.5rem;
-      top: 1.4rem;
-      transform: rotate(-135deg);
-      transition: transform 0.2s ease-out;
+      transform: rotate(-45deg);
+      transition: transform 0.2s;
     }
+
     .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
       transform: rotate(45deg);
     }
-  
+
     .sidebar-footer {
       padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
+
     .sidebar-footer a {
-      color: #fff;
-      display: block;
+      display: flex;
+      align-items: center;
+      color: #f1f1f1;
+      font-size: 1rem;
     }
-  
-    /* === CONTEÚDO PRINCIPAL === */
-    .main {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 264px; right: 0;
-      overflow-y: auto;
-      transition: left 0.35s ease-in-out;
-      color: #2D6A4F;
+
+    .sidebar-footer i {
+      margin-right: 0.75rem;
     }
-  
-    /* Navbar fica fixa no topo do conteúdo */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 500;
-      padding: 1.15rem 1.5rem;
-      border-bottom: 2px dashed #1B4332;
-      background-color: #fff;
+
+    /* === RESPONSIVIDADE: mobile overlay === */
+    @media (max-width: 768px) {
+      #sidebar {
+        left: -264px;
+        /* esconde à esquerda */
+      }
+
+      #sidebar.open {
+        left: 0;
+        /* mostra como overlay */
+      }
+
+      .main {
+        margin-left: 0;
+        /* ocupa toda largura */
+      }
+
+      .toggler-btn {
+        display: block;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1101;
+        transition: left 0.35s ease-in-out;
+      }
+
+      #sidebar.open~.main .toggler-btn {
+        left: calc(264px + 1rem);
+      }
     }
-  
-    /* Botão de alternar sidebar */
-    .toggler-btn {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
-    .toggler-btn i {
-      font-size: 1.75rem;
-      color: #1B4332;
-      font-weight: 1000;
-    }
+
   </style>
 </head>
+
 <body>
-  <div class="d-flex">
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar-toggle">
-      <div class="sidebar-logo">
-        <a href="{% url 'home' %}">Sistema Especialista</a>
-      </div>
-
-      <ul class="sidebar-nav">
-        <li class="sidebar-header">Ferramentas</li>
-
-        <!-- Menu Treinador -->
-        {% if request.session.tipo_usuario == 'treinador' %}
-        <li class="sidebar-item">
-          <a
-            href="#treinadorMenu"
-            class="sidebar-link collapsed has-dropdown"
-            data-bs-toggle="collapse"
-            aria-expanded="false"
-            aria-controls="treinadorMenu"
-          >
-            <i class="bi bi-shield-lock"></i>
-            <span>Treinador</span>
-          </a>
-          <ul id="treinadorMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="{% url 'meus_alunos' %}" class="sidebar-link">
-                <i class="bi bi-people"></i>
-                <span>Meus Alunos</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        {% endif %}
-
-        <!-- Menu Aluno -->
-        {% if request.session.tipo_usuario == 'aluno' %}
-        <li class="sidebar-item">
-          <a
-            href="#alunoMenu"
-            class="sidebar-link collapsed has-dropdown"
-            data-bs-toggle="collapse"
-            aria-expanded="false"
-            aria-controls="alunoMenu"
-          >
-            <i class="bi bi-person"></i>
-            <span>Aluno</span>
-          </a>
-          <ul id="alunoMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="{% url 'escala' %}" class="sidebar-link">
-                <i class="bi bi-plus-circle"></i>
-                <span>Cadastrar Escala</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a href="{% url 'minhas_escalas' %}" class="sidebar-link">
-                <i class="bi bi-journal-text"></i>
-                <span>Minhas escalas</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        {% endif %}
-
-        <li class="sidebar-item">
-          <a
-            href="#ajustesMenu"
-            class="sidebar-link collapsed has-dropdown"
-            data-bs-toggle="collapse"
-            aria-expanded="false"
-            aria-controls="ajustesMenu"
-          >
-            <i class="bi bi-gear"></i>
-            <span>Ajustes</span>
-          </a>
-          <ul id="ajustesMenu" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-
-            <li class="sidebar-item">
-              <a href="{% url 'trocar_treinador' %}" class="sidebar-link">
-                <i class="bi bi-repeat"></i>
-                <span>Trocar Treinador</span>
-              </a>
-            </li>
-            <li class="sidebar-item">
-              <a href="{% url 'solicitar_exclusao' %}" class="sidebar-link">
-                <i class="bi bi-trash"></i>
-                <span>Solicitar Exclusão</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- Menu Perfil -->
-        <li class="sidebar-item">
-          <a href="{% url 'perfil' %}" class="sidebar-link">
-            <i class="bi bi-person-circle"></i>
-            <span>Perfil</span>
-          </a>
-        </li>
-        <li class="sidebar-item">
-          <a href="{% url 'sobre' %}" class="sidebar-link">
-            <i class="bi bi-info-circle"></i>
-            <span>Sobre</span>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Rodapé com botões adicionais -->
-      <div class="sidebar-item">
-        <a href="{% url 'logout' %}" class="sidebar-link">
-          <i class="bi bi-box-arrow-right"></i>
-          <span>Logout</span>
-        </a>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <div class="main">
-      <nav class="navbar navbar-expand">
-        <button class="toggler-btn" type="button">
-          <i class="bi bi-list-nested"></i>
-        </button> 
-      </nav>
-
-      <main class="p-3">
-        <div class="container-fluid">
-          {% block content %}{% endblock %}
-        </div>
-      </main>
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <a href="{% url 'home' %}">Sistema Especialista</a>
     </div>
+    <ul class="sidebar-nav">
+      <li class="sidebar-header">Ferramentas</li>
+      {% if request.session.tipo_usuario == 'treinador' %}
+      <li class="sidebar-item">
+        <a href="#treinadorMenu" class="sidebar-link collapsed" data-bs-toggle="collapse">
+          <i class="bi bi-shield-lock"></i> Treinador
+        </a>
+        <ul id="treinadorMenu" class="collapse list-unstyled ps-4">
+          <li><a href="{% url 'meus_alunos' %}" class="sidebar-link"><i class="bi bi-people"></i> Meus Alunos</a></li>
+        </ul>
+      </li>
+      {% endif %}
+      {% if request.session.tipo_usuario == 'aluno' %}
+      <li class="sidebar-item">
+        <a href="#alunoMenu" class="sidebar-link collapsed" data-bs-toggle="collapse">
+          <i class="bi bi-person"></i> Aluno
+        </a>
+        <ul id="alunoMenu" class="collapse list-unstyled ps-4">
+          <li><a href="{% url 'escala' %}" class="sidebar-link"><i class="bi bi-plus-circle"></i> Cadastrar Escala</a>
+          </li>
+          <li><a href="{% url 'minhas_escalas' %}" class="sidebar-link"><i class="bi bi-journal-text"></i> Minhas
+              Escalas</a></li>
+        </ul>
+      </li>
+      {% endif %}
+      <li class="sidebar-item">
+        <a href="#ajustesMenu" class="sidebar-link collapsed" data-bs-toggle="collapse">
+          <i class="bi bi-gear"></i> Ajustes
+        </a>
+        <ul id="ajustesMenu" class="collapse list-unstyled ps-4">
+          <li><a href="{% url 'trocar_treinador' %}" class="sidebar-link"><i class="bi bi-repeat"></i> Trocar
+              Treinador</a></li>
+          <li><a href="{% url 'solicitar_exclusao' %}" class="sidebar-link"><i class="bi bi-trash"></i> Solicitar
+              Exclusão</a></li>
+        </ul>
+      </li>
+      <li class="sidebar-item"><a href="{% url 'perfil' %}" class="sidebar-link"><i class="bi bi-person-circle"></i>
+          Perfil</a></li>
+      <li class="sidebar-item"><a href="{% url 'sobre' %}" class="sidebar-link"><i class="bi bi-info-circle"></i>
+          Sobre</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <a href="{% url 'logout' %}" class="sidebar-link"><i class="bi bi-box-arrow-right"></i> Logout</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <nav class="navbar">
+      <button class="toggler-btn" aria-label="Abrir menu"><i class="bi bi-list-nested"></i></button>
+      {% block navbar_extra %}{% endblock %}
+    </nav>
+    <main class="container-fluid p-3">
+      {% block content %}{% endblock %}
+    </main>
   </div>
 
-  <!-- Sidebar Toggle Script -->
+  <!-- Bootstrap JS + Toggle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const toggler = document.querySelector(".toggler-btn");
-    toggler.addEventListener("click", function () {
-      document.querySelector("#sidebar").classList.toggle("collapsed");
-    });
+    const toggler = document.querySelector('.toggler-btn');
+    const sidebar = document.getElementById('sidebar');
+    toggler.addEventListener('click', () => sidebar.classList.toggle('open'));
   </script>
 
-  <!-- Bootstrap Bundle JS -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-  ></script>
-  <!-- TOASTS -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const toastElList = [].slice.call(document.querySelectorAll('.toast'));
-      toastElList.forEach(function (toastEl) {
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
-      });
-    });
-  </script>
-  
-</body>
-{% if messages %}
-  <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+  <!-- Django Messages as Toasts -->
+  {% if messages %}
+  <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index:1080;">
     {% for message in messages %}
-      <div class="toast align-items-center text-white bg-{{ message.tags }} border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
-        <div class="d-flex">
-          <div class="toast-body">
-            {{ message }}
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
+    <div class="toast align-items-center text-white bg-{{ message.tags }} border-0 mb-2" role="alert"
+      data-bs-delay="4000">
+      <div class="d-flex">
+        <div class="toast-body">{{ message }}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
       </div>
+    </div>
     {% endfor %}
   </div>
-{% endif %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.toast').forEach(el => new bootstrap.Toast(el).show());
+    });
+  </script>
+  {% endif %}
+</body>
+
 </html>
