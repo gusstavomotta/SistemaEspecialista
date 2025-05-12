@@ -84,10 +84,29 @@
 
 /* Link de voltar */
 .voltar-btn {
-  display: inline-block;
-  margin-top: 1rem;
-  align-self: center;
+  display: block;
+  margin: 1rem auto 0;
+  text-align: center;
+  padding: 0.75rem 1.25rem;
+  width: fit-content;
+  background-color: #57cc99;
+  color: #fff;
+  border: 2px solid #57cc99;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
+
+.voltar-btn:hover,
+.voltar-btn:focus {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+  background-color: #fff;
+  color: #57cc99;
+  font-weight: 600;
+}
+
 
 /* Estado vazio */
 .vazio {

@@ -19,7 +19,7 @@
     <div class="photo-field">
       {% if usuario.foto %}
         <img src="{{ usuario.foto.url }}" alt="Foto de {{ usuario.nome }}" class="photo-preview">
-        <button type="submit" name="remove_foto" value="1" class="remove-photo-btn">Remover Foto</button>
+        <button type="submit" name="remove_foto" value="1" class="btn remove-photo-btn mb-3">Remover Foto</button>
       {% else %}
         <!-- Preview padrão ou foto existente -->
         {% if usuario.foto %}
@@ -69,7 +69,7 @@
     {% endif %}
 
     <div class="profile-actions" style="margin-top: 1em;">
-      <button type="submit" class="btn-success">Salvar Perfil</button>
+      <button type="submit" class="btn gradient-custom-2 mb-3">Salvar Perfil</button>
     </div>
   </form>
 </section>

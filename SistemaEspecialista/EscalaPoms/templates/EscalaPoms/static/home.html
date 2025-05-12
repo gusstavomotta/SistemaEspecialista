@@ -16,10 +16,15 @@
 
 <section class="container mt-4">
   <div class="d-flex justify-content-center align-items-center">
-    <h1 class="mb-4 text-center">Bem-vindo {{ tipo }}: {{ nome }}</h1>
+    {% if genero == 'F' %}
+    <h1 class="mb-4 text-center">Bem-vinda, {{ tipo }} {{ nome }}</h1>
+    {% else %}
+    <h1 class="mb-4 text-center">Bem-vindo, {{ tipo }} {{ nome }}</h1>
+    {% endif %}  
   </div>
+  
 
-  {% if tipo == 'Treinador' %}
+  {% if tipo == 'Treinador' or tipo == 'Treinadora' %}
     <div class="row g-4">
       <!-- Card: Total de Alunos -->
       <div class="col-md-4">
@@ -100,7 +105,7 @@
     </div>
   {% endif %}
 
-{% if tipo == 'Aluno' %}
+  {% if tipo == 'Aluno' or tipo == 'Aluna' %}
   <div class="row g-4">
     <!-- Card: Treinador atual -->
     <div class="col-md-4">

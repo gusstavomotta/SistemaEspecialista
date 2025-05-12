@@ -55,17 +55,20 @@ body {
   background-color: var(--bg-start);
 }
 .remove-photo-btn {
-  background-color: var(--bg-gd);
-  color: var(--sidebar-link-color);
-  border: none;
-  padding: 6px 12px;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
+  background-color: #57cc99;
+  color: #fff;
+  border-width: 2px;
+  border-color: #57cc99;
+  border-radius: .75rem;
+  transition: transform .2s, filter .2s;
 }
-.remove-photo-btn:hover {
-  background-color: var(--bg-end);
+.remove-photo-btn:hover,
+.remove-photo-btn:focus {
+  filter: brightness(1.1);
+  border-color: #57cc99;
+  border-width: 2px;
+  color: #57cc99;
+  font-weight: 600;
 }
 
 /* Campos de perfil */
@@ -98,6 +101,27 @@ body {
   background-color: var(--card-bg);
   width: 100%;
 }
+
+/* Botão com cor sólida esportiva e efeito hover */
+.gradient-custom-2 {
+  background-color: #57cc99;
+  color: #fff;
+  border-width: 2px;
+  border-color: #57cc99;
+  border-radius: .75rem;
+  transition: transform .2s, filter .2s;
+}
+
+.gradient-custom-2:hover,
+.gradient-custom-2:focus {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+  border-color: #57cc99;
+  border-width: 2px;
+  color: #57cc99;
+  font-weight: 600;
+}
+
 
 /* Botões de ação (Salvar, Trocar, Excluir) */
 .profile-actions {

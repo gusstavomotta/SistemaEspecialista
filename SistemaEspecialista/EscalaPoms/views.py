@@ -174,7 +174,8 @@ def home(request):
 
     if isinstance(usuario, Treinador):
         # Tipo e total de alunos
-        tipo = 'Treinador'
+        tipo = 'Treinadora' if usuario.genero == 'feminino' else 'Treinador'
+        genero = 'F' if usuario.genero == 'feminino' else 'M'
         total_alunos = Aluno.objects.filter(treinador=usuario).count()
 
 
@@ -224,9 +225,11 @@ def home(request):
             'escalas_ultima_semana': escalas_ultima_semana,
             'alunos_sem_escala': alunos_sem_escala,
             'alunos_sem_escala_ja': alunos_sem_escala_ja,
+            'genero': genero,
         }
     else:
-        tipo = 'Aluno'
+        tipo = 'Aluna' if usuario.genero == 'feminino' else 'Aluno'
+        genero = 'F' if usuario.genero == 'feminino' else 'M'
         treinador = usuario.treinador
         escalas = EscalaPoms.objects.filter(aluno=usuario).order_by('data')
 
@@ -251,7 +254,8 @@ def home(request):
             'pth': pth,
             'desajuste': desajuste,
             'tem_escalas': escalas.exists(),
-            'tempo_limite' : tempo_limite
+            'tempo_limite' : tempo_limite,
+            'genero': genero,
     }
 
     return render(request, 'EscalaPoms/static/home.html', context)
