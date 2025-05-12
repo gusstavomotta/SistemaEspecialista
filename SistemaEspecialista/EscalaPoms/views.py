@@ -15,6 +15,7 @@ from .validators import validar_cpf
 from django.db.models import Max
 from datetime import timedelta
 from django.utils import timezone
+from .services.usuario_service import enviar_resumo_escalas_pendentes
 
 from .services.usuario_service import (
     obter_usuario_por_cpf,
@@ -26,28 +27,32 @@ from .services.escala_service import confirmar_treinador, salvar_e_classificar_e
 
 from django.core import signing
 
+
 def login_view(request):
-    cpf_digitado = '' 
+    cpf_digitado = ''
     if request.method == 'POST':
         cpf_digitado = request.POST.get('cpf', '').strip()
         senha = request.POST.get('senha', '')
         usuario = authenticate(request, username=cpf_digitado, password=senha)
         if usuario:
             login(request, usuario)
+
             obj = obter_usuario_por_cpf(usuario.username)
             if isinstance(obj, Treinador):
                 request.session['tipo_usuario'] = 'treinador'
+                enviar_resumo_escalas_pendentes(obj)
+
             elif isinstance(obj, Aluno):
                 request.session['tipo_usuario'] = 'aluno'
 
             messages.success(request, "Login efetuado com sucesso!")
             return redirect('home')
+
         messages.error(request, "CPF ou senha incorretos.")
 
     return render(request, 'EscalaPoms/auth/login.html', {
         'cpf': cpf_digitado,
     })
-    
     
 def cadastro(request):
     if request.method == 'POST':
@@ -168,31 +173,27 @@ def home(request):
     usuario = obter_usuario_por_cpf(cpf)
 
     if isinstance(usuario, Treinador):
+        # Tipo e total de alunos
         tipo = 'Treinador'
         total_alunos = Aluno.objects.filter(treinador=usuario).count()
 
-        ultima_escala = (
+
+        ultimas_escalas = (
             EscalaPoms.objects
                 .filter(aluno__treinador=usuario)
                 .select_related('aluno')
-                .order_by('-data')
-                .first()
+                .order_by('-data')[:5]
         )
-        if ultima_escala:
-            aluno_mais_recente = ultima_escala.aluno
-            data_mais_recente  = ultima_escala.data
-        else:
-            aluno_mais_recente = None
-            data_mais_recente  = None
 
+        # Escalas na última semana
         hoje = timezone.now()
         inicio_semana = hoje - timedelta(days=7)
-
         escalas_ultima_semana = EscalaPoms.objects.filter(
             aluno__treinador=usuario,
             data__gte=inicio_semana
         ).count()
 
+        # Alunos sem escala nos últimos 7 dias
         ultimas_por_aluno = (
             EscalaPoms.objects
                 .filter(aluno__treinador=usuario)
@@ -207,16 +208,23 @@ def home(request):
                     'aluno': aluno_obj,
                     'ultima_escala': item['ultima_escala'],
                 })
+
+        # Alunos que nunca cadastraram escala
+        alunos_sem_escala_ja = Aluno.objects.filter(
+            treinador=usuario,
+            escalas__isnull=True
+        )
+
+
         context = {
             'nome': usuario.nome,
-            'tipo': 'Treinador',
+            'tipo': tipo,
             'total_alunos': total_alunos,
-            'aluno_mais_recente': aluno_mais_recente,
-            'data_mais_recente': data_mais_recente,
+            'ultimas_escalas': ultimas_escalas,
             'escalas_ultima_semana': escalas_ultima_semana,
             'alunos_sem_escala': alunos_sem_escala,
+            'alunos_sem_escala_ja': alunos_sem_escala_ja,
         }
-        
     else:
         tipo = 'Aluno'
         treinador = usuario.treinador

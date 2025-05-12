@@ -35,20 +35,25 @@
       <div class="col-md-4">
         <div class="card text-bg-light h-100">
           <div class="card-body">
-            <h5 class="card-title">Escalas cadastradas</h5>
+            <h5 class="card-title">Escalas cadastradas (últimos 7 dias)</h5>
             <p class="card-text fs-4"><strong>{{ escalas_ultima_semana }}</strong></p>
           </div>
         </div>
       </div>
 
-      <!-- Card: Última Escala Cadastrada -->
+      <!-- Card: Últimas 5 Escalas Cadastradas -->
       <div class="col-md-4">
         <div class="card text-bg-light h-100">
           <div class="card-body">
-            <h5 class="card-title">Última escala cadastrada</h5>
-            {% if aluno_mais_recente %}
-              <p class="card-text"><strong>Nome:</strong> {{ aluno_mais_recente.nome }}</p>
-              <p class="card-text"><strong>Data:</strong> {{ data_mais_recente|date:"d/m/Y H:i" }}</p>
+            <h5 class="card-title">Últimas 5 escalas cadastradas</h5>
+            {% if ultimas_escalas %}
+              <ul class="list-group list-group-flush">
+                {% for escala in ultimas_escalas %}
+                  <li class="list-group-item">
+                    {{ escala.aluno.nome }} - {{ escala.data|date:"d/m/Y H:i" }}
+                  </li>
+                {% endfor %}
+              </ul>
             {% else %}
               <p class="card-text">Nenhuma escala cadastrada ainda.</p>
             {% endif %}
@@ -56,7 +61,8 @@
         </div>
       </div>
     </div>
-    <!-- Card: Alunos sem escala -->
+
+    <!-- Card: Alunos sem escala nos últimos 7 dias -->
     <div class="card bg-light mt-4">
       <div class="card-body">
         <h5 class="card-title">Alunos sem escala nos últimos 7 dias</h5>
@@ -65,14 +71,30 @@
             {% for info in alunos_sem_escala %}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>{{ info.aluno.nome }} - última escala em {{ info.ultima_escala|date:"d/m/Y H:i" }}</span>
-                <a href="{% url 'historico_aluno' info.aluno.cpf %}" class="btn btn-sm btn-outline-primary">
-                  Ver Histórico
-                </a>
               </li>
             {% endfor %}
           </ul>
         {% else %}
           <p class="card-text">Todos os seus alunos registraram uma escala recentemente.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Card: Alunos sem nenhuma escala cadastrada -->
+    <div class="card bg-light mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Alunos sem nenhuma escala cadastrada</h5>
+        {% if alunos_sem_escala_ja %}
+          <ul class="list-group list-group-flush">
+            {% for aluno in alunos_sem_escala_ja %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <p>Nome: {{ aluno.nome }}</p>
+                <p>Email: {{ aluno.email}}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="card-text">Todos os seus alunos já cadastraram pelo menos uma escala.</p>
         {% endif %}
       </div>
     </div>

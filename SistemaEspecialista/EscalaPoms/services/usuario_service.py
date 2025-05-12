@@ -6,6 +6,12 @@ from ..validators import validar_numero_telefone, normalizar_cpf
 from ..models import Aluno, Treinador
 from ..forms import AlunoTrocaTreinadorForm
 
+from django.core.mail import send_mail
+from django.utils import timezone
+from django.conf import settings
+
+from ..models import Treinador, Aluno, EscalaPoms
+
 from django.db import IntegrityError
 
 def obter_usuario_por_cpf(cpf):
@@ -89,3 +95,39 @@ def enviar_codigo_email(codigo, email):
 
     send_mail(subject, message, email_from, recipient_list)
     
+def enviar_resumo_escalas_pendentes(treinador):
+    """
+    Busca todas as escalas POMS pendentes (enviado=False) dos alunos
+    do treinador, envia um e-mail resumo e marca-as como enviadas.
+    """
+    pendentes = (
+        EscalaPoms.objects
+            .filter(aluno__treinador=treinador, enviado=False)
+            .select_related('aluno')
+    )
+
+    if not pendentes.exists():
+        return
+
+    linhas = [
+        f"- {e.aluno.nome}: {e.data.strftime('%d/%m/%Y %H:%M')}"
+        for e in pendentes
+    ]
+    corpo = (
+        f"Olá {treinador.nome},\n\n"
+        "Enquanto você estava fora, estas escalas POMS foram cadastradas:\n\n"
+        + "\n".join(linhas)
+        + "\n\nAcesse o sistema para ver detalhes e recomendações."
+    )
+
+    send_mail(
+        subject="Resumo de escalas POMS pendentes",
+        message=corpo,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[treinador.email],
+    )
+
+    update_kwargs = {'enviado': True}
+    if hasattr(EscalaPoms, 'data_envio'):
+        update_kwargs['data_envio'] = timezone.now()
+    pendentes.update(**update_kwargs)

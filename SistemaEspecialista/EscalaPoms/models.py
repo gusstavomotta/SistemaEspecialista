@@ -67,6 +67,8 @@ class EscalaPoms(models.Model):
         help_text="Informações complementares (ex: tomando remédio, acontecimentos da semana)"
     )
 
+    enviado = models.BooleanField(default=False)
+
     def __str__(self):
         return f"Escala de {self.aluno.nome} em {self.data}"
 

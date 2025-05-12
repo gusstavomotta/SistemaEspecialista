@@ -9,7 +9,6 @@ from ..validators import converter_para_inteiro
 from ..models import EscalaPoms, ClassificacaoRecomendacao, Treinador
 from ..maquina_inferencia import classificar_niveis_emocoes
 
-
 def somar_campos_post(request, prefixo, quantidade=6):
     total = 0
     for i in range(1, quantidade + 1):
@@ -75,7 +74,7 @@ def salvar_e_classificar_escala(aluno, request):
             nivel_vigor       = niveis['nivel_vigor'],
             nivel_desajuste   = niveis['nivel_desajuste'],
         )
-
+        
         messages.success(request, "Dados salvos e classificados com sucesso!")
         return redirect('home')
 
