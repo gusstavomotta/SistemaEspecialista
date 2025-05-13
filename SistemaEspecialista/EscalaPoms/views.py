@@ -233,6 +233,10 @@ def home(request):
         total_escalas = escalas.count()
         ultima_escala = escalas.last()
 
+        tempo_limite = False
+        if ultima_escala:
+            tempo_limite = (timezone.now() - ultima_escala.data) > timedelta(days=7)
+                    
         labels = [DateFormat(e.data).format('d/m') for e in escalas]
         pth = [e.pth for e in escalas]
         desajuste = [e.soma_desajuste for e in escalas]
@@ -247,6 +251,7 @@ def home(request):
             'pth': pth,
             'desajuste': desajuste,
             'tem_escalas': escalas.exists(),
+            'tempo_limite' : tempo_limite
     }
 
     return render(request, 'EscalaPoms/static/home.html', context)

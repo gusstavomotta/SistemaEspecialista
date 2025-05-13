@@ -100,45 +100,57 @@
     </div>
   {% endif %}
 
-  {% if tipo == 'Aluno' %}
-    <div class="row g-4">
-      <!-- Card: Treinador atual -->
-      <div class="col-md-4">
-        <div class="card text-bg-light h-100">
-          <div class="card-body">
-            <h5 class="card-title">Treinador Atual</h5>
-            <p class="card-text">{{ treinador.nome }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card: Total de escalas -->
-      <div class="col-md-4">
-        <div class="card text-bg-light h-100">
-          <div class="card-body">
-            <h5 class="card-title">Total de Escalas</h5>
-            <p class="card-text fs-4">{{ total_escalas }}</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card: Última escala -->
-      <div class="col-md-4">
-        <div class="card text-bg-light h-100">
-          <div class="card-body">
-            <h5 class="card-title">Última escala cadastrada</h5>
-            {% if ultima_escala %}
-              <p class="card-text">{{ ultima_escala|date:"d/m/Y H:i" }}</p>
-            {% else %}
-              <p class="card-text">Nenhuma escala cadastrada ainda.</p>
-            {% endif %}
-          </div>
+{% if tipo == 'Aluno' %}
+  <div class="row g-4">
+    <!-- Card: Treinador atual -->
+    <div class="col-md-4">
+      <div class="card text-bg-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">Treinador Atual</h5>
+          <p class="card-text">{{ treinador.nome }}</p>
         </div>
       </div>
     </div>
-  {% endif %}
 
-  {% if tem_escalas %}
+    <!-- Card: Total de escalas -->
+    <div class="col-md-4">
+      <div class="card text-bg-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total de Escalas</h5>
+          <p class="card-text fs-4">{{ total_escalas }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Última escala -->
+    <div class="col-md-4">
+      <div class="card text-bg-light h-100">
+        <div class="card-body">
+          <h5 class="card-title">Última escala cadastrada</h5>
+
+          {% if ultima_escala %}
+            <p class="card-text">{{ ultima_escala|date:"d/m/Y H:i" }}</p>
+
+            {% if tempo_limite %}
+              <div class="alert alert-warning mt-3">
+                Você não cadastrou uma escala nos últimos 7 dias.
+              </div>
+              <a href="{% url 'escala' %}" class="btn btn-primary mt-2">
+                Cadastrar Escala
+              </a>
+            {% endif %}
+
+          {% else %}
+            <p class="card-text">Nenhuma escala cadastrada ainda.</p>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if tem_escalas %}
   <div class="col-12 mt-4">
     <div class="card text-bg-white">
       <div class="card-body">
@@ -153,6 +165,7 @@
     </div>
   </div>
 {% endif %}
+
 
 </section>
 {% if tem_escalas %}
