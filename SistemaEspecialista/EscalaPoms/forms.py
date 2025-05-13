@@ -41,17 +41,6 @@ class PessoaForm(forms.ModelForm):
         if Treinador.objects.filter(num_telefone=tel_normalizado).exists() or Aluno.objects.filter(num_telefone=tel_normalizado).exists():
             raise ValidationError("Este número de telefone já está em uso.")
 
-        # Formata o número com parênteses no DDD
-        if len(tel_normalizado) >= 10:
-            ddd = tel_normalizado[:2]
-            resto = tel_normalizado[2:]
-            tel_formatado = f"({ddd}) {resto[:5]}-{resto[5:]}" if len(resto) >= 9 else f"({ddd}) {resto[:4]}-{resto[4:]}"
-        else:
-            tel_formatado = tel_normalizado  # caso algo não esteja no formato esperado
-
-        return tel_formatado
-
-
     def clean(self):
         cleaned = super().clean()
         senha = cleaned.get('senha')
