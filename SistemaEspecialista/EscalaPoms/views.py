@@ -399,7 +399,7 @@ def confirmar_exclusao(request):
             return redirect('solicitar_exclusao')
 
         if codigo_digitado != str(exclusao_codigo):
-            messages.warning(request, "Código incorreto. Por favor, tente novamente.")
+            messages.success(request, "Código incorreto. Por favor, tente novamente.")
 
         else:
             usuario.ativo = False

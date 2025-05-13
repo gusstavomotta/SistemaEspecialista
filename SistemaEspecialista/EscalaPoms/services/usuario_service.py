@@ -91,7 +91,16 @@ def enviar_codigo_email(codigo, email):
     from django.conf import settings
 
     subject = 'Código de Verificação'
-    message = f'Seu código de verificação é: {codigo}'
+    message = (
+        'Olá!\n\n'
+        'Recebemos um pedido para excluir sua conta.\n'
+        f'Seu código de verificação é: {codigo}\n\n'
+        'Foi você quem solicitou essa exclusão? '
+        'Caso não tenha sido você, pode ter sido um engano ou um pedido malicioso. '
+        'Basta ignorar este e-mail e nada mais acontecerá com sua conta.\n\n'
+        'Se foi você, insira o código acima para confirmar a exclusão.\n\n'
+        
+    )
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [email]
 
