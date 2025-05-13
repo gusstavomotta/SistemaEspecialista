@@ -17,34 +17,59 @@ class PessoaForm(forms.ModelForm):
         cpf = self.cleaned_data['cpf']
         cpf_normalizado = validar_cpf(cpf)
         
+        # Verifica se o CPF já está em uso
         if Treinador.objects.filter(cpf=cpf_normalizado).exists() or Aluno.objects.filter(cpf=cpf_normalizado).exists():
             raise ValidationError("Já existe um usuário com este CPF.")
-
+        
         return cpf_normalizado
 
     def clean_email(self):
         email = self.cleaned_data['email']
+        # Verifica se o e-mail já está cadastrado
         if Treinador.objects.filter(email=email).exists() or Aluno.objects.filter(email=email).exists():
             raise ValidationError("Este e-mail já está cadastrado.")
         return email
-    
+
     def clean_num_telefone(self):
         tel = self.cleaned_data.get('num_telefone', '')
         tel_normalizado = validar_numero_telefone(tel)
+
         if not tel_normalizado:
             raise ValidationError("Telefone inválido.")
-        return tel_normalizado
+
+        # Verifica se já existe um usuário com esse número de telefone
+        if Treinador.objects.filter(num_telefone=tel_normalizado).exists() or Aluno.objects.filter(num_telefone=tel_normalizado).exists():
+            raise ValidationError("Este número de telefone já está em uso.")
+
+        # Formata o número com parênteses no DDD
+        if len(tel_normalizado) >= 10:
+            ddd = tel_normalizado[:2]
+            resto = tel_normalizado[2:]
+            tel_formatado = f"({ddd}) {resto[:5]}-{resto[5:]}" if len(resto) >= 9 else f"({ddd}) {resto[:4]}-{resto[4:]}"
+        else:
+            tel_formatado = tel_normalizado  # caso algo não esteja no formato esperado
+
+        return tel_formatado
+
 
     def clean(self):
         cleaned = super().clean()
-        if cleaned.get('senha') != cleaned.get('senha2'):
+        senha = cleaned.get('senha')
+        senha2 = cleaned.get('senha2')
+
+        # Validação da senha
+        if senha and len(senha) < 8:
+            raise ValidationError({'senha': "A senha deve ter pelo menos 8 caracteres."})
+
+        # Verifica se as senhas coincidem
+        if senha != senha2:
             raise ValidationError({'senha2': "As senhas não conferem."})
+
         return cleaned
 
     def save(self, commit=True):
         self.instance.senha = make_password(self.cleaned_data['senha'])
         return super().save(commit=commit)
-
 
 class TreinadorForm(PessoaForm):
     class Meta(PessoaForm.Meta):
@@ -61,16 +86,26 @@ class AlunoForm(PessoaForm):
         model = Aluno
         fields = PessoaForm.Meta.fields + ['treinador']
 
-    def clean(self):
-        cleaned = super().clean()
-        cpf_t = cleaned.get('treinador')
+    def clean_treinador(self):
+        cpf_t = self.cleaned_data.get('treinador')
         if not cpf_t:
-            raise ValidationError({'treinador': "Informe o CPF do treinador."})
+            raise ValidationError("Informe o CPF do treinador.")
         try:
-            cleaned['treinador'] = Treinador.objects.get(cpf=cpf_t)
+            return Treinador.objects.get(cpf=cpf_t)
         except Treinador.DoesNotExist:
-            raise ValidationError({'treinador': "Treinador não encontrado."})
-        return cleaned
+            raise ValidationError("Treinador não encontrado.")
+
+    def save(self, commit=True):
+        # Criptografa a senha
+        self.instance.senha = make_password(self.cleaned_data['senha'])
+
+        # Atribui o treinador como instância, não como string
+        treinador = self.cleaned_data.get('treinador')
+        if isinstance(treinador, Treinador):
+            self.instance.treinador = treinador
+
+        return super().save(commit=commit)
+
 
 class AlunoTrocaTreinadorForm(forms.ModelForm):
     treinador = forms.ModelChoiceField(
