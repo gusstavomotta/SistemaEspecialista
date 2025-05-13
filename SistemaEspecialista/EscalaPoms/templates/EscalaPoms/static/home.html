@@ -106,16 +106,23 @@
   {% endif %}
 
   {% if tipo == 'Aluno' or tipo == 'Aluna' %}
-  <div class="row g-4">
-    <!-- Card: Treinador atual -->
-    <div class="col-md-4">
-      <div class="card text-bg-light h-100">
-        <div class="card-body">
-          <h5 class="card-title">Treinador Atual</h5>
-          <p class="card-text">{{ treinador.nome }}</p>
+    <div class="row g-4">
+      {% if treinador and treinador.ativo %}
+      <div class="col-md-4">
+        <div class="card text-bg-light h-100">
+          <div class="card-body">
+            <h5 class="card-title">Treinador Atual</h5>
+            <p class="card-text">{{ treinador.nome }}</p>
+          </div>
         </div>
       </div>
-    </div>
+    {% else %}
+      <div class="col-12">
+        <div class="alert alert-warning text-center">
+          Você não tem um treinador ativo no momento. Vá para <strong>Ajustes → Trocar Treinador</strong>.
+        </div>
+      </div>
+    {% endif %}
 
     <!-- Card: Total de escalas -->
     <div class="col-md-4">
