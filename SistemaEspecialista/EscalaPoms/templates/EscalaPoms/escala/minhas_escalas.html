@@ -21,47 +21,20 @@
         </div>
         <div class="escala-header row">
           <div class="col"><strong>Data:</strong> {{ escala.data|date:"d/m/Y" }}</div>
-          <div class="col"><strong>PTH:</strong> {{ escala.pth }}</div>
-          <div class="col"><strong>Sono:</strong> {{ escala.sono|default:"–" }}</div>
-          <div class="col"><strong>Freq. Cardíaca:</strong> {{ escala.freq_cardiaca_media|default:"–" }} bpm</div>
-        </div>
-        <div class="escala-valores row mt-2">
-          <div class="col"><strong>Σ Tensão:</strong> {{ escala.soma_tensao }}</div>
-          <div class="col"><strong>Σ Depressão:</strong> {{ escala.soma_depressao }}</div>
-          <div class="col"><strong>Σ Hostilidade:</strong> {{ escala.soma_hostilidade }}</div>
-          <div class="col"><strong>Σ Fadiga:</strong> {{ escala.soma_fadiga }}</div>
-        </div>
-        <div class="escala-valores row mt-2">
-          <div class="col"><strong>Σ Confusão:</strong> {{ escala.soma_confusao }}</div>
-          <div class="col"><strong>Σ Vigor:</strong> {{ escala.soma_vigor }}</div>
-          <div class="col"><strong>Σ Desajuste:</strong> {{ escala.soma_desajuste }}</div>
-          <div class="col"><strong>Vol. Treino:</strong> {{ escala.volume_treino|default:"–" }}</div>
+          <div class="col"><strong>Sono:</strong> {{ escala.sono|default:"–" }} Hrs</div>
+          <div class="col"><strong>Freq. Cardíaca:</strong> {{ escala.freq_cardiaca_media|default:"–" }} Bpm</div> 
+          <div class="col"><strong>Volume de treino:</strong> {{ escala.freq_cardiaca_media|default:"–" }} Kg</div>
+
         </div>
         <div class="escala-valores row mt-2">
           <div class="col"><strong>Observações:</strong> {{ escala.observacoes|default:"–" }}</div>
+          <div class="col"><strong>Desajuste ao treino:</strong> {{ escala.soma_desajuste|default:"–" }}</div>
+          <div class="col"><strong>PTH:</strong> {{ escala.pth|default:"–" }}</div>
         </div>
-        {% if escala.classificacao %}
-          <div class="row mt-4">
-            <div class="subtitulo mb-3 text-success"><strong>Níveis Emocionais:</strong></div>
-          </div>
-          <div class="escala-valores row mt-1">
-            <div class="col"><strong>Tensão:</strong> {{ escala.classificacao.nivel_tensao }}</div>
-            <div class="col"><strong>Depressão:</strong> {{ escala.classificacao.nivel_depressao }}</div>
-            <div class="col"><strong>Hostilidade:</strong> {{ escala.classificacao.nivel_hostilidade }}</div>
-            <div class="col"><strong>Fadiga:</strong> {{ escala.classificacao.nivel_fadiga }}</div>
-          </div>
-          <div class="escala-valores row mt-2">
-            <div class="col"><strong>Confusão:</strong> {{ escala.classificacao.nivel_confusao }}</div>
-            <div class="col"><strong>Vigor:</strong> {{ escala.classificacao.nivel_vigor }}</div>
-            <div class="col"><strong>Desajuste:</strong> {{ escala.classificacao.nivel_desajuste }}</div>
-          </div>
-        {% else %}
-          <div class="row mt-3">
-            <div class="col-12 text-warning">
-              Classificação emocional ainda não disponível.
-            </div>
-          </div>
-        {% endif %}
+        <div> 
+          <br>
+          <strong> Entre em contato com o seu treinador para mais informações de treinos. </strong>
+        </div>
       </li>
       <br>
     {% empty %}

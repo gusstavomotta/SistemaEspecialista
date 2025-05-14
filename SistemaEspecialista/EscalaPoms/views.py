@@ -15,14 +15,14 @@ from .validators import validar_cpf
 from django.db.models import Max
 from datetime import timedelta
 from django.utils import timezone
-from .services.usuario_service import (
+from .usuario_service import (
     enviar_resumo_escalas_pendentes,
     obter_usuario_por_cpf,
     remover_foto_usuario,
     atualizar_dados_usuario,
     enviar_codigo_email
 )
-from .services.escala_service import confirmar_treinador, salvar_e_classificar_escala
+from .escala_service import confirmar_treinador, salvar_e_classificar_escala
 from django.core import signing
 
 """

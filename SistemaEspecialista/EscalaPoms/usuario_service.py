@@ -2,15 +2,15 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.urls import reverse
 
-from ..validators import validar_numero_telefone, normalizar_cpf
-from ..models import Aluno, Treinador
-from ..forms import AlunoTrocaTreinadorForm
+from .validators import validar_numero_telefone, normalizar_cpf
+from .models import Aluno, Treinador
+from .forms import AlunoTrocaTreinadorForm
 
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.conf import settings
 
-from ..models import Treinador, Aluno, EscalaPoms
+from .models import Treinador, Aluno, EscalaPoms
 from django.db import IntegrityError
 
 def obter_usuario_por_cpf(cpf: str):

@@ -5,9 +5,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from ..validators import converter_para_inteiro
-from ..models import EscalaPoms, ClassificacaoRecomendacao, Treinador
-from ..maquina_inferencia import *
+from .validators import converter_para_inteiro
+from .models import EscalaPoms, ClassificacaoRecomendacao, Treinador
+from .maquina_inferencia import *
 
 def somar_campos_post(request, prefixo: str, quantidade: int = 6) -> int:
     """
