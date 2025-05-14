@@ -27,6 +27,24 @@ VARIAVEL: nivel_desajuste
   TIPO: simbolica
   VALORES: Baixo, Medio_Baixo, Medio, Medio_Alto, Alto
 
+VARIAVEL: sugestao_treino_tensao
+  TIPO: texto
+
+VARIAVEL: sugestao_treino_depressao
+  TIPO: texto
+
+VARIAVEL: sugestao_treino_hostilidade
+  TIPO: texto
+
+VARIAVEL: sugestao_treino_fadiga
+  TIPO: texto
+
+VARIAVEL: sugestao_treino_confusao
+  TIPO: texto
+
+VARIAVEL: sugestao_treino_vigor
+  TIPO: texto
+
 # Variáveis de entrada (soma de cada domínio emocional)
 VARIAVEL: soma_tensao
   TIPO: numerica
@@ -195,3 +213,124 @@ ENTAO nivel_desajuste = Medio_Alto
 REGRA: desajuste_alto
 SE soma_desajuste > 20 E soma_desajuste <= 25
 ENTAO nivel_desajuste = Alto
+
+# Regras para recomendação
+REGRA: recomendacao_tensão_baixa
+SE nivel_tensao = Baixo
+ENTAO sugestao_treino_tensao = "Treino de força, esportes de agilidade, treino técnico"
+
+REGRA: recomendacao_tensão_medio_baixa
+SE nivel_tensao = Medio_Baixo
+ENTAO sugestao_treino_tensao = "Corrida leve, funcional, treino com ritmo controlado"
+
+REGRA: recomendacao_tensão_media
+SE nivel_tensao = Medio
+ENTAO sugestao_treino_tensao = "Corrida leve, funcional, treino com ritmo controlado"
+
+REGRA: recomendacao_tensão_medio_alta
+SE nivel_tensao = Medio_Alto
+ENTAO sugestao_treino_tensao = "Corrida leve, funcional, treino com ritmo controlado"
+
+REGRA: recomendacao_tensão_alta
+SE nivel_tensao = Alto
+ENTAO sugestao_treino_tensao = "Yoga, caminhada, respiração, treino aeróbico leve"
+
+REGRA: recomendacao_depressao_baixa
+SE nivel_depressao = Baixo
+ENTAO sugestao_treino_depressao = "Esportes coletivos, corrida longa, treino com metas"
+
+REGRA: recomendacao_depressao_medio_baixa
+SE nivel_depressao = Medio_Baixo
+ENTAO sugestao_treino_depressao = "Funcional leve, dança, caminhada com metas"
+
+REGRA: recomendacao_depressao_media
+SE nivel_depressao = Medio
+ENTAO sugestao_treino_depressao = "Funcional leve, dança, caminhada com metas"
+
+REGRA: recomendacao_depressao_medio_alta
+SE nivel_depressao = Medio_Alto
+ENTAO sugestao_treino_depressao = "Funcional leve, dança, caminhada com metas"
+
+REGRA: recomendacao_depressao_alta
+SE nivel_depressao = Alto
+ENTAO sugestao_treino_depressao = "Treinos curtos, dança, treino com música"
+
+REGRA: recomendacao_hostilidade_baixa
+SE nivel_hostilidade = Baixo
+ENTAO sugestao_treino_hostilidade = "Pilates, yoga técnico, escalada, slackline"
+
+REGRA: recomendacao_hostilidade_medio_baixa
+SE nivel_hostilidade = Medio_Baixo
+ENTAO sugestao_treino_hostilidade = "HIIT leve, treino funcional coordenado"
+
+REGRA: recomendacao_hostilidade_media
+SE nivel_hostilidade = Medio
+ENTAO sugestao_treino_hostilidade = "HIIT leve, treino funcional coordenado"
+
+REGRA: recomendacao_hostilidade_medio_alta
+SE nivel_hostilidade = Medio_Alto
+ENTAO sugestao_treino_hostilidade = "HIIT leve, treino funcional coordenado"
+
+REGRA: recomendacao_hostilidade_alta
+SE nivel_hostilidade = Alto
+ENTAO sugestao_treino_hostilidade = "Boxe, circuito intenso, corrida com metas"
+
+REGRA: recomendacao_fadiga_baixa
+SE nivel_fadiga = Baixo
+ENTAO sugestao_treino_fadiga = "Corrida, escada, cross training, circuitos de superação"
+
+REGRA: recomendacao_fadiga_medio_baixa
+SE nivel_fadiga = Medio_Baixo
+ENTAO sugestao_treino_fadiga = "Funcional leve, treino regenerativo"
+
+REGRA: recomendacao_fadiga_media
+SE nivel_fadiga = Medio
+ENTAO sugestao_treino_fadiga = "Funcional leve, treino regenerativo"
+
+REGRA: recomendacao_fadiga_medio_alta
+SE nivel_fadiga = Medio_Alto
+ENTAO sugestao_treino_fadiga = "Funcional leve, treino regenerativo"
+
+REGRA: recomendacao_fadiga_alta
+SE nivel_fadiga = Alto
+ENTAO sugestao_treino_fadiga = "Alongamento, pilates, natação leve, treino de mobilidade"
+
+REGRA: recomendacao_confusao_baixa
+SE nivel_confusao = Baixo
+ENTAO sugestao_treino_confusao = "Esportes com estratégia, treino técnico com estímulos múltiplos"
+
+REGRA: recomendacao_confusao_medio_baixa
+SE nivel_confusao = Medio_Baixo
+ENTAO sugestao_treino_confusao = "Treino guiado com repetições, coordenação leve"
+
+REGRA: recomendacao_confusao_media
+SE nivel_confusao = Medio
+ENTAO sugestao_treino_confusao = "Treino guiado com repetições, coordenação leve"
+
+REGRA: recomendacao_confusao_medio_alta
+SE nivel_confusao = Medio_Alto
+ENTAO sugestao_treino_confusao = "Treino guiado com repetições, coordenação leve"
+
+REGRA: recomendacao_confusao_alta
+SE nivel_confusao = Alto
+ENTAO sugestao_treino_confusao = "Yoga com equilíbrio, caminhada em trilha, treino funcional com cones/escada de agilidade"
+
+REGRA: recomendacao_vigor_baixo
+SE nivel_vigor = Baixo
+ENTAO sugestao_treino_vigor = "Treino leve com música, jogos recreativos"
+
+REGRA: recomendacao_vigor_medio_baixo
+SE nivel_vigor = Medio_Baixo
+ENTAO sugestao_treino_vigor = "Funcional, aeróbico moderado, natação"
+
+REGRA: recomendacao_vigor_media
+SE nivel_vigor = Medio
+ENTAO sugestao_treino_vigor = "Funcional, aeróbico moderado, natação"
+
+REGRA: recomendacao_vigor_medio_alto
+SE nivel_vigor = Medio_Alto
+ENTAO sugestao_treino_vigor = "Funcional, aeróbico moderado, natação"
+
+REGRA: recomendacao_vigor_alto
+SE nivel_vigor = Alto
+ENTAO sugestao_treino_vigor = "HIIT, treino de força progressivo, esportes competitivos"

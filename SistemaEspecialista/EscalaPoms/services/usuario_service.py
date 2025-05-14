@@ -11,21 +11,42 @@ from django.utils import timezone
 from django.conf import settings
 
 from ..models import Treinador, Aluno, EscalaPoms
-
 from django.db import IntegrityError
 
-def obter_usuario_por_cpf(cpf):
+def obter_usuario_por_cpf(cpf: str):
+    """
+    Busca um usuário (Treinador ou Aluno) pelo CPF.
+
+    Args:
+        cpf: string contendo o CPF (podendo ter formatação).
+
+    Returns:
+        Instância de Treinador ou Aluno correspondente ao CPF normalizado,
+        ou None se não encontrado.
+    """
     cpf_numeros = normalizar_cpf(cpf)
     return (
         Treinador.objects.filter(cpf=cpf_numeros).first()
         or Aluno.objects.filter(cpf=cpf_numeros).first()
     )
-    
-def atualizar_dados_usuario(usuario, request, template):
+
+def atualizar_dados_usuario(usuario, request, template: str):
+    """
+    Atualiza email, telefone e foto de um usuário (Aluno ou Treinador).
+
+    Args:
+        usuario: instância de Aluno ou Treinador a ser atualizada.
+        request: objeto HttpRequest contendo POST e FILES.
+        template: nome do template a renderizar em caso de erro.
+
+    Returns:
+        HttpResponseRedirect para 'perfil' em caso de sucesso,
+        ou HttpResponse renderizado com erros para correção.
+    """
     is_aluno = isinstance(usuario, Aluno)
     form_troca = AlunoTrocaTreinadorForm(instance=usuario) if is_aluno else None
 
-    def erro(mensagem):
+    def erro(mensagem: str):
         messages.error(request, mensagem)
         return render(request, template, {
             'usuario': usuario,
@@ -37,7 +58,6 @@ def atualizar_dados_usuario(usuario, request, template):
     email = request.POST.get('email')
     telefone = request.POST.get('telefone')
     foto = request.FILES.get('foto')
-    senha = request.POST.get('senha')
 
     if email and email != usuario.email:
         em_uso = (
@@ -64,8 +84,17 @@ def atualizar_dados_usuario(usuario, request, template):
     messages.success(request, 'Dados atualizados com sucesso!')
     return redirect('perfil')
 
-
 def remover_foto_usuario(usuario, request):
+    """
+    Remove a foto de perfil de um usuário, se existir.
+
+    Args:
+        usuario: instância de Aluno ou Treinador.
+        request: objeto HttpRequest para adicionar mensagem.
+
+    Returns:
+        HttpResponseRedirect para 'perfil'.
+    """
     if usuario.foto:
         usuario.foto.delete(save=False)
         usuario.foto = None
@@ -73,43 +102,54 @@ def remover_foto_usuario(usuario, request):
         messages.success(request, 'Foto removida com sucesso.')
     return redirect('perfil')
 
-
 def processar_troca_treinador(usuario, request):
+    """
+    Processa a troca de treinador para um Aluno usando formulário.
+
+    Args:
+        usuario: instância de Aluno.
+        request: HttpRequest contendo POST com o novo treinador.
+
+    Returns:
+        HttpResponseRedirect para 'perfil' com mensagem de sucesso ou erro.
+    """
     form = AlunoTrocaTreinadorForm(request.POST, instance=usuario)
-    
+
     if form.is_valid():
         form.save()
         messages.success(request, 'Treinador atualizado com sucesso!')
         return redirect('perfil')
-    
+
     messages.error(request, 'Selecione um treinador válido.')
     return redirect('perfil')
 
+def enviar_codigo_email(codigo: str, email: str):
+    """
+    Envia um código de verificação por e-mail para o usuário confirmar exclusão.
 
-def enviar_codigo_email(codigo, email):
-    from django.core.mail import send_mail
-    from django.conf import settings
-
+    Args:
+        codigo: string do código de verificação.
+        email: endereço de e-mail de destino.
+    """
     subject = 'Código de Verificação'
     message = (
         'Olá!\n\n'
         'Recebemos um pedido para excluir sua conta.\n'
         f'Seu código de verificação é: {codigo}\n\n'
-        'Foi você quem solicitou essa exclusão? '
-        'Caso não tenha sido você, pode ter sido um engano ou um pedido malicioso. '
-        'Basta ignorar este e-mail e nada mais acontecerá com sua conta.\n\n'
+        'Caso não tenha sido você, ignore este e-mail.\n'
         'Se foi você, insira o código acima para confirmar a exclusão.\n\n'
-        
     )
     email_from = settings.EMAIL_HOST_USER
-    recipient_list = [email]
+    send_mail(subject, message, email_from, [email])
 
-    send_mail(subject, message, email_from, recipient_list)
-    
 def enviar_resumo_escalas_pendentes(treinador):
     """
-    Busca todas as escalas POMS pendentes (enviado=False) dos alunos
-    do treinador, envia um e-mail resumo e marca-as como enviadas.
+    Envia um e-mail resumo de todas as escalas POMS pendentes de alunos de um treinador.
+
+    Para cada escala pendente (enviado=False), lista aluno e data, envia e marca como enviado.
+
+    Args:
+        treinador: instância de Treinador cujo alunos serão verificados.
     """
     pendentes = (
         EscalaPoms.objects
@@ -121,8 +161,8 @@ def enviar_resumo_escalas_pendentes(treinador):
         return
 
     linhas = [
-        f"- {e.aluno.nome}: {e.data.strftime('%d/%m/%Y %H:%M')}"
-        for e in pendentes
+        f"- {escala.aluno.nome}: {escala.data.strftime('%d/%m/%Y %H:%M')}"
+        for escala in pendentes
     ]
     corpo = (
         f"Olá {treinador.nome},\n\n"
@@ -138,7 +178,7 @@ def enviar_resumo_escalas_pendentes(treinador):
         recipient_list=[treinador.email],
     )
 
-    update_kwargs = {'enviado': True}
+    update_fields = {'enviado': True}
     if hasattr(EscalaPoms, 'data_envio'):
-        update_kwargs['data_envio'] = timezone.now()
-    pendentes.update(**update_kwargs)
+        update_fields['data_envio'] = timezone.now()
+    pendentes.update(**update_fields)
