@@ -334,3 +334,4 @@ ENTAO sugestao_treino_vigor = "Funcional, aeróbico moderado, natação"
 REGRA: recomendacao_vigor_alto
 SE nivel_vigor = Alto
 ENTAO sugestao_treino_vigor = "HIIT, treino de força progressivo, esportes competitivos"
+
