@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
+
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    overflow: auto;
+  }
+
+  h1 {
+    font-weight: 800;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  /* === SIDEBAR (desktop fixo, mobile overlay) === */
+  #sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    /* cobre toda a altura */
+    left: 0;
+    /* desktop: visível; mobile será deslocada */
+    width: 264px;
+    background-color: #1b4332;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: left 0.35s ease-in-out;
+    /* usado só no mobile */
+  }
+
+  /* Empurra o conteúdo no desktop */
+  .main {
+    padding-top: 3.5rem;
+    margin-left: 264px;
+    overflow-y: auto;
+    color: #2D6A4F;
+    transition: margin-left 0.35s ease-in-out;
+  }
+
+  /* Oculta o botão no desktop */
+  .toggler-btn {
+    display: none;
+  }
+
+  /* === ESTILO INTERNO DA SIDEBAR === */
+  .sidebar-logo {
+    padding: 1.15rem 1.5rem;
+    text-align: center;
+  }
+
+  .sidebar-logo a {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar-header {
+    color: #ccc;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 1rem 1.5rem 0.5rem;
+  }
+
+  .sidebar-item+.sidebar-item {
+    margin-top: 0.25rem;
+  }
+
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #f1f1f1;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .sidebar-link i {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+  }
+
+  .sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+
+  .sidebar-link[data-bs-toggle="collapse"]::after {
+    content: '';
+    border: solid #f1f1f1;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 1.5rem;
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+  }
+
+  .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+  }
+
+  .sidebar-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-footer a {
+    display: flex;
+    align-items: center;
+    color: #f1f1f1;
+    font-size: 1rem;
+  }
+
+  .sidebar-footer i {
+    margin-right: 0.75rem;
+  }
+
+  /* === RESPONSIVIDADE: mobile overlay === */
+  @media (max-width: 768px) {
+    #sidebar {
+      left: -264px;
+      /* esconde à esquerda */
+    }
+
+    #sidebar.open {
+      left: 0;
+      /* mostra como overlay */
+    }
+
+    .main {
+      margin-left: 0;
+      padding-top: 1rem;
+      /* ocupa toda largura */
+    }
+
+    .toggler-btn {
+      display: block;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1101;
+      transition: left 0.35s ease-in-out;
+    }
+
+    #sidebar.open~.main .toggler-btn {
+      left: calc(264px + 1rem);
+    }
+  }

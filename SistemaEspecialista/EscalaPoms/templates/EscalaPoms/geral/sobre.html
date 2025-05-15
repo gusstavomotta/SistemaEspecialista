@@ -1,0 +1,25 @@
+{% extends 'EscalaPoms/geral/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/sobre.css' %}">
+{% endblock %}
+
+{% block title %}Sobre o Projeto{% endblock %}
+
+{% block content %}
+  <section class="sobre">
+    <h1>Sobre o Projeto</h1>
+
+    <p>Sistema Especialista desenvolvido em 2025 para a Disciplina de Inteligência Artificial do Curso de Ciência da Computação da Universidade de Santa Cruz do Sul – RS (UNISC).
+      <br><br>
+      Desenvolvedores: Caio Eduardo Koester Kirst, Gustavo Oliveira da Motta, Matheus Deicke Nunes e Victor Eduardo do Nascimento.
+      <br><br>
+      Especialista da Educação Física: Profa. Dra. Francesca Chaida Sonda (UNISC) – Doutorado em Ciências do Movimento Humano pela UFRGS - RS.
+      <br><br>
+      Colaboradora: Profa. Dra. Rejane Frozza (UNISC) – Doutorado em Computação pela UFRGS - RS.
+      <br><br>
+      Objetivo: Sistema Especialista para auxiliar treinadores na recomendação de treinos personalizados, com base na análise das emoções dos estudantes por meio da escala POMS reduzida (Profile of Mood States, em português: Perfil de Estados de Humor).
+    </p>
+  </section>
+{% endblock %}

@@ -1,6 +1,7 @@
 import re
 from django.forms import ValidationError
 
+
 def normalizar_cpf(cpf: str) -> str:
     """
     Remove todos os caracteres não numéricos de um CPF.
@@ -11,7 +12,7 @@ def normalizar_cpf(cpf: str) -> str:
     Returns:
         String apenas com os 11 dígitos numéricos.
     """
-    return re.sub(r'\D', '', cpf or '')
+    return re.sub(r"\D", "", cpf or "")
 
 
 def validar_cpf(cpf: str) -> str:
@@ -41,7 +42,7 @@ def validar_cpf(cpf: str) -> str:
     soma = sum(int(cpf[i]) * (11 - i) for i in range(10))
     digito2 = (soma * 10 % 11) % 10
 
-    if cpf[-2:] != f'{digito1}{digito2}':
+    if cpf[-2:] != f"{digito1}{digito2}":
         raise ValidationError("CPF inválido.")
 
     return cpf
@@ -57,10 +58,10 @@ def validar_numero_telefone(telefone: str) -> str:
     Returns:
         Número contendo apenas dígitos se válido, ou string vazia se inválido.
     """
-    telefone_normalizado = re.sub(r'\D', '', telefone or '')
+    telefone_normalizado = re.sub(r"\D", "", telefone or "")
     if len(telefone_normalizado) in (10, 11):
         return telefone_normalizado
-    return ''
+    return ""
 
 
 def converter_para_inteiro(valor):

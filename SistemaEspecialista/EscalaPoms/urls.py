@@ -33,6 +33,7 @@ urlpatterns = [
 
     # Página institucional
     path('sobre/', sobre, name='sobre'),
+    path("termo_uso/", termo_uso, name="termo_uso"),
 
     # Logout
     path('logout/', logout_view, name='logout'),

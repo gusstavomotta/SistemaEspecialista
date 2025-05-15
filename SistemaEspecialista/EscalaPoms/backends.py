@@ -15,7 +15,9 @@ class CPFBackend(BaseBackend):
     Backend de autenticação que usa CPF + senha armazenada em modelos Treinador ou Aluno.
     """
 
-    def authenticate(self, request, username: str = None, password: str = None, **kwargs) -> User:
+    def authenticate(
+        self, request, username: str = None, password: str = None, **kwargs
+    ) -> User:
         """
         Tenta autenticar um usuário pelo CPF.
 
@@ -91,7 +93,7 @@ def treinador_required(view_func):
     def _wrapped(request, *args, **kwargs):
         # Redireciona não autenticados para login
         if not request.user.is_authenticated:
-            return redirect('login')
+            return redirect("login")
 
         # Confere se o username (CPF) pertence a um treinador
         cpf_normalizado = normalizar_cpf(request.user.username)
@@ -112,7 +114,7 @@ def aluno_required(view_func):
     def _wrapped(request, *args, **kwargs):
         # Redireciona não autenticados para login
         if not request.user.is_authenticated:
-            return redirect('login')
+            return redirect("login")
 
         # Confere se o username (CPF) pertence a um aluno
         cpf_normalizado = normalizar_cpf(request.user.username)

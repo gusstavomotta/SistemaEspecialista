@@ -13,6 +13,7 @@ from django.conf import settings
 from .models import Treinador, Aluno, EscalaPoms
 from django.db import IntegrityError
 
+
 def obter_usuario_por_cpf(cpf: str):
     """
     Busca um usuário (Treinador ou Aluno) pelo CPF.
@@ -29,6 +30,7 @@ def obter_usuario_por_cpf(cpf: str):
         Treinador.objects.filter(cpf=cpf_numeros).first()
         or Aluno.objects.filter(cpf=cpf_numeros).first()
     )
+
 
 def atualizar_dados_usuario(usuario, request, template: str):
     """
@@ -48,29 +50,33 @@ def atualizar_dados_usuario(usuario, request, template: str):
 
     def erro(mensagem: str):
         messages.error(request, mensagem)
-        return render(request, template, {
-            'usuario': usuario,
-            'url_dashboard': reverse('perfil'),
-            'is_aluno': is_aluno,
-            'form_troca': form_troca,
-        })
+        return render(
+            request,
+            template,
+            {
+                "usuario": usuario,
+                "url_dashboard": reverse("perfil"),
+                "is_aluno": is_aluno,
+                "form_troca": form_troca,
+            },
+        )
 
-    email = request.POST.get('email')
-    telefone = request.POST.get('telefone')
-    foto = request.FILES.get('foto')
+    email = request.POST.get("email")
+    telefone = request.POST.get("telefone")
+    foto = request.FILES.get("foto")
 
     if email and email != usuario.email:
         em_uso = (
-            Treinador.objects.filter(email=email).exclude(pk=usuario.pk).exists() or
-            Aluno.objects.filter(email=email).exclude(pk=usuario.pk).exists()
+            Treinador.objects.filter(email=email).exclude(pk=usuario.pk).exists()
+            or Aluno.objects.filter(email=email).exclude(pk=usuario.pk).exists()
         )
         if em_uso:
-            return erro('Este e-mail já está em uso por outro usuário.')
+            return erro("Este e-mail já está em uso por outro usuário.")
         usuario.email = email
 
     if telefone:
         if not validar_numero_telefone(telefone):
-            return erro('Telefone inválido. Use DDD e apenas números.')
+            return erro("Telefone inválido. Use DDD e apenas números.")
         usuario.num_telefone = telefone
 
     if foto:
@@ -79,10 +85,11 @@ def atualizar_dados_usuario(usuario, request, template: str):
     try:
         usuario.save()
     except IntegrityError:
-        return erro('Não foi possível atualizar: conflito de dados no banco.')
+        return erro("Não foi possível atualizar: conflito de dados no banco.")
 
-    messages.success(request, 'Dados atualizados com sucesso!')
-    return redirect('perfil')
+    messages.success(request, "Dados atualizados com sucesso!")
+    return redirect("perfil")
+
 
 def remover_foto_usuario(usuario, request):
     """
@@ -99,8 +106,9 @@ def remover_foto_usuario(usuario, request):
         usuario.foto.delete(save=False)
         usuario.foto = None
         usuario.save()
-        messages.success(request, 'Foto removida com sucesso.')
-    return redirect('perfil')
+        messages.success(request, "Foto removida com sucesso.")
+    return redirect("perfil")
+
 
 def processar_troca_treinador(usuario, request):
     """
@@ -117,11 +125,12 @@ def processar_troca_treinador(usuario, request):
 
     if form.is_valid():
         form.save()
-        messages.success(request, 'Treinador atualizado com sucesso!')
-        return redirect('perfil')
+        messages.success(request, "Treinador atualizado com sucesso!")
+        return redirect("perfil")
 
-    messages.error(request, 'Selecione um treinador válido.')
-    return redirect('perfil')
+    messages.error(request, "Selecione um treinador válido.")
+    return redirect("perfil")
+
 
 def enviar_codigo_email(codigo: str, email: str):
     """
@@ -131,16 +140,17 @@ def enviar_codigo_email(codigo: str, email: str):
         codigo: string do código de verificação.
         email: endereço de e-mail de destino.
     """
-    subject = 'Código de Verificação'
+    subject = "Código de Verificação"
     message = (
-        'Olá!\n\n'
-        'Recebemos um pedido para excluir sua conta.\n'
-        f'Seu código de verificação é: {codigo}\n\n'
-        'Caso não tenha sido você, ignore este e-mail.\n'
-        'Se foi você, insira o código acima para confirmar a exclusão.\n\n'
+        "Olá!\n\n"
+        "Recebemos um pedido para excluir sua conta.\n"
+        f"Seu código de verificação é: {codigo}\n\n"
+        "Caso não tenha sido você, ignore este e-mail.\n"
+        "Se foi você, insira o código acima para confirmar a exclusão.\n\n"
     )
     email_from = settings.EMAIL_HOST_USER
     send_mail(subject, message, email_from, [email])
+
 
 def enviar_resumo_escalas_pendentes(treinador):
     """
@@ -151,11 +161,9 @@ def enviar_resumo_escalas_pendentes(treinador):
     Args:
         treinador: instância de Treinador cujo alunos serão verificados.
     """
-    pendentes = (
-        EscalaPoms.objects
-            .filter(aluno__treinador=treinador, enviado=False)
-            .select_related('aluno')
-    )
+    pendentes = EscalaPoms.objects.filter(
+        aluno__treinador=treinador, enviado=False
+    ).select_related("aluno")
 
     if not pendentes.exists():
         return
@@ -178,7 +186,7 @@ def enviar_resumo_escalas_pendentes(treinador):
         recipient_list=[treinador.email],
     )
 
-    update_fields = {'enviado': True}
-    if hasattr(EscalaPoms, 'data_envio'):
-        update_fields['data_envio'] = timezone.now()
+    update_fields = {"enviado": True}
+    if hasattr(EscalaPoms, "data_envio"):
+        update_fields["data_envio"] = timezone.now()
     pendentes.update(**update_fields)

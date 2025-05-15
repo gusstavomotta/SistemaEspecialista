@@ -9,6 +9,7 @@ from .validators import converter_para_inteiro
 from .models import EscalaPoms, ClassificacaoRecomendacao, Treinador
 from .maquina_inferencia import *
 
+
 def somar_campos_post(request, prefixo: str, quantidade: int = 6) -> int:
     """
     Soma valores inteiros em campos POST sequenciais de um prefixo.
@@ -29,7 +30,7 @@ def somar_campos_post(request, prefixo: str, quantidade: int = 6) -> int:
     """
     total = 0
     for i in range(1, quantidade + 1):
-        campo = f'{prefixo}_{i}'
+        campo = f"{prefixo}_{i}"
         valor = request.POST.get(campo)
         if valor is None or not valor.isdigit():
             raise ValueError(f"Valor inválido para {campo}.")
@@ -62,29 +63,33 @@ def processar_dados_escala(request) -> dict:
             'freq_cardiaca_media': int,
         }
     """
-    soma_tensao      = somar_campos_post(request, 'tensao')
-    soma_depressao   = somar_campos_post(request, 'depressao')
-    soma_hostilidade = somar_campos_post(request, 'hostilidade')
-    soma_fadiga      = somar_campos_post(request, 'fadiga')
-    soma_confusao    = somar_campos_post(request, 'confusao')
-    soma_vigor       = somar_campos_post(request, 'vigor')
-    soma_desajuste   = somar_campos_post(request, 'desajuste')
+    soma_tensao = somar_campos_post(request, "tensao")
+    soma_depressao = somar_campos_post(request, "depressao")
+    soma_hostilidade = somar_campos_post(request, "hostilidade")
+    soma_fadiga = somar_campos_post(request, "fadiga")
+    soma_confusao = somar_campos_post(request, "confusao")
+    soma_vigor = somar_campos_post(request, "vigor")
+    soma_desajuste = somar_campos_post(request, "desajuste")
 
-    pth = ((soma_tensao + soma_depressao + soma_hostilidade +
-            soma_fadiga + soma_confusao) - soma_vigor) + 100
+    pth = (
+        (soma_tensao + soma_depressao + soma_hostilidade + soma_fadiga + soma_confusao)
+        - soma_vigor
+    ) + 100
 
     return {
-        'soma_tensao': soma_tensao,
-        'soma_depressao': soma_depressao,
-        'soma_hostilidade': soma_hostilidade,
-        'soma_fadiga': soma_fadiga,
-        'soma_confusao': soma_confusao,
-        'soma_vigor': soma_vigor,
-        'soma_desajuste': soma_desajuste,
-        'pth': pth,
-        'sono': converter_para_inteiro(request.POST.get('sono')),
-        'volume_treino': converter_para_inteiro(request.POST.get('volume_treino')),
-        'freq_cardiaca_media': converter_para_inteiro(request.POST.get('freq_cardiaca_media')),
+        "soma_tensao": soma_tensao,
+        "soma_depressao": soma_depressao,
+        "soma_hostilidade": soma_hostilidade,
+        "soma_fadiga": soma_fadiga,
+        "soma_confusao": soma_confusao,
+        "soma_vigor": soma_vigor,
+        "soma_desajuste": soma_desajuste,
+        "pth": pth,
+        "sono": converter_para_inteiro(request.POST.get("sono")),
+        "volume_treino": converter_para_inteiro(request.POST.get("volume_treino")),
+        "freq_cardiaca_media": converter_para_inteiro(
+            request.POST.get("freq_cardiaca_media")
+        ),
     }
 
 
@@ -107,54 +112,61 @@ def salvar_e_classificar_escala(aluno, request):
         HttpResponseRedirect para 'home' em caso de sucesso,
         ou para 'escala' em caso de erro, com mensagem apropriada.
     """
-    campos_soma = ['tensao', 'depressao', 'hostilidade',
-                   'fadiga', 'confusao', 'vigor', 'desajuste']
+    campos_soma = [
+        "tensao",
+        "depressao",
+        "hostilidade",
+        "fadiga",
+        "confusao",
+        "vigor",
+        "desajuste",
+    ]
     try:
         dados = processar_dados_escala(request)
-        observacoes = request.POST.get('observacoes', '').strip() or None
+        observacoes = request.POST.get("observacoes", "").strip() or None
 
         # 1) Persiste Escala bruta
         escala = EscalaPoms.objects.create(
-            aluno=aluno,
-            data=datetime.datetime.now(),
-            observacoes=observacoes,
-            **dados
+            aluno=aluno, data=datetime.datetime.now(), observacoes=observacoes, **dados
         )
 
         # 2) Extrai somas para a inferência
         somas = {
-            f'soma_{campo}': getattr(escala, f'soma_{campo}')
-            for campo in campos_soma
+            f"soma_{campo}": getattr(escala, f"soma_{campo}") for campo in campos_soma
         }
 
         # 3) Aplica máquinas de regras POMS
-        regras_path = os.path.join(settings.BASE_DIR, 'EscalaPoms', 'regras.txt')
+        regras_path = os.path.join(settings.BASE_DIR, "EscalaPoms", "regras.txt")
         resultados = classificar_e_recomendar_poms(regras_path, somas)
 
         # 4) Persiste níveis e sugestões
         ClassificacaoRecomendacao.objects.create(
             escala=escala,
-            nivel_tensao      = resultados.get('nivel_tensao'),
-            nivel_depressao   = resultados.get('nivel_depressao'),
-            nivel_hostilidade = resultados.get('nivel_hostilidade'),
-            nivel_fadiga      = resultados.get('nivel_fadiga'),
-            nivel_confusao    = resultados.get('nivel_confusao'),
-            nivel_vigor       = resultados.get('nivel_vigor'),
-            nivel_desajuste   = resultados.get('nivel_desajuste'),
-            sugestao_treino_tensao      = resultados.get('sugestao_treino_tensao'),
-            sugestao_treino_depressao   = resultados.get('sugestao_treino_depressao'),
-            sugestao_treino_hostilidade = resultados.get('sugestao_treino_hostilidade'),
-            sugestao_treino_fadiga      = resultados.get('sugestao_treino_fadiga'),
-            sugestao_treino_confusao    = resultados.get('sugestao_treino_confusao'),
-            sugestao_treino_vigor       = resultados.get('sugestao_treino_vigor'),
+            nivel_tensao=resultados.get("nivel_tensao"),
+            nivel_depressao=resultados.get("nivel_depressao"),
+            nivel_hostilidade=resultados.get("nivel_hostilidade"),
+            nivel_fadiga=resultados.get("nivel_fadiga"),
+            nivel_confusao=resultados.get("nivel_confusao"),
+            nivel_vigor=resultados.get("nivel_vigor"),
+            nivel_desajuste=resultados.get("nivel_desajuste"),
+            sugestao_treino_tensao=resultados.get("sugestao_treino_tensao"),
+            sugestao_treino_depressao=resultados.get("sugestao_treino_depressao"),
+            sugestao_treino_hostilidade=resultados.get("sugestao_treino_hostilidade"),
+            sugestao_treino_fadiga=resultados.get("sugestao_treino_fadiga"),
+            sugestao_treino_confusao=resultados.get("sugestao_treino_confusao"),
+            sugestao_treino_vigor=resultados.get("sugestao_treino_vigor"),
         )
 
-        messages.success(request, "Dados salvos, classificados e recomendados com sucesso!")
-        return redirect('home')
+        messages.success(
+            request, "Dados salvos, classificados e recomendados com sucesso!"
+        )
+        return redirect("home")
 
     except Exception as e:
-        messages.error(request, f"Ocorreu um erro ao salvar e classificar a escala: {e}")
-        return redirect('escala')
+        messages.error(
+            request, f"Ocorreu um erro ao salvar e classificar a escala: {e}"
+        )
+        return redirect("escala")
 
 
 def confirmar_treinador(aluno, request):
@@ -168,7 +180,7 @@ def confirmar_treinador(aluno, request):
     Returns:
         HttpResponseRedirect para 'escala' com mensagem de sucesso ou erro.
     """
-    cpf_selecionado = request.POST.get('treinador')
+    cpf_selecionado = request.POST.get("treinador")
     try:
         treinador = Treinador.objects.get(cpf=cpf_selecionado)
         aluno.treinador = treinador
@@ -176,4 +188,4 @@ def confirmar_treinador(aluno, request):
         messages.success(request, "Treinador confirmado com sucesso!")
     except Treinador.DoesNotExist:
         messages.error(request, "Treinador inválido.")
-    return redirect('escala')
+    return redirect("escala")

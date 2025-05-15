@@ -20,7 +20,7 @@ from .usuario_service import (
     obter_usuario_por_cpf,
     remover_foto_usuario,
     atualizar_dados_usuario,
-    enviar_codigo_email
+    enviar_codigo_email,
 )
 from .escala_service import confirmar_treinador, salvar_e_classificar_escala
 from django.core import signing
@@ -28,6 +28,7 @@ from django.core import signing
 """
 Módulo de views: autenticação, cadastro, gestão de escalas e perfil de usuário.
 """
+
 
 def login_view(request):
     """
@@ -44,23 +45,23 @@ def login_view(request):
     4. Exibe mensagem de sucesso ou erro.
     5. Renderiza template de login com valor de CPF preenchido.
     """
-    cpf_digitado = ''
-    if request.method == 'POST':
-        cpf_digitado = request.POST.get('cpf', '').strip()
-        senha = request.POST.get('senha', '')
+    cpf_digitado = ""
+    if request.method == "POST":
+        cpf_digitado = request.POST.get("cpf", "").strip()
+        senha = request.POST.get("senha", "")
         usuario = authenticate(request, username=cpf_digitado, password=senha)
         if usuario:
             login(request, usuario)
             obj = obter_usuario_por_cpf(usuario.username)
             if isinstance(obj, Treinador):
-                request.session['tipo_usuario'] = 'treinador'
+                request.session["tipo_usuario"] = "treinador"
                 enviar_resumo_escalas_pendentes(obj)
             elif isinstance(obj, Aluno):
-                request.session['tipo_usuario'] = 'aluno'
+                request.session["tipo_usuario"] = "aluno"
             messages.success(request, "Login efetuado com sucesso!")
-            return redirect('home')
+            return redirect("home")
         messages.error(request, "CPF ou senha incorretos.")
-    return render(request, 'EscalaPoms/auth/login.html', {'cpf': cpf_digitado})
+    return render(request, "EscalaPoms/auth/login.html", {"cpf": cpf_digitado})
 
 
 def cadastro(request):
@@ -79,27 +80,37 @@ def cadastro(request):
     4. Para alunos, carrega lista de treinadores para seleção.
     5. Renderiza template de cadastro com contexto.
     """
-    if request.method == 'POST':
-        tipo = request.POST.get('tipo_usuario')
+    if request.method == "POST":
+        tipo = request.POST.get("tipo_usuario")
     else:
-        tipo = request.GET.get('tipo')
-    form = TreinadorForm(request.POST) if request.method == 'POST' and tipo == 'treinador' else (
-        AlunoForm(request.POST) if request.method == 'POST' else (
-            TreinadorForm() if tipo == 'treinador' else AlunoForm()
+        tipo = request.GET.get("tipo")
+    form = (
+        TreinadorForm(request.POST)
+        if request.method == "POST" and tipo == "treinador"
+        else (
+            AlunoForm(request.POST)
+            if request.method == "POST"
+            else (TreinadorForm() if tipo == "treinador" else AlunoForm())
         )
     )
-    if request.method == 'POST':
+    if request.method == "POST":
         if form.is_valid():
             form.save()
             messages.success(request, "Cadastro realizado com sucesso!")
-            return redirect('login')
+            return redirect("login")
         messages.error(request, "Por favor, corrija os erros abaixo.")
-    treinadores = Treinador.objects.all().values('cpf', 'nome') if tipo != 'treinador' else []
-    return render(request, 'EscalaPoms/auth/cadastro.html', {
-        'form': form,
-        'treinadores': treinadores,
-        'tipo_usuario': tipo,
-    })
+    treinadores = (
+        Treinador.objects.all().values("cpf", "nome") if tipo != "treinador" else []
+    )
+    return render(
+        request,
+        "EscalaPoms/auth/cadastro.html",
+        {
+            "form": form,
+            "treinadores": treinadores,
+            "tipo_usuario": tipo,
+        },
+    )
 
 
 def redefinir_senha(request):
@@ -117,29 +128,39 @@ def redefinir_senha(request):
     5. Envia código por email e redireciona para confirmação.
     6. Renderiza template com campos preenchidos em caso de erro.
     """
-    cpf_digitado = ''
-    email_digitado = ''
-    if request.method == 'POST':
-        cpf_digitado = request.POST.get('cpf', '').strip()
-        email_digitado = request.POST.get('email', '').strip()
+    cpf_digitado = ""
+    email_digitado = ""
+    if request.method == "POST":
+        cpf_digitado = request.POST.get("cpf", "").strip()
+        email_digitado = request.POST.get("email", "").strip()
         try:
             cpf_normalizado = validar_cpf(cpf_digitado)
         except Exception:
-            messages.error(request, 'CPF inválido.')
-            return render(request, 'EscalaPoms/auth/redefinir_senha.html', {'cpf': cpf_digitado, 'email': email_digitado})
+            messages.error(request, "CPF inválido.")
+            return render(
+                request,
+                "EscalaPoms/auth/redefinir_senha.html",
+                {"cpf": cpf_digitado, "email": email_digitado},
+            )
         usuario = obter_usuario_por_cpf(cpf_normalizado)
         if not usuario:
-            messages.error(request, 'CPF não encontrado.')
+            messages.error(request, "CPF não encontrado.")
         elif usuario.email.strip().lower() != email_digitado.lower():
-            messages.error(request, 'Email não corresponde ao CPF.')
+            messages.error(request, "Email não corresponde ao CPF.")
         else:
             codigo = f"{random.randint(100000, 999999):06}"
-            request.session['reset_cpf'] = cpf_normalizado
-            request.session['reset_codigo'] = codigo
+            request.session["reset_cpf"] = cpf_normalizado
+            request.session["reset_codigo"] = codigo
             enviar_codigo_email(codigo, usuario.email)
-            messages.info(request, 'Enviamos um código para o seu e-mail. Insira-o abaixo.')
-            return redirect('confirmar_codigo')
-    return render(request, 'EscalaPoms/auth/redefinir_senha.html', {'cpf': cpf_digitado, 'email': email_digitado})
+            messages.info(
+                request, "Enviamos um código para o seu e-mail. Insira-o abaixo."
+            )
+            return redirect("confirmar_codigo")
+    return render(
+        request,
+        "EscalaPoms/auth/redefinir_senha.html",
+        {"cpf": cpf_digitado, "email": email_digitado},
+    )
 
 
 def confirmar_codigo(request):
@@ -157,30 +178,43 @@ def confirmar_codigo(request):
     5. Exibe mensagens e redireciona para login.
     6. Renderiza template em caso de erro.
     """
-    codigo = ''
-    if request.method == 'POST':
-        codigo = request.POST.get('codigo')
-        nova = request.POST.get('nova_senha')
-        conf = request.POST.get('confirmar_senha')
-        sessao = request.session.get('reset_codigo')
-        cpf = request.session.get('reset_cpf')
+    codigo = ""
+    if request.method == "POST":
+        codigo = request.POST.get("codigo")
+        nova = request.POST.get("nova_senha")
+        conf = request.POST.get("confirmar_senha")
+        sessao = request.session.get("reset_codigo")
+        cpf = request.session.get("reset_cpf")
         if not sessao or codigo != sessao:
-            messages.error(request, 'Código inválido ou expirado.')
-            return render(request, 'EscalaPoms/auth/confirmar_codigo.html', {'codigo_digitado': codigo})
+            messages.error(request, "Código inválido ou expirado.")
+            return render(
+                request,
+                "EscalaPoms/auth/confirmar_codigo.html",
+                {"codigo_digitado": codigo},
+            )
         if nova != conf:
-            messages.error(request, 'As senhas não coincidem.')
-            return render(request, 'EscalaPoms/auth/confirmar_codigo.html', {'codigo_digitado': codigo})
+            messages.error(request, "As senhas não coincidem.")
+            return render(
+                request,
+                "EscalaPoms/auth/confirmar_codigo.html",
+                {"codigo_digitado": codigo},
+            )
         usuario = obter_usuario_por_cpf(cpf)
         if not usuario:
-            messages.error(request, 'Sessão expirada. Tente novamente.')
-            return render(request, 'EscalaPoms/auth/confirmar_codigo.html', {'codigo_digitado': codigo})
+            messages.error(request, "Sessão expirada. Tente novamente.")
+            return render(
+                request,
+                "EscalaPoms/auth/confirmar_codigo.html",
+                {"codigo_digitado": codigo},
+            )
         usuario.senha = make_password(nova)
         usuario.save()
-        request.session.pop('reset_codigo', None)
-        request.session.pop('reset_cpf', None)
-        messages.success(request, 'Senha redefinida com sucesso.')
-        return redirect('login')
-    return render(request, 'EscalaPoms/auth/confirmar_codigo.html')
+        request.session.pop("reset_codigo", None)
+        request.session.pop("reset_cpf", None)
+        messages.success(request, "Senha redefinida com sucesso.")
+        return redirect("login")
+    return render(request, "EscalaPoms/auth/confirmar_codigo.html")
+
 
 @login_required
 def home(request):
@@ -202,48 +236,63 @@ def home(request):
     usuario = obter_usuario_por_cpf(request.user.username)
     if isinstance(usuario, Treinador):
         # dados para treinador
-        tipo = 'Treinadora' if usuario.genero == 'feminino' else 'Treinador'
+        tipo = "Treinadora" if usuario.genero == "feminino" else "Treinador"
         total_alunos = Aluno.objects.filter(treinador=usuario).count()
-        ultimas = EscalaPoms.objects.filter(aluno__treinador=usuario).select_related('aluno').order_by('-data')[:5]
+        ultimas = (
+            EscalaPoms.objects.filter(aluno__treinador=usuario)
+            .select_related("aluno")
+            .order_by("-data")[:5]
+        )
         hoje = timezone.now()
         inicio = hoje - timedelta(days=7)
-        count_semana = EscalaPoms.objects.filter(aluno__treinador=usuario, data__gte=inicio).count()
-        ult_por_aluno = EscalaPoms.objects.filter(aluno__treinador=usuario).values('aluno').annotate(ultima_escala=Max('data'))
-        sem_escala = [Aluno.objects.get(pk=i['aluno']) for i in ult_por_aluno if i['ultima_escala'] < inicio]
+        count_semana = EscalaPoms.objects.filter(
+            aluno__treinador=usuario, data__gte=inicio
+        ).count()
+        ult_por_aluno = (
+            EscalaPoms.objects.filter(aluno__treinador=usuario)
+            .values("aluno")
+            .annotate(ultima_escala=Max("data"))
+        )
+        sem_escala = [
+            Aluno.objects.get(pk=i["aluno"])
+            for i in ult_por_aluno
+            if i["ultima_escala"] < inicio
+        ]
         sem_escala_ja = Aluno.objects.filter(treinador=usuario, escalas__isnull=True)
         context = {
-            'nome': usuario.nome,
-            'tipo': tipo,
-            'total_alunos': total_alunos,
-            'ultimas_escalas': ultimas,
-            'escalas_ultima_semana': count_semana,
-            'alunos_sem_escala': sem_escala,
-            'alunos_sem_escala_ja': sem_escala_ja,
-            'genero': usuario.genero[0].upper(),
+            "nome": usuario.nome,
+            "tipo": tipo,
+            "total_alunos": total_alunos,
+            "ultimas_escalas": ultimas,
+            "escalas_ultima_semana": count_semana,
+            "alunos_sem_escala": sem_escala,
+            "alunos_sem_escala_ja": sem_escala_ja,
+            "genero": usuario.genero[0].upper(),
         }
     else:
         # dados para aluno
-        escalas = EscalaPoms.objects.filter(aluno=usuario).order_by('data')
+        escalas = EscalaPoms.objects.filter(aluno=usuario).order_by("data")
         total = escalas.count()
         ultima = escalas.last()
         prazo = (timezone.now() - ultima.data) > timedelta(days=7) if ultima else False
-        labels = [DateFormat(e.data).format('d/m') for e in escalas]
+        labels = [DateFormat(e.data).format("d/m") for e in escalas]
         pth = [e.pth for e in escalas]
         desaj = [e.soma_desajuste for e in escalas]
         context = {
-            'nome': usuario.nome,
-            'tipo': 'Aluna' if usuario.genero=='feminino' else 'Aluno',
-            'treinador': usuario.treinador,
-            'total_escalas': total,
-            'ultima_escala': ultima.data if ultima else None,
-            'labels': labels,
-            'pth': pth,
-            'desajuste': desaj,
-            'tem_escalas': bool(escalas),
-            'tempo_limite': prazo,
-            'genero': usuario.genero[0].upper(),
+            "nome": usuario.nome,
+            "tipo": "Aluna" if usuario.genero == "feminino" else "Aluno",
+            "treinador": usuario.treinador,
+            "total_escalas": total,
+            "ultima_escala": ultima.data if ultima else None,
+            "labels": labels,
+            "pth": pth,
+            "desajuste": desaj,
+            "tem_escalas": bool(escalas),
+            "tempo_limite": prazo,
+            "genero": usuario.genero[0].upper(),
         }
-    return render(request, 'EscalaPoms/static/home.html', context)
+    return render(request, "EscalaPoms/geral/home.html", context)
+
 
 @login_required
 @treinador_required
@@ -261,14 +310,17 @@ def meus_alunos(request):
     4. Renderiza template com lista de alunos.
     """
     treinador = Treinador.objects.get(cpf=request.user.username)
-    q = request.GET.get('q', '').strip()
+    q = request.GET.get("q", "").strip()
     alunos = Aluno.objects.filter(treinador=treinador)
     if q:
         alunos = alunos.filter(nome__icontains=q)
-    alunos = alunos.order_by('nome')
+    alunos = alunos.order_by("nome")
     for aluno in alunos:
-        aluno.cpf_assinado = signing.dumps(aluno.cpf, salt='aluno-cpf-salt')
-    return render(request, 'EscalaPoms/escala/meus_alunos.html', {'alunos': alunos, 'q': q})
+        aluno.cpf_assinado = signing.dumps(aluno.cpf, salt="aluno-cpf-salt")
+    return render(
+        request, "EscalaPoms/usuario/meus_alunos.html", {"alunos": alunos, "q": q}
+    )
+
 
 @login_required
 @treinador_required
@@ -286,19 +338,24 @@ def historico_aluno(request, aluno_cpf):
     3. Prepara dados para gráfico (labels, pth, desajuste).
     4. Renderiza template de histórico.
     """
-    cpf = signing.loads(aluno_cpf, salt='aluno-cpf-salt')
+    cpf = signing.loads(aluno_cpf, salt="aluno-cpf-salt")
     aluno = get_object_or_404(Aluno, cpf=cpf, treinador__cpf=request.user.username)
-    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data')
-    labels = [DateFormat(e.data).format('d/m') for e in escalas]
+    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by("data")
+    labels = [DateFormat(e.data).format("d/m") for e in escalas]
     pth = [e.pth for e in escalas]
     desaj = [e.soma_desajuste for e in escalas]
-    return render(request, 'EscalaPoms/aluno/historico_aluno.html', {
-        'aluno': aluno,
-        'escalas': escalas,
-        'labels': labels,
-        'pth': pth,
-        'desajuste': desaj,
-    })
+    return render(
+        request,
+        "EscalaPoms/usuario/historico_aluno.html",
+        {
+            "aluno": aluno,
+            "escalas": escalas,
+            "labels": labels,
+            "pth": pth,
+            "desajuste": desaj,
+        },
+    )
+
 
 @login_required
 @aluno_required
@@ -316,11 +373,16 @@ def escala(request):
     """
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
     treinadores = Treinador.objects.all()
-    if request.method == 'POST':
-        if 'confirmar_treinador' in request.POST:
+    if request.method == "POST":
+        if "confirmar_treinador" in request.POST:
             return confirmar_treinador(aluno, request)
         return salvar_e_classificar_escala(aluno, request)
-    return render(request, 'EscalaPoms/escala/escala.html', {'usuario': aluno, 'treinadores': treinadores})
+    return render(
+        request,
+        "EscalaPoms/escala/escala.html",
+        {"usuario": aluno, "treinadores": treinadores},
+    )
+
 
 @login_required
 @aluno_required
@@ -337,17 +399,26 @@ def minhas_escalas(request):
     3. Renderiza template com lista e gráficos.
     """
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
-    escalas = EscalaPoms.objects.filter(aluno=aluno).order_by('data').select_related('classificacao')
-    labels = [DateFormat(e.data).format('d/m') for e in escalas]
+    escalas = (
+        EscalaPoms.objects.filter(aluno=aluno)
+        .order_by("data")
+        .select_related("classificacao")
+    )
+    labels = [DateFormat(e.data).format("d/m") for e in escalas]
     pth = [e.pth for e in escalas]
     desaj = [e.soma_desajuste for e in escalas]
-    return render(request, 'EscalaPoms/escala/minhas_escalas.html', {
-        'aluno': aluno,
-        'escalas': escalas,
-        'labels': labels,
-        'pth': pth,
-        'desajuste': desaj,
-    })
+    return render(
+        request,
+        "EscalaPoms/usuario/minhas_escalas.html",
+        {
+            "aluno": aluno,
+            "escalas": escalas,
+            "labels": labels,
+            "pth": pth,
+            "desajuste": desaj,
+        },
+    )
+
 
 @login_required
 def perfil(request):
@@ -363,11 +434,18 @@ def perfil(request):
     3. Renderiza template com dados atuais.
     """
     usuario = obter_usuario_por_cpf(request.user.username)
-    if request.method == 'POST':
-        if 'remove_foto' in request.POST:
+    if request.method == "POST":
+        if "remove_foto" in request.POST:
             return remover_foto_usuario(usuario, request)
-        return atualizar_dados_usuario(usuario, request, 'EscalaPoms/aluno/perfil.html')
-    return render(request, 'EscalaPoms/aluno/perfil.html', {'usuario': usuario, 'url_dashboard': reverse('perfil')})
+        return atualizar_dados_usuario(
+            usuario, request, "EscalaPoms/usuario/perfil.html"
+        )
+    return render(
+        request,
+        "EscalaPoms/usuario/perfil.html",
+        {"usuario": usuario, "url_dashboard": reverse("perfil")},
+    )
+
 
 @login_required
 def solicitar_exclusao(request):
@@ -384,17 +462,22 @@ def solicitar_exclusao(request):
     4. Renderiza template com feedback.
     """
     usuario = obter_usuario_por_cpf(request.user.username)
-    email_digitado = ''
-    if request.method == 'POST':
-        email_digitado = request.POST.get('email', '').strip()
+    email_digitado = ""
+    if request.method == "POST":
+        email_digitado = request.POST.get("email", "").strip()
         if email_digitado.lower() != usuario.email.strip().lower():
             messages.warning(request, "Email diferente do da sua conta.")
         else:
             codigo = f"{random.randint(100000, 999999):06}"
-            request.session['exclusao_codigo'] = codigo
+            request.session["exclusao_codigo"] = codigo
             enviar_codigo_email(codigo, usuario.email)
-            return redirect('confirmar_exclusao')
-    return render(request, 'EscalaPoms/exclusao/solicitar_exclusao.html', {'usuario': usuario, 'email': email_digitado})
+            return redirect("confirmar_exclusao")
+    return render(
+        request,
+        "EscalaPoms/exclusao/solicitar_exclusao.html",
+        {"usuario": usuario, "email": email_digitado},
+    )
+
 
 @login_required
 def confirmar_exclusao(request):
@@ -411,23 +494,31 @@ def confirmar_exclusao(request):
     4. Renderiza template de confirmação.
     """
     usuario = obter_usuario_por_cpf(request.user.username)
-    codigo_digitado = ''
-    if request.method == 'POST':
-        codigo_digitado = request.POST.get('codigo', '').strip()
-        sessao = request.session.get('exclusao_codigo')
+    codigo_digitado = ""
+    if request.method == "POST":
+        codigo_digitado = request.POST.get("codigo", "").strip()
+        sessao = request.session.get("exclusao_codigo")
         if not sessao:
-            messages.error(request, "Código expirado ou não gerado. Tente solicitar exclusão novamente.")
-            return redirect('solicitar_exclusao')
+            messages.error(
+                request,
+                "Código expirado ou não gerado. Tente solicitar exclusão novamente.",
+            )
+            return redirect("solicitar_exclusao")
         if codigo_digitado != str(sessao):
             messages.error(request, "Código incorreto. Por favor, tente novamente.")
         else:
             usuario.ativo = False
             usuario.save()
-            request.session.pop('exclusao_codigo', None)
+            request.session.pop("exclusao_codigo", None)
             deslogar(request)
             messages.success(request, "Sua conta foi desativada com sucesso.")
-            return redirect('login')
-    return render(request, 'EscalaPoms/exclusao/confirmar_exclusao.html', {'usuario': usuario, 'codigo': codigo_digitado})
+            return redirect("login")
+    return render(
+        request,
+        "EscalaPoms/exclusao/confirmar_exclusao.html",
+        {"usuario": usuario, "codigo": codigo_digitado},
+    )
+
 
 @login_required
 def logout_view(request):
@@ -442,7 +533,8 @@ def logout_view(request):
     2. Redireciona para a view de login.
     """
     deslogar(request)
-    return redirect('login')
+    return redirect("login")
+
 
 @login_required
 def sobre(request):
@@ -455,7 +547,8 @@ def sobre(request):
     Fluxo:
     1. Renderiza template estático sobre a aplicação.
     """
-    return render(request, 'EscalaPoms/static/sobre.html')
+    return render(request, "EscalaPoms/geral/sobre.html")
+
 
 @login_required
 @aluno_required
@@ -474,14 +567,31 @@ def trocar_treinador(request):
     """
     aluno = get_object_or_404(Aluno, cpf=request.user.username)
     treinadores = Treinador.objects.all()
-    if request.method == 'POST':
-        novo_cpf = request.POST.get('treinador_id')
+    if request.method == "POST":
+        novo_cpf = request.POST.get("treinador_id")
         try:
             novo = Treinador.objects.get(cpf=novo_cpf)
             aluno.treinador = novo
             aluno.save()
             messages.success(request, "Treinador atualizado com sucesso!")
-            return redirect('perfil')
+            return redirect("perfil")
         except Treinador.DoesNotExist:
             messages.error(request, "Treinador não encontrado.")
-    return render(request, 'EscalaPoms/aluno/trocar_treinador.html', {'usuario': aluno, 'treinadores': treinadores})
+    return render(
+        request,
+        "EscalaPoms/usuario/trocar_treinador.html",
+        {"usuario": aluno, "treinadores": treinadores},
+    )
+
+
+def termo_uso(request):
+    """
+    Exibe o termo de uso da aplicação.
+
+    Parâmetros:
+    - request: HttpRequest.
+
+    Fluxo:
+    1. Renderiza template do termo de uso.
+    """
+    return render(request, "EscalaPoms/geral/termo_uso.html")
