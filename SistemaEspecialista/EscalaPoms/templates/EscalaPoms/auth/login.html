@@ -10,7 +10,6 @@
   <!-- Seu CSS customizado -->
   <link rel="stylesheet" href="{% static 'css/login.css' %}" />
   <link rel="icon" href="{% static 'images/icone.png' %}" type="image/png" />
-
 </head>
 <body>
   <section class="gradient-form d-flex align-items-center justify-content-center min-vh-100">
@@ -40,6 +39,7 @@
                         value="{{ cpf }}"
                       />
                     </div>
+
                     <div class="form-outline mb-4">
                       <input
                         type="password"
@@ -70,6 +70,7 @@
                       </a>
                     </div>
                   </form>
+
                 </div>
               </div>
             </div>
@@ -90,8 +91,8 @@
       });
     });
   </script>
-  
 </body>
+
 {% if messages %}
   <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
     {% for message in messages %}
@@ -114,5 +115,4 @@
     {% endfor %}
   </div>
 {% endif %}
-
 </html>

@@ -73,6 +73,17 @@ body {
   padding: 1rem;
 }
 
+.link-termo {
+  color: #57cc99; /* Altere para a cor desejada */
+  text-decoration: none; /* Remove o sublinhado padrão */
+}
+
+.link-termo:hover {
+  text-decoration: none; /* Estilo opcional no hover */
+  color: #38B880; /* Tom mais escuro no hover, opcional */
+}
+
+
 /* Ajuste de paddings responsivo */
 @media (min-width: 768px) {
   .card-body {

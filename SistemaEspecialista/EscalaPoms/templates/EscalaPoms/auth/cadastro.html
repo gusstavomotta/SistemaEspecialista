@@ -99,58 +99,66 @@
                   </div>
                 </div>
 
-<!-- Gênero (full width) -->
-<div class="mt-4">
-  <label class="form-label me-3">Gênero:</label>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="genero" id="genero-m" value="masculino"
-      {% if form.genero.value == "masculino" %}checked{% endif %}>
-    <label class="form-check-label" for="genero-m">Masculino</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="genero" id="genero-f" value="feminino"
-      {% if form.genero.value == "feminino" %}checked{% endif %}>
-    <label class="form-check-label" for="genero-f">Feminino</label>
-  </div>
-  <div class="text-danger small">{{ form.genero.errors|first }}</div>
-</div>
+                <!-- Gênero (full width) -->
+                <div class="mt-4">
+                  <label class="form-label me-3">Gênero:</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genero" id="genero-m" value="masculino"
+                      {% if form.genero.value == "masculino" %}checked{% endif %}>
+                    <label class="form-check-label" for="genero-m">Masculino</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="genero" id="genero-f" value="feminino"
+                      {% if form.genero.value == "feminino" %}checked{% endif %}>
+                    <label class="form-check-label" for="genero-f">Feminino</label>
+                  </div>
+                  <div class="text-danger small">{{ form.genero.errors|first }}</div>
+                </div>
 
-<!-- Função (full width) -->
-<div class="mt-3">
-  <label class="form-label me-3">Função:</label>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-aluno" value="aluno"
-      {% if tipo_usuario == "aluno" %}checked{% endif %}>
-    <label class="form-check-label" for="tipo-aluno">Aluno</label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-treinador" value="treinador"
-      {% if tipo_usuario == "treinador" %}checked{% endif %}>
-    <label class="form-check-label" for="tipo-treinador">Treinador</label>
-  </div>
-  <!-- Se você quiser validar esse campo no Form, pode exibir erros gerais -->
-  <div class="text-danger small">
-    {% if form.non_field_errors %}
-      {{ form.non_field_errors|first }}
-    {% endif %}
-  </div>
-</div>
+                <!-- Função (full width) -->
+                <div class="mt-3">
+                  <label class="form-label me-3">Função:</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-aluno" value="aluno"
+                      {% if tipo_usuario == "aluno" %}checked{% endif %}>
+                    <label class="form-check-label" for="tipo-aluno">Aluno</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_usuario" id="tipo-treinador" value="treinador"
+                      {% if tipo_usuario == "treinador" %}checked{% endif %}>
+                    <label class="form-check-label" for="tipo-treinador">Treinador</label>
+                  </div>
+                  <div class="text-danger small">
+                    {% if form.non_field_errors %}
+                      {{ form.non_field_errors|first }}
+                    {% endif %}
+                  </div>
+                </div>
 
-<!-- Seleção de Treinador (full width) -->
-<div class="mt-3" id="treinador-field">
-  <select
-    name="treinador"
-    class="form-control form-control-lg {% if form.treinador.errors %}is-invalid{% endif %}">
-    <option value="" disabled selected>Selecione o treinador</option>
-    {% for t in treinadores %}
-      <option value="{{ t.cpf }}"
-        {% if form.treinador.value == t.cpf %}selected{% endif %}>
-        {{ t.nome }}
-      </option>
-    {% endfor %}
-  </select>
-  <div class="invalid-feedback">{{ form.treinador.errors|first }}</div>
-</div>
+                <!-- Seleção de Treinador (full width) -->
+                <div class="mt-3" id="treinador-field">
+                  <select
+                    name="treinador"
+                    class="form-control form-control-lg {% if form.treinador.errors %}is-invalid{% endif %}">
+                    <option value="" disabled selected>Selecione o treinador</option>
+                    {% for t in treinadores %}
+                      <option value="{{ t.cpf }}"
+                        {% if form.treinador.value == t.cpf %}selected{% endif %}>
+                        {{ t.nome }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                  <div class="invalid-feedback">{{ form.treinador.errors|first }}</div>
+                </div>
+
+                <!-- Aceite dos Termos de Uso -->
+                <div class="form-check mt-4">
+                  <input class="form-check-input" type="checkbox" id="aceite-termos" name="aceite_termos" required>
+                  <label class="form-check-label" for="aceite-termos">
+                    Eu li e aceito os 
+                    <a href="{% url 'termo_uso' %}" class="link-termo">Termos de Uso</a>
+                  </label>
+                </div>
 
                 <!-- Botão e link -->
                 <div class="text-center mt-4">
@@ -170,6 +178,8 @@
       </div>
     </div>
   </section>
+  
+  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <script>
     const radios = document.querySelectorAll('input[name="tipo_usuario"]');
@@ -181,7 +191,7 @@
     radios.forEach(r => r.addEventListener("change", toggleTreinadorField));
     toggleTreinadorField();
   </script>
-  <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const toastElList = [].slice.call(document.querySelectorAll('.toast'));
@@ -192,6 +202,7 @@
     });
   </script>
 </body>
+
 {% if messages %}
   <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
     {% for message in messages %}

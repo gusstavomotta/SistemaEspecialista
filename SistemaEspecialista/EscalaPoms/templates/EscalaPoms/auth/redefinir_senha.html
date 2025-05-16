@@ -16,8 +16,7 @@
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card border-0 shadow-lg rounded-4">
             <div class="card-body p-md-5">
-              
-              
+
               <div class="text-center mb-4">
                 <h2 class="fw-bold display-6">Redefinir Senha</h2>
                 <p>Informe seu CPF e e-mail para receber um código de verificação.</p>
@@ -38,6 +37,7 @@
                     value="{{ cpf }}"
                   />
                 </div>
+
                 <div class="form-outline mb-4">
                   <input
                     type="email"
@@ -81,10 +81,11 @@
     });
   </script>
 </body>
+
 {% if messages %}
   <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
     {% for message in messages %}
-      <div class="toast align-items-center 2-auto text-white 
+      <div class="toast align-items-center w-auto text-white 
         {% if message.tags == 'error' %}bg-danger
         {% elif message.tags == 'success' %}bg-success
         {% elif message.tags == 'warning' %}bg-warning text-dark

@@ -19,14 +19,19 @@ body {
 .gradient-custom-2 {
   background-color: #57cc99;
   color: #fff;
-  border: none;
+  border-width: 2px;
+  border-color: #57cc99;
   border-radius: .75rem;
   transition: transform .2s, filter .2s;
 }
 .gradient-custom-2:hover,
 .gradient-custom-2:focus {
-  transform: scale(1.02);
+  transform: scale(1.08);
   filter: brightness(1.1);
+  border-color: #57cc99;
+  border-width: 2px;
+  color: #57cc99;
+  font-weight: 600;
 }
 
 /* Card mais suave */
