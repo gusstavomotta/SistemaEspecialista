@@ -24,6 +24,9 @@ from .usuario_service import (
 )
 from .escala_service import confirmar_treinador, salvar_e_classificar_escala
 from django.core import signing
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 """
 Módulo de views: autenticação, cadastro, gestão de escalas e perfil de usuário.
@@ -595,3 +598,41 @@ def termo_uso(request):
     1. Renderiza template do termo de uso.
     """
     return render(request, "EscalaPoms/geral/termo_uso.html")
+
+import uuid
+from django.conf import settings
+from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
+@login_required
+def reportar_bug(request):
+    if request.method == 'POST':
+        mensagem = request.POST.get('mensagem', '').strip()
+
+        # Gera um código UUID curto (8 caracteres)
+        codigo = uuid.uuid4().hex[:8].upper()  # Ex: 3F9A2C8B
+
+        # Corpo do e-mail
+        corpo_email = f"""
+[UMORE] NOVO BUG REPORTADO
+
+Código do Reporte: #{codigo}
+
+Mensagem:
+{mensagem}
+"""
+
+        send_mail(
+            subject=f'[UMORE] Bug Report #{codigo}',
+            message=corpo_email,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.DEFAULT_FROM_EMAIL],
+        )
+
+        messages.success(request, f"Reporte #{codigo} enviado com sucesso. Obrigado!")
+        return redirect('home')
+
+    return render(request, 'EscalaPoms/geral/reportar_bug.html')
+

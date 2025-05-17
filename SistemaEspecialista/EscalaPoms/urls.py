@@ -41,4 +41,8 @@ urlpatterns = [
     # Trocar treinador (aluno)
     path('trocar_treinador/', trocar_treinador, name='trocar_treinador'),
 
+    # Reportar Bug
+    path('reportar_bug/', reportar_bug, name='reportar_bug'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,6 +1,11 @@
 {% extends 'EscalaPoms/geral/base.html' %}
+{% load static %}
 
 {% block title %}Solicitar Exclusão de Conta{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/solicitar_exclusao.css' %}">
+{% endblock %}
 
 {% block content %}
   <div class="container d-flex justify-content-center align-items-start min-vh-100 pt-5">
@@ -24,7 +29,7 @@
               value="{{ email|default_if_none:'' }}"
             />
           </div>
-          <button type="submit" class="btn btn-warning w-100">Enviar Código de Confirmação</button>
+          <button type="submit" class="btn gradient-custom-2 w-100">Enviar Código de Confirmação</button>
         </form>
       </div>
     </div>

@@ -91,6 +91,7 @@
             </li>
           </ul>
         </li>
+
         <li class="sidebar-item">
           <a href="{% url 'perfil' %}" class="sidebar-link"
             ><i class="bi bi-person-circle"></i> Perfil</a
@@ -103,9 +104,12 @@
         </li>
       </ul>
       <div class="sidebar-item">
+        <a href="{% url 'reportar_bug' %}" class="sidebar-link">
+          <i class="bi bi-bug"></i> Reportar Bug
+        </a>
         <a href="{% url 'logout' %}" class="sidebar-link"
-          ><i class="bi bi-box-arrow-right"></i> Sair</a
-        >
+          ><i class="bi bi-box-arrow-right"></i> Sair
+        </a>
       </div>
     </aside>
 

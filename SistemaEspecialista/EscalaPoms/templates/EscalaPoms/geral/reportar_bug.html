@@ -1,0 +1,26 @@
+{% extends 'EscalaPoms/geral/base.html' %}
+{% load static %}
+
+{% block title %}Reportar Bug{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reportar_bug.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-start" style="min-height: 80vh; padding-top: 3rem;">
+  <div class="card shadow-sm p-4" style="width: 100%; max-width: 600px;">
+  <h1 class="titulo-reporte mb-4 text-center">Reportar um Problema</h1>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group mb-3">
+        <label for="mensagem" class="form-label">Descreva detalhadamente o bug encontrado:</label>
+        <textarea class="form-control" id="mensagem" name="mensagem" rows="6" required placeholder="Escreva aqui"></textarea>
+      </div>
+      <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn gradient-custom-2">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

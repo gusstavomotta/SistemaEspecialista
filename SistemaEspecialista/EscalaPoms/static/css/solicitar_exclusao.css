@@ -1,0 +1,17 @@
+/* Estilo do botão (visual esportivo sem zoom) */
+.gradient-custom-2 {
+  background-color: #57cc99;
+  color: #fff;
+  border-width: 2px;
+  border-color: #57cc99;
+  border-radius: .75rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.gradient-custom-2:hover,
+.gradient-custom-2:focus {
+  background-color: #fff;
+  color: #57cc99;
+  border-color: #57cc99;
+  font-weight: 600;
+}
