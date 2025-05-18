@@ -1,8 +1,13 @@
 # Ignorar a virtual environment
 venv/
-media/
 
-# Ignorar arquivos Python compilados
+# Ignorar arquivos de mídia e arquivos estáticos gerados
+media/
+staticfiles/
+
+# Ignorar arquivos Python compilados e caches
 *.pyc
 __pycache__/
 
+# Ignorar arquivos de configuração de ambiente sensíveis
+#.env
