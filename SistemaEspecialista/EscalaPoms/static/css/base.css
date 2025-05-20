@@ -30,7 +30,7 @@ a {
   left: 0;
   /* desktop: visível; mobile será deslocada */
   width: 264px;
-  background-color: #d9ff03;
+  background-color: #1b4332;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
