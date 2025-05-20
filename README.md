@@ -14,8 +14,9 @@ Este sistema utiliza regras de inferência para classificar o estado emocional d
 - Fadiga
 - Confusão
 - Vigor
+- Desajuste ao Treino
 
-Com esses valores, o sistema calcula o índice de Perturbação Total do Humor (PTH) e, a partir de um motor de inferência baseado em regras (sistema especialista), classifica o nível de cada emoção e oferece recomendações de intervenção física ou emocional.
+Com esses valores, o sistema calcula o índice de Perturbação Total do Humor (PTH) e, a partir de um motor de inferência baseado em regras (sistema especialista), classifica o nível de cada emoção e oferece recomendações de treinos.
 
 ---
 
@@ -35,7 +36,7 @@ Com esses valores, o sistema calcula o índice de Perturbação Total do Humor (
 | **Python** | Backend e motor de inferência |
 | **Django** | Framework web |
 | **HTML/CSS** | Interface do sistema |
-| **JavaScript** | Validação de formulários e interações |
+| **JavaScript** | Criação de gráficos |
 | **Bootstrap** | Layout responsivo |
 | **PostgreSQL** | Banco de dados |
 
@@ -53,9 +54,10 @@ Com esses valores, o sistema calcula o índice de Perturbação Total do Humor (
 ### 📥 Passos para rodar localmente
 
 ```bash
-# Download do PgSQL
+# Banco de dados
+Instale o PostgreSql
 Crie um database com o nome de sua escolha
-Acesse o arquivo .env e preencha com as informações do database e do e-mail
+Acesse o arquivo .env e preencha com as informações do database e do e-mail (crie uma senha de app)
 
 # Clone o repositório
 git clone https://github.com/gusstavomotta/SistemaEspecialista.git
