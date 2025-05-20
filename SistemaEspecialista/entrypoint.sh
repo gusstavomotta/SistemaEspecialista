@@ -21,4 +21,8 @@ python manage.py collectstatic --noinput
 
 # Inicia o Gunicorn, substituindo o runserver; 
 # ajuste "sistemaespecialista" conforme a estrutura do seu projeto.
-exec gunicorn SistemaEspecialista.wsgi:application --bind 0.0.0.0:8080 --workers 3
+exec gunicorn SistemaEspecialista.wsgi:application \
+      --bind 0.0.0.0:8080 \
+      --workers 5 \
+      --worker-class gevent \
+      --timeout 30
