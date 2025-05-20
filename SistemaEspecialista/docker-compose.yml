@@ -5,13 +5,13 @@ services:
     build: .
     container_name: django_app
     expose:
-      - "8080"  # Apenas expõe a porta internamente, não é mapeada para fora
+      - "8080" 
     depends_on:
       - db
     env_file:
       - .env
     volumes:
-      - static_volume:/app/static  # Compartilha os arquivos estáticos entre web e nginx
+      - static_volume:/app/static 
 
   db:
     image: postgres:latest
@@ -35,7 +35,7 @@ services:
       - web
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - static_volume:/app/static:ro  # Permite que o Nginx acesse os arquivos estáticos
+      - static_volume:/app/static:ro
 
 volumes:
   postgres_data: {}
