@@ -2,6 +2,7 @@
 
 Sistema especialista desenvolvido em parceria com o curso de Educação Física da UNISC. O objetivo do projeto é auxiliar na avaliação do humor de atletas e pacientes a partir da aplicação da Escala POMS (Profile of Mood States), gerando recomendações automáticas com base nas emoções relatadas.
 
+Acesse pela URL: sistemaumore.com.br
 ---
 
 ## 📌 Sobre o Projeto
@@ -61,7 +62,7 @@ Acesse o arquivo .env e preencha com as informações do database e do e-mail (c
 
 # Clone o repositório
 git clone https://github.com/gusstavomotta/SistemaEspecialista.git
-cd SistemaEspecialista
+cd SistemaEspecialista (2x)
 
 # Crie e ative o ambiente virtual (opcional, mas recomendado)
 python -m venv venv
@@ -85,7 +86,7 @@ Instalar Docker Engine e Docker Compose - Linux
 
 # Clone o repositório
 git clone https://github.com/gusstavomotta/SistemaEspecialista.git
-cd SistemaEspecialista
+cd SistemaEspecialista (2x)
 
 # Acessar a pasta raiz e rodar o comando:
 docker-compose up --build
