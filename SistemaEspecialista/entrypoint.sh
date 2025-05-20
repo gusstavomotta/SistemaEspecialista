@@ -17,8 +17,5 @@ pip install -r requirements.txt
 python manage.py makemigrations --noinput
 python manage.py migrate --noinput
 
-python manage.py collectstatic --noinput
-
-
 # Inicia o servidor Django na porta 8080
 exec python manage.py runserver 0.0.0.0:8080

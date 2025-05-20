@@ -20,6 +20,9 @@ COPY . /app
 RUN dos2unix /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
+
+RUN python manage.py collectstatic --noinput
+
 # 6) Expõe porta e define entrypoint
 EXPOSE 8080
 ENTRYPOINT ["bash", "/app/entrypoint.sh"]
