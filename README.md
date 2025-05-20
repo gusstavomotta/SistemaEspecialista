@@ -3,6 +3,7 @@
 Sistema especialista desenvolvido em parceria com o curso de Educação Física da UNISC. O objetivo do projeto é auxiliar na avaliação do humor de atletas e pacientes a partir da aplicação da Escala POMS (Profile of Mood States), gerando recomendações automáticas com base nas emoções relatadas.
 
 Acesse pela URL: sistemaumore.com.br
+
 ---
 
 ## 📌 Sobre o Projeto
