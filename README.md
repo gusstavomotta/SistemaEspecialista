@@ -41,9 +41,6 @@ Com esses valores, o sistema calcula o índice de Perturbação Total do Humor (
 
 ---
 
-
----
-
 ## ⚙️ Instalação e Execução
 
 ### 🔧 Requisitos
